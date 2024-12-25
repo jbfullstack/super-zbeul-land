@@ -1,0 +1,407 @@
+[gd_scene load_steps=4 format=3 uid="uid://csy18fc22t0ca"]
+
+[ext_resource type="Script" path="res://scripts/menu/network_menu_canvas_layer.gd" id="2_fp5wt"]
+[ext_resource type="Theme" uid="uid://qqnbmru5dqld" path="res://themes/network_menu_theme.tres" id="3_ckb07"]
+[ext_resource type="FontFile" uid="uid://c53kogtyjwsss" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_r44fr"]
+
+[node name="Network setup" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_fp5wt")
+
+[node name="Main" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ckb07")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Main/CenterContainer"]
+custom_minimum_size = Vector2(512, 256)
+layout_mode = 2
+
+[node name="GameModeContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Select mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="SoloBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.65
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Solo"
+
+[node name="MultiBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.57
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Multi
+"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MultiplayerContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Multiplayer" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Multiplayer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="HostBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.65
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Host"
+
+[node name="JoinBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.57
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Join"
+
+[node name="Multiplayer2" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ReturnBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.65
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Back"
+
+[node name="HostContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Ready ?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Peudonyme"
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Launch"
+
+[node name="BackFromHostButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Back"
+
+[node name="JoinContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Ready ?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Peudonyme"
+
+[node name="IpAddr" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "84.98.112.147"
+placeholder_text = "Ip address"
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Launch"
+
+[node name="BackFromJoinButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Back
+"
+
+[node name="SettingsContainer2" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="IsHosting" type="CheckButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Host game ?"
+
+[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Peudonyme"
+
+[node name="IpAddr" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Ip address"
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Launch"
+
+[node name="InGameContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="IsHosting" type="CheckButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Host game ?"
+
+[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Peudonyme"
+
+[node name="IpAddr" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+placeholder_text = "Ip address"
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_r44fr")
+theme_override_font_sizes/font_size = 19
+text = "Launch"
+
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="CanvasLayer" method="_on_solo_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/MultiBtn" to="CanvasLayer" method="_on_multi_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/HostBtn" to="CanvasLayer" method="_on_host_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/JoinBtn" to="CanvasLayer" method="_on_join_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/ReturnBtn" to="CanvasLayer" method="_on_return_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer/BackFromHostButton" to="CanvasLayer" method="_on_back_from_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/BackFromJoinButton" to="CanvasLayer" method="_on_back_from_join_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/IsHosting" to="CanvasLayer" method="_on_is_hosting_toggled"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/IsHosting" to="CanvasLayer" method="_on_is_hosting_toggled"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]
