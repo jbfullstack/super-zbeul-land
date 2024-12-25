@@ -11,6 +11,10 @@ var multiplayer_mode_enabled = false
 var respawn_point = Vector2(30, 20)
 
 func become_host():
+	become_dedicated_host()
+	_add_player_to_game(1)
+
+func become_dedicated_host():
 	print("Starting host!")
 	
 	_players_spawn_node = get_tree().get_current_scene().get_node("Players")
@@ -27,12 +31,9 @@ func become_host():
 	multiplayer.peer_disconnected.connect(_del_player)
 	
 	_remove_single_player()
-	
-	if not OS.has_feature("dedicated_server"):
-		_add_player_to_game(1)
-	
-func join_as_player_2():
-	print("Player 2 joining")
+
+func join_as_player():
+	print("Player joining")
 	
 	multiplayer_mode_enabled = true
 	

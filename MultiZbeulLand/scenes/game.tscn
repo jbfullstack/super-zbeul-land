@@ -616,16 +616,16 @@ theme_override_fonts/font = ExtResource("2_nlliu")
 theme_override_font_sizes/font_size = 8
 text = "Host New Game"
 
-[node name="JoinAsPlayer2" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer"]
+[node name="JoinAsPlayer" type="Button" parent="MultiplayerHUD/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_8cblx")
 theme_override_font_sizes/font_size = 8
-text = "Join as Player 2"
+text = "Join as Player"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/multiplayer_player.tscn")
 spawn_path = NodePath("../Players")
-spawn_limit = 2
+spawn_limit = 10
 
 [node name="Players" type="Node2D" parent="."]
 
@@ -638,5 +638,5 @@ position = Vector2(622.5, -136.5)
 shape = SubResource("RectangleShape2D_2186x")
 
 [connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/HostGame" to="GameManager" method="become_host"]
-[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/JoinAsPlayer2" to="GameManager" method="join_as_player_2"]
+[connection signal="pressed" from="MultiplayerHUD/Panel/VBoxContainer/JoinAsPlayer" to="GameManager" method="join_as_player"]
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

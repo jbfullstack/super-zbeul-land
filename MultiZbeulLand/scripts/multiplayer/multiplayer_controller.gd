@@ -13,6 +13,8 @@ var do_jump = false
 var _is_on_floor = true
 var alive = true
 
+var nb_collected_coin = 0
+
 @export var player_id := 1:
 	set(id):
 		player_id = id
