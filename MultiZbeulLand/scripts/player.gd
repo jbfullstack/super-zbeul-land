@@ -6,10 +6,14 @@ const JUMP_VELOCITY = -300.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var color_rect_2 = $Camera2D/ColorRect2
 
 @onready var animated_sprite = $AnimatedSprite2D
 
 var nb_collected_coin = 0
+
+func _ready():
+	color_rect_2.visible = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -45,3 +49,7 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_solo_btn_pressed():
+	color_rect_2.visible = false

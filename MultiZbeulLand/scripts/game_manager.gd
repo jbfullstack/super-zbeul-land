@@ -16,7 +16,7 @@ func add_point(body):
 	if MultiplayerManager.host_mode_enabled:
 		print( str(body.player_id) + " collected " + str(body.nb_collected_coin) + " coins.")
 	else:
-		print("Player collected " + str(body.nb_collected_coin) + " coins.")
+		print("Player collected " + str(body.nb_collected_coin) + " coins")
 
 func become_host():
 	print("Become host pressed")

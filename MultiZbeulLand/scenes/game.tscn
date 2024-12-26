@@ -496,6 +496,14 @@ limit_bottom = 120
 limit_smoothed = true
 position_smoothing_enabled = true
 
+[node name="ColorRect2" type="ColorRect" parent="Player/Camera2D"]
+visible = false
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+color = Color(0.196078, 0.505882, 1, 1)
+
 [node name="Killzone" parent="." instance=ExtResource("5_x8euu")]
 position = Vector2(74, 141)
 
@@ -629,7 +637,6 @@ custom_minimum_size = Vector2(512, 256)
 layout_mode = 2
 
 [node name="GameModeContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -1034,6 +1041,7 @@ position = Vector2(622.5, -136.5)
 shape = SubResource("RectangleShape2D_2186x")
 
 [connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="GameManager" method="_on_solo_btn_pressed"]
+[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="Player" method="_on_solo_btn_pressed"]
 [connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/MultiBtn" to="HUD/CanvasLayer" method="_on_multi_btn_pressed"]
 [connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/HostBtn" to="HUD/CanvasLayer" method="_on_host_btn_pressed"]
 [connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/JoinBtn" to="HUD/CanvasLayer" method="_on_join_btn_pressed"]
