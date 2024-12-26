@@ -5,12 +5,11 @@ extends Control
 var peer
 var game_scene = "res://scenes/game.tscn"
 
-@onready var pseudo = $CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/Pseudo
-@onready var nb_player_lbl = $CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer/NbPlayerLbl
-@onready var nb_player_joining_menu_lbl = $CanvasLayer/Main/CenterContainer/PanelContainer/JoinWaitingContainer/VBoxContainer/Label2
+@onready var pseudoInput = %Pseudo
+@onready var nb_player_lbl = %NbPlayerLbl
+@onready var nb_player_joining_menu_lbl = %NbPlayerJoinWaitingLbl
 
 @onready var canvas_layer = $CanvasLayer
-
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,17 +23,13 @@ func _ready():
 	#pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 # this get called on the server and clients
 func peer_connected(id):
-	print("Player Connected  [%s]" % multiplayer.get_unique_id())
+	print("Player Connected  [%s]" % id)
 	
 # this get called on the server and clients
 func peer_disconnected(id):
-	print("Player Disconnected  [%s]" % multiplayer.get_unique_id())
+	print("Player Disconnected  [%s]" % id)
 	GameManager.Players.erase(id)
 	var players = get_tree().get_nodes_in_group("Player")
 	for i in players:
@@ -43,17 +38,17 @@ func peer_disconnected(id):
 # called only from clients
 func connected_to_server():
 	print("connected To Sever!  [%s]" % multiplayer.get_unique_id())
-	SendPlayerInformation.rpc_id(1, pseudo.text, multiplayer.get_unique_id())
+	SendPlayerInformation.rpc_id(1, pseudoInput.text, multiplayer.get_unique_id())
 
 # called only from clients
 func connection_failed():
 	print("Couldnt Connect  [%s]" % multiplayer.get_unique_id())
 
 @rpc("any_peer")
-func SendPlayerInformation(name, id):
+func SendPlayerInformation(pseudo, id):
 	if !GameManager.Players.has(id):
 		GameManager.Players[id] ={
-			"name" : name,
+			"name" : pseudo,
 			"id" : id,
 			"score": 0,
 			"color":  ColorsUtils.pick_random_hex_color_for_player()
@@ -74,6 +69,7 @@ func StartGame():
 	var scene = load(game_scene).instantiate()
 	get_tree().root.add_child(scene)
 	canvas_layer.hide()
+	_remove_single_player()
 	get_tree().paused = false
 	
 func hostGame():
@@ -86,11 +82,13 @@ func hostGame():
 	
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting For Players!  [%s]" % multiplayer.get_unique_id())
+	NetworkController.multiplayer_mode_enabled = true
+	NetworkController.host_mode_enabled = true
 	
 	
 func _on_host_button_down():
 	hostGame()
-	SendPlayerInformation(pseudo.text, multiplayer.get_unique_id())
+	SendPlayerInformation(pseudoInput.text, multiplayer.get_unique_id())
 	pass
 
 
@@ -98,10 +96,24 @@ func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(canvas_layer.get_server_ip(), port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)	
+	multiplayer.set_multiplayer_peer(peer)
+	
+	NetworkController.multiplayer_mode_enabled = true
 	pass
 
 
 func _on_start_game_button_down():
 	StartGame.rpc()
 	pass
+
+func _remove_single_player():
+	print("Remove single player [%s]" % multiplayer.get_unique_id())
+	var player_to_remove = get_tree().root.get_node("Game").get_node("Player")
+	player_to_remove.queue_free()
+
+
+func _on_solo_btn_pressed():
+	var scene = load(game_scene).instantiate()
+	get_tree().root.add_child(scene)
+	canvas_layer.hide()
+	get_tree().paused = false

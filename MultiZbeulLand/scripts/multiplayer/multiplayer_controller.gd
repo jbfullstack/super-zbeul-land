@@ -21,7 +21,11 @@ var nb_collected_coin = 0
 		player_id = id
 		%InputSynchronizer.set_multiplayer_authority(id)
 
-@export var pseudo := "undefined"
+@export var pseudo := "undefined":
+	set(name):
+		pseudo = name
+		%PseudoLbl.text = name
+
 
 func _ready():
 	if multiplayer.get_unique_id() == player_id:
@@ -32,7 +36,7 @@ func _ready():
 	#$PseudoLbl.text = pseudo
 	#print("pseudo: %s" % pseudo)
 
-func _apply_animations(delta):
+func _apply_animations(_delta):
 	# Flip the Sprite
 	if direction > 0:
 		animated_sprite.flip_h = false
@@ -77,7 +81,7 @@ func _physics_process(delta):
 		_is_on_floor = is_on_floor()
 		_apply_movement_from_input(delta)
 		
-	if not multiplayer.is_server() || MultiplayerManager.host_mode_enabled:
+	if not multiplayer.is_server() || NetworkController.host_mode_enabled:
 		_apply_animations(delta)
 
 func mark_dead():
@@ -87,9 +91,9 @@ func mark_dead():
 	$RespawnTimer.start()
 
 func _respawn():
-	print("Respawned!")
-	position = MultiplayerManager.respawn_point
-	$CollisionShape2D.set_deferred("disabled", false)
+	print("Respawned! TODO")
+	#position = MultiplayerManager.respawn_point
+	#$CollisionShape2D.set_deferred("disabled", false)
 
 func _set_alive():
 	print("alive again!")

@@ -1,10 +1,28 @@
 extends Node
 #class_name SpawnerManager
+
+@export var PlayerScene : PackedScene
+
+
+func _ready():
+	var index = 0
+	for i in GameManager.Players:
+		var currentPlayer = PlayerScene.instantiate()
+		currentPlayer.name = str(GameManager.Players[i].id)
+		currentPlayer.player_id = str(GameManager.Players[i].id)
+		currentPlayer.pseudo = str(GameManager.Players[i].name)
+		currentPlayer.modulate = ColorsUtils.pick_random_hex_color_for_player()
+		
+		add_child(currentPlayer)
+		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
+			if spawn.name == str(index):
+				currentPlayer.global_position = spawn.global_position
+		index += 1
 #
 #var _coins_spawn_node
 #
 #func instanciate_coins(game_manager):
-	#var coin_scene = preload("res://scenes/multiplayer/multiplayer_coin.tscn") if MultiplayerManager.multiplayer_mode_enabled else preload("res://scenes/coin.tscn")
+	#var coin_scene = preload("res://scenes/multiplayer/multiplayer_coin.tscn") if NetworkController..multiplayer_mode_enabled else preload("res://scenes/coin.tscn")
 	#var coins_container = $"../Coins"
 	#
 	#_coins_spawn_node = get_tree().get_current_scene().get_node("Coins")

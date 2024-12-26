@@ -126,6 +126,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_r44fr")
@@ -205,6 +206,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="NbPlayerLbl" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_r44fr")
@@ -312,7 +314,8 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label2" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinWaitingContainer/VBoxContainer"]
+[node name="NbPlayerJoinWaitingLbl" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/JoinWaitingContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_r44fr")
@@ -431,6 +434,7 @@ theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 19
 text = "Launch"
 
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="." method="_on_solo_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="CanvasLayer" method="_on_solo_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/MultiBtn" to="CanvasLayer" method="_on_multi_btn_pressed"]
 [connection signal="text_changed" from="CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/Pseudo" to="CanvasLayer" method="_on_pseudo_text_changed"]

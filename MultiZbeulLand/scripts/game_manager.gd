@@ -11,7 +11,7 @@ var nb_collected_coin = 0
 		#MultiplayerManager.become_dedicated_host()
 
 func add_point(_body):
-	if !MultiplayerManager.host_mode_enabled:
+	if !NetworkController.host_mode_enabled:
 		nb_collected_coin += 1
 		print("Player collected %s coins" % nb_collected_coin)
 	#score_label.text = str(body.player_id) + " collected " + str(score) + " coins."

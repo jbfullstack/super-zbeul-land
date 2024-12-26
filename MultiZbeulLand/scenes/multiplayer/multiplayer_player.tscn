@@ -26,6 +26,9 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath(".:pseudo")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath(".:scale")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kgm8b"]
 properties/0/path = NodePath("InputSynchronizer:input_direction")
@@ -230,6 +233,7 @@ limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="PseudoLbl" type="Label" parent="."]
+unique_name_in_owner = true
 clip_contents = true
 offset_left = -9.0
 offset_top = -27.0
@@ -239,6 +243,7 @@ theme_override_font_sizes/font_size = 8
 text = " ??? "
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
 [node name="RespawnTimer" type="Timer" parent="."]
 wait_time = 0.6
