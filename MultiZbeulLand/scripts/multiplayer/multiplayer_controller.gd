@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name MultiplayerController
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
@@ -20,11 +21,16 @@ var nb_collected_coin = 0
 		player_id = id
 		%InputSynchronizer.set_multiplayer_authority(id)
 
+@export var pseudo := "undefined"
+
 func _ready():
 	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()
 	else:
 		$Camera2D.enabled = false
+		
+	#$PseudoLbl.text = pseudo
+	#print("pseudo: %s" % pseudo)
 
 func _apply_animations(delta):
 	# Flip the Sprite

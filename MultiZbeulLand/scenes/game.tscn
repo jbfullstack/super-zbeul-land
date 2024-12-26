@@ -1,17 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://cuv4vme4rwno0"]
+[gd_scene load_steps=16 format=3 uid="uid://cuv4vme4rwno0"]
 
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_l4ihi"]
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_rbmkf"]
-[ext_resource type="FontFile" uid="uid://c53kogtyjwsss" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_nlliu"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
 [ext_resource type="PackedScene" uid="uid://bgv5v2fxqlswe" path="res://scenes/platform.tscn" id="3_cmfc3"]
-[ext_resource type="PackedScene" uid="uid://pqp5qaw561fr" path="res://scenes/coin.tscn" id="4_28cek"]
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="5_x8euu"]
 [ext_resource type="PackedScene" uid="uid://d2w2i5h0lhc6l" path="res://scenes/slime.tscn" id="6_l0s6b"]
+[ext_resource type="Script" path="res://scripts/spawner_manager.gd" id="6_rwnli"]
 [ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="7_8cblx"]
-[ext_resource type="Script" path="res://scripts/menu/network_menu_canvas_layer.gd" id="10_nlnlm"]
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="10_nyxvp"]
-[ext_resource type="Theme" uid="uid://qqnbmru5dqld" path="res://themes/network_menu_theme.tres" id="11_fop4x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_r1crl")
@@ -498,22 +494,6 @@ size = Vector2(33, 83)
 
 [node name="Game" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("1_l4ihi")
-
-[node name="ScoreLabel" type="Label" parent="GameManager"]
-offset_left = 513.0
-offset_top = -144.0
-offset_right = 618.0
-offset_bottom = -125.0
-theme_override_colors/font_color = Color(0.0980392, 0.313726, 0.752941, 1)
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 8
-text = "You collected X coins."
-horizontal_alignment = 1
-autowrap_mode = 2
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_wvtw0")
 format = 2
@@ -532,48 +512,26 @@ limit_bottom = 120
 limit_smoothed = true
 position_smoothing_enabled = true
 
-[node name="ColorRect2" type="ColorRect" parent="Player/Camera2D"]
-visible = false
-offset_left = -500.0
-offset_top = -500.0
-offset_right = 500.0
-offset_bottom = 500.0
-color = Color(0.196078, 0.505882, 1, 1)
-
 [node name="Killzone" parent="." instance=ExtResource("5_x8euu")]
 position = Vector2(74, 141)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 shape = SubResource("WorldBoundaryShape2D_cn5tm")
 
-[node name="Coins" type="Node" parent="."]
+[node name="SpawnerManager" type="Node" parent="."]
+script = ExtResource("6_rwnli")
 
-[node name="Coin" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(73, 68)
+[node name="Coins" type="Node2D" parent="."]
+visible = false
 
-[node name="Coin2" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(217, 69)
+[node name="CoinMarker_1" type="Marker2D" parent="Coins"]
+position = Vector2(43, -23)
 
-[node name="Coin3" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(232, 69)
+[node name="CoinMarker_2" type="Marker2D" parent="Coins"]
+position = Vector2(72, -41)
 
-[node name="Coin4" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(104, -44)
-
-[node name="Coin5" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(503, 37)
-
-[node name="Coin6" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(757, -25)
-
-[node name="Coin7" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(776, -25)
-
-[node name="Coin8" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(795, -25)
-
-[node name="Coin9" parent="Coins" instance=ExtResource("4_28cek")]
-position = Vector2(584, -108)
+[node name="CoinMarker_3" type="Marker2D" parent="Coins"]
+position = Vector2(71, 63)
 
 [node name="Platforms" type="Node" parent="."]
 
@@ -637,400 +595,11 @@ theme_override_font_sizes/font_size = 8
 text = "Great job!"
 horizontal_alignment = 1
 
-[node name="HUD" type="Control" parent="."]
-unique_name_in_owner = true
-process_mode = 3
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CanvasLayer" type="CanvasLayer" parent="HUD"]
-unique_name_in_owner = true
-script = ExtResource("10_nlnlm")
-
-[node name="Main" type="Control" parent="HUD/CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("11_fop4x")
-
-[node name="CenterContainer" type="CenterContainer" parent="HUD/CanvasLayer/Main"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="HUD/CanvasLayer/Main/CenterContainer"]
-custom_minimum_size = Vector2(512, 256)
-layout_mode = 2
-
-[node name="GameModeContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Select mode"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-
-[node name="SoloBtn" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.65
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Solo"
-
-[node name="MultiBtn" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.57
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Multi
-"
-
-[node name="Label2" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MultiplayerContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Multiplayer" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Multiplayer"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator2" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-
-[node name="HostBtn" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.65
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Host"
-
-[node name="JoinBtn" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.57
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Join"
-
-[node name="Multiplayer2" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator3" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="ReturnBtn" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.65
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Back"
-
-[node name="HostContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Ready ?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Pseudo" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
-
-[node name="HSeparator2" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LaunchButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Launch"
-
-[node name="BackFromHostButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Back"
-
-[node name="JoinContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Ready ?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="Pseudo" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
-
-[node name="IpAddr" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "84.98.112.147"
-placeholder_text = "Ip address"
-
-[node name="HSeparator2" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LaunchButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Launch"
-
-[node name="BackFromJoinButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Back
-"
-
-[node name="SettingsContainer2" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Settings"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="IsHosting" type="CheckButton" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Host game ?"
-
-[node name="Pseudo" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
-
-[node name="IpAddr" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Ip address"
-
-[node name="HSeparator2" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LaunchButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Launch"
-
-[node name="InGameContainer" type="MarginContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 30
-text = "Settings"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="IsHosting" type="CheckButton" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Host game ?"
-
-[node name="Pseudo" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
-
-[node name="IpAddr" type="LineEdit" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Ip address"
-
-[node name="HSeparator2" type="HSeparator" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LaunchButton" type="Button" parent="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_nlliu")
-theme_override_font_sizes/font_size = 19
-text = "Launch"
+[node name="CoinSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Coins")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/multiplayer_player.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/multiplayer/multiplayer_player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 10
 
@@ -1044,18 +613,4 @@ script = ExtResource("10_nyxvp")
 position = Vector2(622.5, -136.5)
 shape = SubResource("RectangleShape2D_2186x")
 
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="GameManager" method="_on_solo_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn" to="Player" method="_on_solo_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/MultiBtn" to="HUD/CanvasLayer" method="_on_multi_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/HostBtn" to="HUD/CanvasLayer" method="_on_host_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/JoinBtn" to="HUD/CanvasLayer" method="_on_join_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/ReturnBtn" to="HUD/CanvasLayer" method="_on_return_btn_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer/LaunchButton" to="GameManager" method="become_host"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer/BackFromHostButton" to="HUD/CanvasLayer" method="_on_back_from_host_button_pressed"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/LaunchButton" to="GameManager" method="join_as_player"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/BackFromJoinButton" to="HUD/CanvasLayer" method="_on_back_from_join_button_pressed"]
-[connection signal="toggled" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/IsHosting" to="HUD/CanvasLayer" method="_on_is_hosting_toggled"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/LaunchButton" to="HUD/CanvasLayer" method="_on_launch_button_pressed"]
-[connection signal="toggled" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/IsHosting" to="HUD/CanvasLayer" method="_on_is_hosting_toggled"]
-[connection signal="pressed" from="HUD/CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/LaunchButton" to="HUD/CanvasLayer" method="_on_launch_button_pressed"]
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

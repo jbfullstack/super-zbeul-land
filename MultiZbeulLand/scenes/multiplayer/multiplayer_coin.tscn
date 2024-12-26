@@ -1,57 +1,61 @@
-[gd_scene load_steps=22 format=3 uid="uid://pqp5qaw561fr"]
+[gd_scene load_steps=23 format=3 uid="uid://dhbcujmgpo7yv"]
 
-[ext_resource type="Texture2D" uid="uid://bped01tsjeycn" path="res://assets/sprites/coin.png" id="1_hrxtj"]
-[ext_resource type="Script" path="res://scripts/coin.gd" id="1_ix6bn"]
-[ext_resource type="AudioStream" uid="uid://hxv3svfwkg67" path="res://assets/sounds/coin.wav" id="3_ag2jy"]
+[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_coin.gd" id="1_x3nbv"]
+[ext_resource type="Texture2D" uid="uid://bped01tsjeycn" path="res://assets/sprites/coin.png" id="2_xt1ss"]
+[ext_resource type="AudioStream" uid="uid://hxv3svfwkg67" path="res://assets/sounds/coin.wav" id="3_2n2ft"]
+[ext_resource type="AudioStream" uid="uid://blkdjxlrdrhgx" path="res://assets/sounds/coin_collected_by_someone_else.wav" id="4_gjmtk"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cvqen"]
+properties/0/path = NodePath(".:coin_collected")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1fm7y"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbwas"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ex1m6"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2u7hg"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjnp2"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hvebx"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwl53"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(96, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jj66p"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6x2no"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(128, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tba44"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(144, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wxbvu"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(160, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nfuqw"]
-atlas = ExtResource("1_hrxtj")
+atlas = ExtResource("2_xt1ss")
 region = Rect2(176, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i3y1m"]
@@ -168,7 +172,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("PickupSound:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -199,9 +203,11 @@ _data = {
 "pickup": SubResource("Animation_0t7oa")
 }
 
-[node name="Coin" type="Area2D"]
+[node name="MultiplayerCoin" type="Area2D"]
 collision_mask = 2
-script = ExtResource("1_ix6bn")
+script = ExtResource("1_x3nbv")
+sfx_pickup_loud = ExtResource("3_2n2ft")
+sfx_pickup_soft = ExtResource("4_gjmtk")
 
 [node name="CoinSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_cvqen")
@@ -214,7 +220,11 @@ autoplay = "default"
 shape = SubResource("CircleShape2D_osao3")
 
 [node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_ag2jy")
+stream = ExtResource("3_2n2ft")
+bus = &"SFX"
+
+[node name="PickupBySomeoneElseSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gjmtk")
 max_distance = 200.0
 bus = &"SFX"
 
@@ -222,5 +232,7 @@ bus = &"SFX"
 libraries = {
 "": SubResource("AnimationLibrary_gmtgn")
 }
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
