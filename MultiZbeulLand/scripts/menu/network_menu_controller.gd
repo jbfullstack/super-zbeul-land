@@ -31,9 +31,9 @@ func peer_connected(id):
 func peer_disconnected(id):
 	print("Player Disconnected  [%s]" % id)
 	GameManager.Players.erase(id)
-	var players = get_tree().get_nodes_in_group("Player")
+	var players = get_tree().get_nodes_in_group("Players")
 	for i in players:
-		if i.name == str(id):
+		if i.player_id == id:
 			i.queue_free()
 # called only from clients
 func connected_to_server():

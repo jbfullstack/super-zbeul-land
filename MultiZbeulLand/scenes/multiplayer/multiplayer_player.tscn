@@ -203,7 +203,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_7dch5"]
 radius = 5.0
 
-[node name="MultiplayerPlayer" type="CharacterBody2D"]
+[node name="MultiplayerPlayer" type="CharacterBody2D" groups=["Players"]]
 collision_layer = 2
 script = ExtResource("1_iydig")
 
