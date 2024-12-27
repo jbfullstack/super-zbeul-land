@@ -532,6 +532,9 @@ position = Vector2(24, -20)
 [node name="1" type="Marker2D" parent="SpawnerManager/PlayersMarkers" groups=["PlayerSpawnPoint"]]
 position = Vector2(71, -40)
 
+[node name="2" type="Marker2D" parent="SpawnerManager/PlayersMarkers" groups=["PlayerSpawnPoint"]]
+position = Vector2(-7, 39)
+
 [node name="CoinsMarkers" type="Node" parent="SpawnerManager"]
 
 [node name="0" type="Marker2D" parent="SpawnerManager/CoinsMarkers" groups=["CoinSpawnPoint"]]

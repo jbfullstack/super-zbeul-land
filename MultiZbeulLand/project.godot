@@ -22,6 +22,7 @@ ColorsUtils="*res://scripts/utils/colors.gd"
 EnumsUtils="*res://scripts/utils/enums.gd"
 GameManager="*res://scripts/multiplayer/game_manager.gd"
 NetworkController="*res://scripts/multiplayer/network_controller.gd"
+RpcAwait="*res://scripts/multiplayer/rpc_await.gd"
 
 [display]
 

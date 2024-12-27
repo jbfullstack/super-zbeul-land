@@ -6,6 +6,6 @@ extends Area2D
 func init(gm):
 	game_manager = gm
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	#game_manager.add_point(body)
 	animation_player.play("pickup")

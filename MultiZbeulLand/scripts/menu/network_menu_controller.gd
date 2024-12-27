@@ -3,7 +3,7 @@ extends Control
 #@export var Address = "84.98.112.147"
 @export var port = 3311
 var peer
-var game_scene = "res://scenes/game.tscn"
+var game_scene = preload("res://scenes/game.tscn")
 
 @onready var pseudoInput = %Pseudo
 @onready var nb_player_lbl = %NbPlayerLbl
@@ -84,7 +84,7 @@ func LateJoinStartGame(players_dict: Dictionary):
 	
 	# 2) Instantiate the game scene (if it's not already)
 	if !game_started:
-		var scene = load(game_scene).instantiate()
+		var scene = game_scene.instantiate()
 		get_tree().root.add_child(scene)
 		canvas_layer.hide()
 		_remove_single_player()
@@ -93,7 +93,7 @@ func LateJoinStartGame(players_dict: Dictionary):
 	else:
 		# If we already loaded the scene, just get it
 		if !get_tree().root.has_node("Game"):
-			var scene2 = load(game_scene).instantiate()
+			var scene2 = game_scene.instantiate()
 			get_tree().root.add_child(scene2)
 			canvas_layer.hide()
 			_remove_single_player()
@@ -106,7 +106,7 @@ func LateJoinStartGame(players_dict: Dictionary):
 
 @rpc("any_peer","call_local")
 func StartGame():
-	var scene = load(game_scene).instantiate()
+	var scene = game_scene.instantiate()
 	get_tree().root.add_child(scene)
 	canvas_layer.hide()
 	_remove_single_player()
