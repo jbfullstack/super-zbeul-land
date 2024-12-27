@@ -16,11 +16,16 @@ func _ready():
 	
 	index = 0
 	for coin in get_tree().get_nodes_in_group("CoinSpawnPoint"):
-		#print("Spawn coin %s  [%s]" % [coin, multiplayer.get_unique_id()])
-		var currentCoin = CoinScene.instantiate()
-		currentCoin.position = coin.global_position
-		currentCoin.id = index
-		get_tree().root.get_node("Game").get_node("Coins").add_child(currentCoin)
+		#print("Spawning coin %s  [%s]" % [coin, multiplayer.get_unique_id()])
+		#print("GameManager.CollectedCoins.has index %s? %s  [%s]" % [coin, str(GameManager.CollectedCoins.has(index)), multiplayer.get_unique_id()])
+		#for i in GameManager.CollectedCoins:
+			#print("Coin %s collected by %s  [%s]" % [i, GameManager.CollectedCoins[i].player_id,  multiplayer.get_unique_id()])
+		#print("*****")
+		if !GameManager.CollectedCoins.has(index):
+			var currentCoin = CoinScene.instantiate()
+			currentCoin.position = coin.global_position
+			currentCoin.id = index
+			get_tree().root.get_node("Game").get_node("Coins").add_child(currentCoin)
 		index += 1
 
 @rpc("any_peer", "call_local")

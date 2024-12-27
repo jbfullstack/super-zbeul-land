@@ -32,7 +32,7 @@ func peer_connected(id):
 	# If the game is already running and we're the server,
 	if multiplayer.is_server() and game_started:
 		# Instead of sending info + then StartGame, do it in one step:
-		LateJoinStartGame.rpc_id(id, GameManager.Players)
+		LateJoinStartGame.rpc_id(id, GameManager.Players, GameManager.CollectedCoins)
 		
 # this get called on the server and clients
 func peer_disconnected(id):
@@ -79,9 +79,10 @@ func SendPlayerInformation(pseudo, id):
 	GameManager.print_players()
 
 @rpc("any_peer", "call_local")
-func LateJoinStartGame(players_dict: Dictionary):
+func LateJoinStartGame(players_dict: Dictionary, collected_coins_dict: Dictionary):
 	# 1) Update our local dictionary
 	GameManager.Players = players_dict.duplicate()
+	GameManager.CollectedCoins = collected_coins_dict.duplicate()
 	
 	# 2) Instantiate the game scene (if it's not already)
 	if !game_started:

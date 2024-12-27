@@ -7,7 +7,7 @@ class_name  MultiplayerCoin
 @export var sfx_pickup_loud: AudioStream
 @export var sfx_pickup_soft: AudioStream
 
-var id
+var id:= -1
 
 func _on_body_entered(body):
 	#game_manager.add_point(body)
