@@ -2,16 +2,27 @@ extends Node
 #class_name SpawnerManager
 
 @export var PlayerScene : PackedScene
+@export var CoinScene : PackedScene
 
 var respawn_point: Vector2
 
 func _ready():
 	var index = 0
 	for player_id in GameManager.Players:
+		print("***** OR THIS ONE SPAWNER ??  [%s]" % multiplayer.get_unique_id())
 		spawnPlayer(index, player_id)
 		index += 1
 		
 	respawn_point = get_tree().get_nodes_in_group("PlayerRespawnPoint")[0].global_position
+	
+	index = 0
+	for coin in get_tree().get_nodes_in_group("CoinSpawnPoint"):
+		print("Spawn coin %s  [%s]" % [coin, multiplayer.get_unique_id()])
+		var currentCoin = CoinScene.instantiate()
+		currentCoin.position = coin.global_position
+		currentCoin.id = index
+		get_tree().root.get_node("Game").get_node("Coins").add_child(currentCoin)
+		index += 1
 
 @rpc("any_peer", "call_local")
 func spawn_late_joiner(player_id):
@@ -23,14 +34,22 @@ func spawn_late_joiner(player_id):
 		return
 	
 	var index = get_child_count()
+	print("***** THAT SPAWNER ??  [%s]" % multiplayer.get_unique_id())
 	spawnPlayer(index, player_id)
 
 func spawnPlayer(index_in_spawn_group: int, player_id):
 	var currentPlayer = PlayerScene.instantiate()
-	currentPlayer.name = str(GameManager.Players[player_id].id)
-	currentPlayer.player_id = str(GameManager.Players[player_id].id)
-	currentPlayer.pseudo = str(GameManager.Players[player_id].name)
-	currentPlayer.modulate = ColorsUtils.pick_random_hex_color_for_player()
+	var found_player_in_list = GameManager.Players[player_id]
+	if found_player_in_list == null:
+		print("Player %s not found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
+	else:
+		print("Player %s found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
+		print("player_id.id = %s  [%s]" % [str(found_player_in_list.id), multiplayer.get_unique_id()])
+		
+	currentPlayer.name = str(found_player_in_list.id)
+	currentPlayer.player_id = str(found_player_in_list.id)
+	currentPlayer.pseudo = str(found_player_in_list.name)
+	currentPlayer.modulate = GameManager.Players[player_id].color
 	
 	add_child(currentPlayer)
 	for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):

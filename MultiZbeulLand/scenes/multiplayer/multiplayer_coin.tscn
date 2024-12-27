@@ -6,9 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://blkdjxlrdrhgx" path="res://assets/sounds/coin_collected_by_someone_else.wav" id="4_gjmtk"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cvqen"]
-properties/0/path = NodePath(".:coin_collected")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1fm7y"]
 atlas = ExtResource("2_xt1ss")
@@ -172,7 +169,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("PickupSound:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -206,8 +203,6 @@ _data = {
 [node name="MultiplayerCoin" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_x3nbv")
-sfx_pickup_loud = ExtResource("3_2n2ft")
-sfx_pickup_soft = ExtResource("4_gjmtk")
 
 [node name="CoinSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_cvqen")

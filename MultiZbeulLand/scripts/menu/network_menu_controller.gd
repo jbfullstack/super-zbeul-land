@@ -1,7 +1,7 @@
 extends Control
 
 #@export var Address = "84.98.112.147"
-@export var port = 3311
+var port = 3311
 var peer
 var game_scene = preload("res://scenes/game.tscn")
 
@@ -60,6 +60,7 @@ func SendPlayerInformation(pseudo, id):
 			"score": 0,
 			"color":  ColorsUtils.pick_random_hex_color_for_player()
 		}
+		
 	
 	nb_player_lbl.text = "%s players" % GameManager.Players.size()
 	nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
