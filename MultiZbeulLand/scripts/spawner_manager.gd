@@ -9,7 +9,6 @@ var respawn_point: Vector2
 func _ready():
 	var index = 0
 	for player_id in GameManager.Players:
-		print("***** OR THIS ONE SPAWNER ??  [%s]" % multiplayer.get_unique_id())
 		spawnPlayer(index, player_id)
 		index += 1
 		
@@ -17,7 +16,7 @@ func _ready():
 	
 	index = 0
 	for coin in get_tree().get_nodes_in_group("CoinSpawnPoint"):
-		print("Spawn coin %s  [%s]" % [coin, multiplayer.get_unique_id()])
+		#print("Spawn coin %s  [%s]" % [coin, multiplayer.get_unique_id()])
 		var currentCoin = CoinScene.instantiate()
 		currentCoin.position = coin.global_position
 		currentCoin.id = index
@@ -34,17 +33,16 @@ func spawn_late_joiner(player_id):
 		return
 	
 	var index = get_child_count()
-	print("***** THAT SPAWNER ??  [%s]" % multiplayer.get_unique_id())
 	spawnPlayer(index, player_id)
 
 func spawnPlayer(index_in_spawn_group: int, player_id):
 	var currentPlayer = PlayerScene.instantiate()
 	var found_player_in_list = GameManager.Players[player_id]
-	if found_player_in_list == null:
-		print("Player %s not found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
-	else:
-		print("Player %s found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
-		print("player_id.id = %s  [%s]" % [str(found_player_in_list.id), multiplayer.get_unique_id()])
+	#if found_player_in_list == null:
+		#print("Player %s not found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
+	#else:
+		#print("Player %s found in player list  [%s]" % [player_id, multiplayer.get_unique_id()])
+		#print("player_id.id = %s  [%s]" % [str(found_player_in_list.id), multiplayer.get_unique_id()])
 		
 	currentPlayer.name = str(found_player_in_list.id)
 	currentPlayer.player_id = str(found_player_in_list.id)

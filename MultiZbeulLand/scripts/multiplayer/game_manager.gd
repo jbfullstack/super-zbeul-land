@@ -20,13 +20,15 @@ func print_collected_coins():
 		print("-----------------------------\n")
 
 @rpc("any_peer")
-func SendCollectedCoinInformation(collected_id: int):
+func SendCollectedCoinInformation(collected_id: int, collector_id: int):
 	if CollectedCoins.has(collected_id):
 		print("Cannot add coin %s from CollectedCoins dict.. Coin already exists  [%d]" % [collected_id, multiplayer.get_unique_id()])
 	else:
-		CollectedCoins.erase(collected_id)
-		print("Coin %s removed from CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
+		CollectedCoins[collected_id] = {
+			"player_id": collector_id
+		}
+		print("Coin %s added to CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
 	
 	if multiplayer.is_server():
-		SendCollectedCoinInformation.rpc(collected_id)
+		SendCollectedCoinInformation.rpc(collected_id, collector_id)
 	
