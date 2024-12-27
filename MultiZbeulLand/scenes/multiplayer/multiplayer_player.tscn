@@ -1,8 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://b5s0pc6e66n5v"]
+[gd_scene load_steps=30 format=3 uid="uid://b5s0pc6e66n5v"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_controller.gd" id="1_iydig"]
 [ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_input.gd" id="2_64d1i"]
 [ext_resource type="Texture2D" uid="uid://b8cmjj8vq3r8d" path="res://assets/sprites/knight.png" id="3_fi6qr"]
+[ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="4_wpn2i"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
@@ -235,13 +236,15 @@ position_smoothing_enabled = true
 [node name="PseudoLbl" type="Label" parent="."]
 unique_name_in_owner = true
 clip_contents = true
-offset_left = -9.0
-offset_top = -27.0
-offset_right = 9.0
+layout_direction = 2
+offset_left = -19.0
+offset_top = -23.0
+offset_right = 19.0
 offset_bottom = -15.0
-theme_override_font_sizes/font_size = 8
-text = " ??? "
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_wpn2i")
+theme_override_font_sizes/font_size = 7
+text = "Master 8456"
 vertical_alignment = 1
 clip_text = true
 

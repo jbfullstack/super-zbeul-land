@@ -16,6 +16,7 @@ extends CanvasLayer
 
 var is_local_mode: bool
 var is_host: bool
+var can_joining_game_late: bool = false
 var current_window: EnumsUtils.WINDOW
 
 func _ready():
@@ -85,3 +86,7 @@ func _on_pseudo_text_changed(new_text):
 	else:
 		host_btn.disabled = true
 		join_btn.disabled = true
+
+
+func _on_check_button_toggled(toggled_on):
+	can_joining_game_late = toggled_on

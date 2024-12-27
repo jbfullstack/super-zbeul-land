@@ -13,6 +13,7 @@ var game_scene = "res://scenes/game.tscn"
 
 var game_started = false
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	multiplayer.peer_connected.connect(peer_connected)
@@ -70,9 +71,8 @@ func SendPlayerInformation(pseudo, id):
 	
 	# If the server is already in-game, spawn this new player on all peers
 	if multiplayer.is_server() and game_started:
-		var game_node = get_tree().root.get_node("Game")
-		if game_node and game_node.has_node("SpawnerManager"):
-			var spawner_manager = game_node.get_node("SpawnerManager")
+		var spawner_manager = getSpawnerManager()
+		if spawner_manager != null:
 			spawner_manager.spawn_late_joiner.rpc(id)
 	
 	GameManager.print_players()
@@ -99,9 +99,8 @@ func LateJoinStartGame(players_dict: Dictionary):
 			_remove_single_player()
 	
 	# 3) Spawn every known player via SpawnerManager
-	var game_node = get_tree().root.get_node("Game")
-	if game_node and game_node.has_node("SpawnerManager"):
-		var spawner_manager = game_node.get_node("SpawnerManager")
+	var spawner_manager = getSpawnerManager()
+	if spawner_manager != null:
 		for player_id in GameManager.Players:
 			spawner_manager.spawn_late_joiner(player_id)
 
@@ -164,3 +163,12 @@ func _on_solo_btn_pressed():
 	get_tree().root.add_child(scene)
 	canvas_layer.hide()
 	get_tree().paused = false
+
+func getSpawnerManager():
+	var game_node = get_tree().root.get_node("Game")
+	if game_node and game_node.has_node("SpawnerManager"):
+		var spawner_manager = game_node.get_node("SpawnerManager")
+		return spawner_manager
+	
+	printerr("spawner_manager not found  [%s]" % multiplayer.get_unique_id())
+	return null

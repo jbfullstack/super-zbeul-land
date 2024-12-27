@@ -9,6 +9,8 @@ const JUMP_VELOCITY = -300.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var spawner_manager
+
 var direction = 1
 var do_jump = false
 var _is_on_floor = true
@@ -32,6 +34,12 @@ func _ready():
 		$Camera2D.make_current()
 	else:
 		$Camera2D.enabled = false
+		
+	var game_node = get_tree().root.get_node("Game")
+	if game_node and game_node.has_node("SpawnerManager"):
+		spawner_manager = game_node.get_node("SpawnerManager")
+	else:
+		push_error("No SpawnerManager found  [%]", % player_id)
 		
 	#$PseudoLbl.text = pseudo
 	#print("pseudo: %s" % pseudo)
@@ -85,22 +93,17 @@ func _physics_process(delta):
 		_apply_animations(delta)
 
 func mark_dead():
-	print("Mark player dead!")
+	print("Mark player dead!  [%s]" % player_id)
 	alive = false
 	$CollisionShape2D.set_deferred("disabled", true)
 	$RespawnTimer.start()
 
 func _respawn():
-	print("Respawned! TODO")
-	#position = MultiplayerManager.respawn_point
-	#$CollisionShape2D.set_deferred("disabled", false)
+	print("Respawned!  [%s]" % player_id)
+	position = spawner_manager.respawn_point
+	$CollisionShape2D.set_deferred("disabled", false)
 
 func _set_alive():
-	print("alive again!")
+	print("Alive again!  [%s]" % player_id)
 	alive = true
 	Engine.time_scale = 1.0
-
-
-
-
-

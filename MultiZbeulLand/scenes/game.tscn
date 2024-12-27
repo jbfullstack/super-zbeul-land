@@ -520,6 +520,7 @@ position = Vector2(74, 141)
 shape = SubResource("WorldBoundaryShape2D_cn5tm")
 
 [node name="SpawnerManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("6_rwnli")
 PlayerScene = ExtResource("5_03udm")
 
@@ -531,17 +532,21 @@ position = Vector2(24, -20)
 [node name="1" type="Marker2D" parent="SpawnerManager/PlayersMarkers" groups=["PlayerSpawnPoint"]]
 position = Vector2(71, -40)
 
-[node name="Coins" type="Node2D" parent="."]
-visible = false
+[node name="CoinsMarkers" type="Node" parent="SpawnerManager"]
 
-[node name="CoinMarker_1" type="Marker2D" parent="Coins"]
+[node name="0" type="Marker2D" parent="SpawnerManager/CoinsMarkers" groups=["CoinSpawnPoint"]]
 position = Vector2(43, -23)
 
-[node name="CoinMarker_2" type="Marker2D" parent="Coins"]
+[node name="1" type="Marker2D" parent="SpawnerManager/CoinsMarkers" groups=["CoinSpawnPoint"]]
 position = Vector2(72, -41)
 
-[node name="CoinMarker_3" type="Marker2D" parent="Coins"]
+[node name="2" type="Marker2D" parent="SpawnerManager/CoinsMarkers" groups=["CoinSpawnPoint"]]
 position = Vector2(71, 63)
+
+[node name="PlayersRespawnMarker" type="Node" parent="SpawnerManager"]
+
+[node name="0" type="Marker2D" parent="SpawnerManager/PlayersRespawnMarker" groups=["PlayerRespawnPoint"]]
+position = Vector2(224, 51)
 
 [node name="Platforms" type="Node" parent="."]
 
@@ -614,6 +619,8 @@ spawn_path = NodePath("../Players")
 spawn_limit = 10
 
 [node name="Players" type="Node2D" parent="."]
+
+[node name="Coins" type="Node2D" parent="."]
 
 [node name="FinishLine" type="Area2D" parent="."]
 collision_mask = 2

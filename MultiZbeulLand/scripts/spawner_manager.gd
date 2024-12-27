@@ -3,21 +3,15 @@ extends Node
 
 @export var PlayerScene : PackedScene
 
+var respawn_point: Vector2
 
 func _ready():
 	var index = 0
-	for i in GameManager.Players:
-		var currentPlayer = PlayerScene.instantiate()
-		currentPlayer.name = str(GameManager.Players[i].id)
-		currentPlayer.player_id = str(GameManager.Players[i].id)
-		currentPlayer.pseudo = str(GameManager.Players[i].name)
-		currentPlayer.modulate = ColorsUtils.pick_random_hex_color_for_player()
-		
-		add_child(currentPlayer)
-		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
-			if spawn.name == str(index):
-				currentPlayer.global_position = spawn.global_position
+	for player_id in GameManager.Players:
+		spawnPlayer(index, player_id)
 		index += 1
+		
+	respawn_point = get_tree().get_nodes_in_group("PlayerRespawnPoint")[0].global_position
 
 @rpc("any_peer", "call_local")
 func spawn_late_joiner(player_id):
@@ -28,20 +22,21 @@ func spawn_late_joiner(player_id):
 	if has_node(str(player_id)):
 		return
 	
+	var index = get_child_count()
+	spawnPlayer(index, player_id)
+
+func spawnPlayer(index_in_spawn_group: int, player_id):
 	var currentPlayer = PlayerScene.instantiate()
 	currentPlayer.name = str(GameManager.Players[player_id].id)
 	currentPlayer.player_id = str(GameManager.Players[player_id].id)
 	currentPlayer.pseudo = str(GameManager.Players[player_id].name)
 	currentPlayer.modulate = ColorsUtils.pick_random_hex_color_for_player()
 	
-	# Example approach: place them in the next available spawn slot
-	var index = get_child_count()
 	add_child(currentPlayer)
 	for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
-		if spawn.name == str(index):
+		if spawn.name == str(index_in_spawn_group):
 			currentPlayer.global_position = spawn.global_position
-
-
+			
 #var _coins_spawn_node
 #
 #func instanciate_coins(game_manager):
