@@ -11,6 +11,7 @@ var game_scene = "res://scenes/game.tscn"
 
 @onready var canvas_layer = $CanvasLayer
 
+var game_started = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,6 +28,11 @@ func _ready():
 func peer_connected(id):
 	print("Player Connected  [%s]" % id)
 	
+	# If the game is already running and we're the server,
+	if multiplayer.is_server() and game_started:
+		# Instead of sending info + then StartGame, do it in one step:
+		LateJoinStartGame.rpc_id(id, GameManager.Players)
+		
 # this get called on the server and clients
 func peer_disconnected(id):
 	print("Player Disconnected  [%s]" % id)
@@ -62,7 +68,42 @@ func SendPlayerInformation(pseudo, id):
 		for i in GameManager.Players:
 			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
 	
+	# If the server is already in-game, spawn this new player on all peers
+	if multiplayer.is_server() and game_started:
+		var game_node = get_tree().root.get_node("Game")
+		if game_node and game_node.has_node("SpawnerManager"):
+			var spawner_manager = game_node.get_node("SpawnerManager")
+			spawner_manager.spawn_late_joiner.rpc(id)
+	
 	GameManager.print_players()
+
+@rpc("any_peer", "call_local")
+func LateJoinStartGame(players_dict: Dictionary):
+	# 1) Update our local dictionary
+	GameManager.Players = players_dict.duplicate()
+	
+	# 2) Instantiate the game scene (if it's not already)
+	if !game_started:
+		var scene = load(game_scene).instantiate()
+		get_tree().root.add_child(scene)
+		canvas_layer.hide()
+		_remove_single_player()
+		get_tree().paused = false
+		game_started = true
+	else:
+		# If we already loaded the scene, just get it
+		if !get_tree().root.has_node("Game"):
+			var scene2 = load(game_scene).instantiate()
+			get_tree().root.add_child(scene2)
+			canvas_layer.hide()
+			_remove_single_player()
+	
+	# 3) Spawn every known player via SpawnerManager
+	var game_node = get_tree().root.get_node("Game")
+	if game_node and game_node.has_node("SpawnerManager"):
+		var spawner_manager = game_node.get_node("SpawnerManager")
+		for player_id in GameManager.Players:
+			spawner_manager.spawn_late_joiner(player_id)
 
 @rpc("any_peer","call_local")
 func StartGame():
@@ -71,10 +112,17 @@ func StartGame():
 	canvas_layer.hide()
 	_remove_single_player()
 	get_tree().paused = false
+	game_started = true
+
+	# The new client now has the full dictionary, so let's spawn them all:
+	var spawner_manager = scene.get_node("SpawnerManager")
+	if spawner_manager:
+		for player_id in GameManager.Players:
+			spawner_manager.spawn_late_joiner(player_id)
 	
 func hostGame():
 	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 2)
+	var error = peer.create_server(port, 10)
 	if error != OK:
 		print("cannot host: " + error)
 		return
@@ -99,7 +147,6 @@ func _on_join_button_down():
 	multiplayer.set_multiplayer_peer(peer)
 	
 	NetworkController.multiplayer_mode_enabled = true
-	pass
 
 
 func _on_start_game_button_down():
