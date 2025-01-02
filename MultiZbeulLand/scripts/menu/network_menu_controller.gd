@@ -27,7 +27,7 @@ func _ready():
 
 # this get called on the server and clients
 func peer_connected(id):
-	print("Player Connected  [%s]" % id)
+	print_d("Player Connected  [%s]" % id)
 	
 	# If the game is already running and we're the server,
 	if multiplayer.is_server() and game_started:
@@ -36,7 +36,7 @@ func peer_connected(id):
 		
 # this get called on the server and clients
 func peer_disconnected(id):
-	print("Player Disconnected  [%s]" % id)
+	print_d("Player Disconnected  [%s]" % id)
 	GameManager.Players.erase(id)
 	var players = get_tree().get_nodes_in_group("Players")
 	for i in players:
@@ -44,12 +44,12 @@ func peer_disconnected(id):
 			i.queue_free()
 # called only from clients
 func connected_to_server():
-	print("connected To Sever!  [%s]" % multiplayer.get_unique_id())
+	print_d("connected To Sever!  [%s]" % multiplayer.get_unique_id())
 	SendPlayerInformation.rpc_id(1, pseudoInput.text, multiplayer.get_unique_id())
 
 # called only from clients
 func connection_failed():
-	print("Couldnt Connect  [%s]" % multiplayer.get_unique_id())
+	print_d("Couldnt Connect  [%s]" % multiplayer.get_unique_id())
 
 @rpc("any_peer")
 func SendPlayerInformation(pseudo, id):
@@ -66,7 +66,7 @@ func SendPlayerInformation(pseudo, id):
 	nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
 	
 	if multiplayer.is_server():		
-		print("updated number player %s " % nb_player_lbl.text)
+		print_d("updated number player %s " % nb_player_lbl.text)
 		for i in GameManager.Players:
 			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
 	
@@ -101,10 +101,10 @@ func LateJoinStartGame(players_dict: Dictionary, collected_coins_dict: Dictionar
 			_remove_single_player()
 	
 	# 3) Spawn every known player via SpawnerManager
-	var spawner_manager = getSpawnerManager()
-	if spawner_manager != null:
-		for player_id in GameManager.Players:
-			spawner_manager.spawn_late_joiner(player_id)
+	#var spawner_manager = getSpawnerManager()
+	#if spawner_manager != null:
+		#for player_id in GameManager.Players:
+			#spawner_manager.spawn_late_joiner(player_id)
 
 @rpc("any_peer","call_local")
 func StartGame():
@@ -116,21 +116,21 @@ func StartGame():
 	game_started = true
 
 	# The new client now has the full dictionary, so let's spawn them all:
-	var spawner_manager = scene.get_node("SpawnerManager")
-	if spawner_manager:
-		for player_id in GameManager.Players:
-			spawner_manager.spawn_late_joiner(player_id)
+	#var spawner_manager = scene.get_node("SpawnerManager")
+	#if spawner_manager:
+		#for player_id in GameManager.Players:
+			#spawner_manager.spawn_late_joiner(player_id)
 	
 func hostGame():
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 10)
 	if error != OK:
-		print("cannot host: " + error)
+		print_d("cannot host: " + error)
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	
 	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting For Players!  [%s]" % multiplayer.get_unique_id())
+	print_d("Waiting For Players!  [%s]" % multiplayer.get_unique_id())
 	NetworkController.multiplayer_mode_enabled = true
 	NetworkController.host_mode_enabled = true
 	
@@ -155,13 +155,13 @@ func _on_start_game_button_down():
 	pass
 
 func _remove_single_player():
-	print("Remove single player [%s]" % multiplayer.get_unique_id())
+	print_d("Remove single player [%s]" % multiplayer.get_unique_id())
 	var player_to_remove = get_tree().root.get_node("Game").get_node("Player")
 	player_to_remove.queue_free()
 
 
 func _on_solo_btn_pressed():
-	var scene = load(game_scene).instantiate()
+	var scene = game_scene.instantiate()
 	get_tree().root.add_child(scene)
 	canvas_layer.hide()
 	get_tree().paused = false
@@ -174,3 +174,7 @@ func getSpawnerManager():
 	
 	printerr("spawner_manager not found  [%s]" % multiplayer.get_unique_id())
 	return null
+	
+func print_d(msg: String):
+	if DebugUtils.debug_network_setup:
+		print(msg)
