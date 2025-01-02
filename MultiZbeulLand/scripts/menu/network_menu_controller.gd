@@ -20,8 +20,8 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
-	#if "--server" in OS.get_cmdline_args():
-		#hostGame()
+	if "--server" in OS.get_cmdline_args():
+		hostGame()
 	#pass # Replace with function body.
 
 
@@ -42,6 +42,7 @@ func peer_disconnected(id):
 	for i in players:
 		if i.player_id == id:
 			i.queue_free()
+
 # called only from clients
 func connected_to_server():
 	print_d("connected To Sever!  [%s]" % multiplayer.get_unique_id())

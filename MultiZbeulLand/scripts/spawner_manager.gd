@@ -6,14 +6,17 @@ extends Node
 
 var respawn_point: Vector2
 
+
+
 func _ready():
 	var index = 0
 	for player_id in GameManager.Players:
 		spawnPlayer(index, player_id)
 		index += 1
 		
-	respawn_point = get_tree().get_nodes_in_group("PlayerRespawnPoint")[0].global_position
 	
+		
+	respawn_point = get_tree().get_nodes_in_group("PlayerRespawnPoint")[0].global_position
 	index = 0
 	for coin in get_tree().get_nodes_in_group("CoinSpawnPoint"):
 		#print_d("Spawning coin %s  [%s]" % [coin, multiplayer.get_unique_id()])

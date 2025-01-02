@@ -15,6 +15,7 @@ func _on_body_entered(body):
 	if NetworkController.multiplayer_mode_enabled:
 		if multiplayer.is_server():
 			GameManager.SendCollectedCoinInformation(id, body.player_id)
+			GameManager.UpdateScoreInformation(body.player_id, 1)
 			
 		if body.player_id == multiplayer.get_unique_id():
 			audio_player.stream = sfx_pickup_loud

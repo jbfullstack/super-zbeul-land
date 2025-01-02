@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw23by3xj4w4m"]
+
+[ext_resource type="Script" path="res://scripts/menu/player_hud.gd" id="1_eaiva"]
+
+[node name="PlayerHUD" type="CanvasLayer"]
+script = ExtResource("1_eaiva")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 25.0
+offset_top = 11.0
+offset_right = 78.0
+offset_bottom = 61.0
+scale = Vector2(1, 0.951219)
+
+[node name="NameHbox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="NameLbl" type="Label" parent="VBoxContainer/NameHbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Player_002"
+
+[node name="ScoreHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreTitleLbl" type="Label" parent="VBoxContainer/ScoreHBox"]
+layout_mode = 2
+text = "Score:"
+
+[node name="ScoreValueLbl" type="Label" parent="VBoxContainer/ScoreHBox"]
+unique_name_in_owner = true
+layout_mode = 2

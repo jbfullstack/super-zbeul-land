@@ -5,6 +5,7 @@ const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var player_hud = %PlayerHUD
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -32,8 +33,12 @@ var nb_collected_coin = 0
 func _ready():
 	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()
+		GameManager.current_player = self
+		player_hud.init(player_id)
+		
 	else:
 		$Camera2D.enabled = false
+		player_hud.queue_free()
 		
 	var game_node = get_tree().root.get_node("Game")
 	if game_node and game_node.has_node("SpawnerManager"):
@@ -43,6 +48,8 @@ func _ready():
 		
 	#$PseudoLbl.text = pseudo
 	#print("pseudo: %s" % pseudo)
+	
+	
 
 func _apply_animations(_delta):
 	# Flip the Sprite
@@ -95,6 +102,7 @@ func _physics_process(delta):
 func mark_dead():
 	print("Mark player dead!  [%s]" % player_id)
 	alive = false
+	GameManager.UpdateScoreInformation(player_id, -1)
 	$CollisionShape2D.set_deferred("disabled", true)
 	$RespawnTimer.start()
 
@@ -107,3 +115,6 @@ func _set_alive():
 	print("Alive again!  [%s]" % player_id)
 	alive = true
 	Engine.time_scale = 1.0
+
+func update_score():
+	player_hud.UpdateScoreHUD.rpc()

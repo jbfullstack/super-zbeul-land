@@ -1,6 +1,7 @@
 extends Node
 
 var Players = {}
+var current_player
 var CollectedCoins = {}
 
 func print_players():
@@ -27,8 +28,22 @@ func SendCollectedCoinInformation(collected_id: int, collector_id: int):
 		CollectedCoins[collected_id] = {
 			"player_id": collector_id
 		}
-		print("Coin %s added to CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
+		#print("Coin %s added to CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
 	
 	if multiplayer.is_server():
 		SendCollectedCoinInformation.rpc(collected_id, collector_id)
+		
+@rpc("any_peer")
+func UpdateScoreInformation(player_id: int, score_delta: int):
+	if! Players.has(player_id):
+		print("Cannot update score for player %s, Player not in the Players List  [%d]" % [player_id, multiplayer.get_unique_id()])
+		return
+	else:
+		Players[player_id]["score"] += score_delta
+		current_player.player_hud.UpdateScoreHUD.rpc()
+		#UpdateScoreHUD.rpc_id(multiplayer.get_unique_id())
+		#print("Coin %s added to CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
+	
+	if multiplayer.is_server():
+		UpdateScoreInformation.rpc(player_id, score_delta)
 	
