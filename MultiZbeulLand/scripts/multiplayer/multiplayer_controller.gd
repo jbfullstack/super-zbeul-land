@@ -102,7 +102,7 @@ func _physics_process(delta):
 func mark_dead():
 	print("Mark player dead!  [%s]" % player_id)
 	alive = false
-	GameManager.UpdateScoreInformation(player_id, -1)
+	
 	$CollisionShape2D.set_deferred("disabled", true)
 	$RespawnTimer.start()
 
@@ -113,6 +113,7 @@ func _respawn():
 
 func _set_alive():
 	print("Alive again!  [%s]" % player_id)
+	GameManager.UpdateScoreInformation(player_id, -1)
 	alive = true
 	Engine.time_scale = 1.0
 
