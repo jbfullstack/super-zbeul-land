@@ -11,7 +11,9 @@ var game_scene = preload("res://scenes/game.tscn")
 
 @onready var canvas_layer = $CanvasLayer
 
-var game_started = false
+var is_game_started = false
+var is_local_game = false
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,13 +26,15 @@ func _ready():
 		hostGame()
 	#pass # Replace with function body.
 
+func _process(_delta):
+	manage_settings_display()
 
 # this get called on the server and clients
 func peer_connected(id):
 	print_d("Player Connected  [%s]" % id)
 	
 	# If the game is already running and we're the server,
-	if multiplayer.is_server() and game_started:
+	if multiplayer.is_server() and is_game_started:
 		# Instead of sending info + then StartGame, do it in one step:
 		LateJoinStartGame.rpc_id(id, GameManager.Players, GameManager.CollectedCoins)
 		
@@ -72,7 +76,7 @@ func SendPlayerInformation(pseudo, id):
 			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
 	
 	# If the server is already in-game, spawn this new player on all peers
-	if multiplayer.is_server() and game_started:
+	if multiplayer.is_server() and is_game_started:
 		var spawner_manager = getSpawnerManager()
 		if spawner_manager != null:
 			spawner_manager.spawn_late_joiner.rpc(id)
@@ -86,13 +90,13 @@ func LateJoinStartGame(players_dict: Dictionary, collected_coins_dict: Dictionar
 	GameManager.CollectedCoins = collected_coins_dict.duplicate()
 	
 	# 2) Instantiate the game scene (if it's not already)
-	if !game_started:
+	if !is_game_started:
 		var scene = game_scene.instantiate()
 		get_tree().root.add_child(scene)
 		canvas_layer.hide()
 		_remove_single_player()
 		get_tree().paused = false
-		game_started = true
+		is_game_started = true
 	else:
 		# If we already loaded the scene, just get it
 		if !get_tree().root.has_node("Game"):
@@ -114,7 +118,7 @@ func StartGame():
 	canvas_layer.hide()
 	_remove_single_player()
 	get_tree().paused = false
-	game_started = true
+	is_game_started = true
 
 	# The new client now has the full dictionary, so let's spawn them all:
 	#var spawner_manager = scene.get_node("SpawnerManager")
@@ -164,7 +168,9 @@ func _remove_single_player():
 func _on_solo_btn_pressed():
 	var scene = game_scene.instantiate()
 	get_tree().root.add_child(scene)
+	is_game_started = true
 	canvas_layer.hide()
+	is_local_game = true
 	get_tree().paused = false
 
 func getSpawnerManager():
@@ -179,3 +185,24 @@ func getSpawnerManager():
 func print_d(msg: String):
 	if DebugUtils.debug_network_setup:
 		print(msg)
+		
+		
+func manage_settings_display():
+	if Input.is_action_just_pressed("settings"):
+		if is_game_started:
+			if is_local_game:
+				if get_tree().paused == false:
+					get_tree().paused = true
+					canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+					canvas_layer.visible = true
+				else:
+					canvas_layer.hide()
+					get_tree().paused = false
+			else:
+				if canvas_layer.visible == false:
+					canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+					canvas_layer.visible = true
+				else:
+					canvas_layer.visible = false
+					
+	

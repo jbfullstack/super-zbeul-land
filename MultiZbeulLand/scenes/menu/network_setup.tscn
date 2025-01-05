@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://csy18fc22t0ca"]
+[gd_scene load_steps=7 format=3 uid="uid://csy18fc22t0ca"]
 
 [ext_resource type="Script" path="res://scripts/menu/network_menu_controller.gd" id="1_qd86m"]
 [ext_resource type="Script" path="res://scripts/menu/network_menu_canvas_layer.gd" id="2_fp5wt"]
 [ext_resource type="Theme" uid="uid://qqnbmru5dqld" path="res://themes/network_menu_theme.tres" id="3_ckb07"]
 [ext_resource type="FontFile" uid="uid://c53kogtyjwsss" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_r44fr"]
+[ext_resource type="Script" path="res://scripts/menu/options_settings.gd" id="5_b8sun"]
+[ext_resource type="Script" path="res://scripts/menu/fps_label.gd" id="5_khung"]
 
 [node name="Network setup" type="Control"]
 process_mode = 3
@@ -181,6 +183,7 @@ theme_override_font_sizes/font_size = 19
 text = "Back"
 
 [node name="HostContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -346,60 +349,51 @@ text = "0 Players"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsContainer2" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
+[node name="SettingsContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 30
 text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="IsHosting" type="CheckButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="FPSLabel" type="Label" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("3_r44fr")
-theme_override_font_sizes/font_size = 19
-text = "Host game ?"
+text = "FPS"
+script = ExtResource("5_khung")
 
-[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_r44fr")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
+size_flags_horizontal = 4
 
-[node name="IpAddr" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="Options_Settings" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_r44fr")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Ip address"
-
-[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
-layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("5_b8sun")
 
-[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer"]
+[node name="resolution_OptionButton" type="OptionButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
 layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-theme_override_fonts/font = ExtResource("3_r44fr")
-theme_override_font_sizes/font_size = 19
-text = "Launch"
+
+[node name="fullscreen_CheckBox" type="CheckBox" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
+layout_mode = 2
+text = "Full screen"
+
+[node name="screen_selector_OptionButton" type="OptionButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
+layout_mode = 2
 
 [node name="InGameContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
 visible = false
@@ -471,7 +465,8 @@ text = "Launch"
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/LaunchButton" to="." method="_on_join_button_down"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/BackFromJoinButton" to="CanvasLayer" method="_on_back_from_join_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/IsHosting" to="CanvasLayer" method="_on_is_hosting_toggled"]
-[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer2/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]
+[connection signal="item_selected" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/resolution_OptionButton" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_option_button_item_selected"]
+[connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/fullscreen_CheckBox" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_fullscreen_check_box_toggled"]
+[connection signal="item_selected" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/screen_selector_OptionButton" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_screen_selector_option_button_item_selected"]
 [connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/IsHosting" to="CanvasLayer" method="_on_is_hosting_toggled"]
 [connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]

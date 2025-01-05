@@ -7,6 +7,8 @@ extends CanvasLayer
 @onready var join_container = $Main/CenterContainer/PanelContainer/JoinContainer
 @onready var in_game_container = $Main/CenterContainer/PanelContainer/InGameContainer
 @onready var join_waiting_container = $Main/CenterContainer/PanelContainer/JoinWaitingContainer
+@onready var settings_container = $Main/CenterContainer/PanelContainer/SettingsContainer
+
 
 @onready var ip_addr = $Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/IpAddr
 
@@ -14,8 +16,6 @@ extends CanvasLayer
 @onready var join_btn = $Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/JoinBtn
 
 
-var is_local_mode: bool
-var is_host: bool
 var can_joining_game_late: bool = false
 var current_window: EnumsUtils.WINDOW
 
@@ -39,6 +39,8 @@ func display(window: EnumsUtils.WINDOW):
 			in_game_container.visible = true
 		EnumsUtils.WINDOW.JOIN_WAITING_MENU:
 			join_waiting_container.visible = true
+		EnumsUtils.WINDOW.SETTINGS_MENU:
+			settings_container.visible = true
 			
 func hide_all():
 	select_solo_multi_container.visible = false
@@ -47,6 +49,7 @@ func hide_all():
 	join_container.visible = false
 	in_game_container.visible = false
 	join_waiting_container.visible = false
+	settings_container.visible = false
 	
 
 
