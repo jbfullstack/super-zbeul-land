@@ -2,15 +2,29 @@ extends CanvasLayer
 
 
 @onready var select_solo_multi_container = $Main/CenterContainer/PanelContainer/GameModeContainer
+@onready var select_solo_multi_container_graber = $Main/CenterContainer/PanelContainer/GameModeContainer/VBoxContainer/HBoxContainer2/SoloBtn
+
 @onready var select_host_join_container = $Main/CenterContainer/PanelContainer/MultiplayerContainer
+@onready var select_host_join_container_graber = %Pseudo
+
 @onready var host_container = $Main/CenterContainer/PanelContainer/HostContainer
+@onready var host_container_graber = $Main/CenterContainer/PanelContainer/HostContainer/VBoxContainer/LaunchButton
+
 @onready var join_container = $Main/CenterContainer/PanelContainer/JoinContainer
+@onready var join_container_graber = $Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/LaunchButton
+
 @onready var in_game_container = $Main/CenterContainer/PanelContainer/InGameContainer
 @onready var join_waiting_container = $Main/CenterContainer/PanelContainer/JoinWaitingContainer
+
 @onready var settings_container = $Main/CenterContainer/PanelContainer/SettingsContainer
+@onready var settings_container_graber = $Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/fullscreen_CheckBox
+
 
 
 @onready var ip_addr = $Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/IpAddr
+
+
+
 
 @onready var host_btn = $Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/HostBtn
 @onready var join_btn = $Main/CenterContainer/PanelContainer/MultiplayerContainer/VBoxContainer/HBoxContainer2/JoinBtn
@@ -23,24 +37,31 @@ func _ready():
 	get_tree().paused = true
 	display(EnumsUtils.WINDOW.SELECT_SOLO_MULTI_MENU)
 	
+
+	
 func display(window: EnumsUtils.WINDOW):
 	current_window = window
 	hide_all()
 	match window:
 		EnumsUtils.WINDOW.SELECT_SOLO_MULTI_MENU:
 			select_solo_multi_container.visible = true
+			select_solo_multi_container_graber.grab_focus()
 		EnumsUtils.WINDOW.SELECT_HOST_JOIN_MENU:
 			select_host_join_container.visible = true
+			select_host_join_container_graber.grab_focus()
 		EnumsUtils.WINDOW.HOST_MENU:
 			host_container.visible = true
+			host_container_graber.grab_focus()
 		EnumsUtils.WINDOW.JOIN_MENU:
 			join_container.visible = true
+			join_container_graber.grab_focus()
 		EnumsUtils.WINDOW.IN_GAME_MENU:
 			in_game_container.visible = true
 		EnumsUtils.WINDOW.JOIN_WAITING_MENU:
 			join_waiting_container.visible = true
 		EnumsUtils.WINDOW.SETTINGS_MENU:
 			settings_container.visible = true
+			settings_container_graber.grab_focus()
 			
 func hide_all():
 	select_solo_multi_container.visible = false
