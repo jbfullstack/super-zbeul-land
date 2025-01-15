@@ -20,8 +20,16 @@ func _physics_process(_delta):
 func _process(_delta):
 	if Input.is_action_just_pressed("jump"):
 		jump.rpc()
+	
+	if Input.is_action_just_pressed("down"):
+		down.rpc()
 
 @rpc("call_local")
 func jump():
 	if multiplayer.is_server():
 		player.do_jump = true
+		
+@rpc("call_local")
+func down():
+	if multiplayer.is_server():
+		player.do_down = true

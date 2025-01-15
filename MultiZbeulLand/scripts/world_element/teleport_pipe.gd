@@ -1,7 +1,7 @@
 extends StaticBody2D
 class_name TeleportPipe
 
-@export var destination: Pipe
+@export var destination: TeleportPipe
 
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var pipe_body_sprite = $pipeBodySprite as Sprite2D
@@ -67,3 +67,40 @@ func adjust_pipe(height):
 
 	# Correct the collision shape position
 	collision_shape_2d.position = Vector2(0, (height / 2) - (TOP_PIPE_HEIGHT / 2))
+
+
+func _on_pipe_area_2d_body_entered(body):
+	if body is Player or body is MultiplayerController:
+		print("pipe setted")
+		body.current_pipe = self
+
+
+func _on_pipe_area_2d_body_exited(body):
+	if body is Player or body is MultiplayerController:
+		print("pipe removed")
+		body.current_pipe = null
+
+func teleport_player(player):
+	if not destination:
+		return
+
+	player.set_physics_process(false)
+	player.position.x = position.x
+	# Start entering animation
+	var enter_pipe_tween = get_tree().create_tween()
+	enter_pipe_tween.tween_property(player, "position", player.position + Vector2(0, TOP_PIPE_HEIGHT), 1)
+	await enter_pipe_tween.finished
+
+	# Teleport to destination pipe
+	player.global_position = destination.global_position + Vector2(0, destination.TOP_PIPE_HEIGHT / 2)
+
+	# Start exiting animation
+	var exit_pipe_tween = get_tree().create_tween()
+	exit_pipe_tween.tween_property(player, "position", player.position - Vector2(0, destination.TOP_PIPE_HEIGHT), 1)
+	await exit_pipe_tween.finished
+	
+	# Position player on top of the destination pipe
+	#player.global_position = destination.global_position - Vector2(0, destination.TOP_PIPE_HEIGHT)
+	player.set_physics_process(true)
+	
+	

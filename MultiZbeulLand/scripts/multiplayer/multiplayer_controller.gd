@@ -14,8 +14,11 @@ var spawner_manager
 
 var direction = 1
 var do_jump = false
+var do_down = false
 var _is_on_floor = true
 var alive = true
+
+var current_pipe = null
 
 var nb_collected_coin = 0
 
@@ -76,6 +79,12 @@ func _apply_movement_from_input(delta):
 	if do_jump and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		do_jump = false
+		
+	if do_down:
+		if current_pipe != null:
+			print("Down with pipe  [%s]" % player_id)
+			current_pipe.teleport_player(self)
+		do_down = false
 
 	# Get the input direction: -1, 0, 1
 	direction = %InputSynchronizer.input_direction

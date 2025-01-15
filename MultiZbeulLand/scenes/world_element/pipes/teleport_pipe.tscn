@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3vcf4jchj2um"]
+[gd_scene load_steps=6 format=3 uid="uid://dd18nnqadvu7y"]
 
 [ext_resource type="Texture2D" uid="uid://bds3megmrlpt2" path="res://assets/sprites/mario_world/items/pipe/pipe_top_green_vertical.png" id="1_1gkae"]
 [ext_resource type="Script" path="res://scripts/world_element/teleport_pipe.gd" id="1_sdx3n"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q4jnp"]
 size = Vector2(32, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfc6s"]
+size = Vector2(22, 9)
 
 [node name="TeleportPipe" type="StaticBody2D"]
 script = ExtResource("1_sdx3n")
@@ -27,3 +30,14 @@ shape = SubResource("RectangleShape2D_q4jnp")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 384)
 collide_with_areas = true
+
+[node name="pipeArea2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="enterPipeCollisionShape" type="CollisionShape2D" parent="pipeArea2D"]
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_nfc6s")
+
+[connection signal="body_entered" from="pipeArea2D" to="." method="_on_pipe_area_2d_body_entered"]
+[connection signal="body_exited" from="pipeArea2D" to="." method="_on_pipe_area_2d_body_exited"]

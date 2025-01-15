@@ -12,7 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var nb_collected_coin = 0
 
-
+var current_pipe = null
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -25,6 +25,12 @@ func _physics_process(delta):
 
 	# Get the input direction: -1, 0, 1
 	var direction = Input.get_axis("move_left", "move_right")
+	
+	if Input.is_action_just_pressed("down"):
+		print("Down")
+		if current_pipe != null:
+			print("Down with pipe")
+			current_pipe.teleport_player(self)
 	
 	# Flip the Sprite
 	if direction > 0:
