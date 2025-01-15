@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b36a5v7tdeqeb"]
+
+[ext_resource type="Script" path="res://scripts/pipe.gd" id="1_8xi8f"]
+[ext_resource type="Texture2D" uid="uid://bds3megmrlpt2" path="res://assets/sprites/mario_world/items/pipe/pipe_top_green.png" id="1_oqfpa"]
+[ext_resource type="Texture2D" uid="uid://btq5wsjrhie8g" path="res://assets/sprites/mario_world/items/pipe/pipe_body_green.png" id="2_uxh36"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yaeg8"]
+size = Vector2(32, 64)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 111
+script = ExtResource("1_8xi8f")
+
+[node name="pipeTopSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_oqfpa")
+
+[node name="pipeBodySprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_uxh36")
+offset = Vector2(0, 32)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_yaeg8")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 384)
+collision_mask = 2
+collide_with_areas = true
