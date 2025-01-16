@@ -17,9 +17,9 @@ var is_lenght_computed = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	if !is_lenght_computed:
-		_calculate_height_and_adjust_pipe()
+#func _process(_delta):
+	#if !is_lenght_computed:
+		#_calculate_height_and_adjust_pipe()
 
 func _calculate_height_and_adjust_pipe():
 	if is_lenght_computed:
@@ -102,5 +102,7 @@ func teleport_player(player):
 	# Position player on top of the destination pipe
 	#player.global_position = destination.global_position - Vector2(0, destination.TOP_PIPE_HEIGHT)
 	player.set_physics_process(true)
-	
-	
+
+
+func _on_timer_timeout():
+	_calculate_height_and_adjust_pipe()
