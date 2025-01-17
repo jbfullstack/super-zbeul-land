@@ -33,3 +33,10 @@ static func is_instance_of_class(obj: Object, className: String) -> bool:
 			check_script = check_script.get_base_script()
 
 	return false
+
+
+static func is_player_type(body) -> bool :
+	if body is Player or body is MultiplayerController:
+		return true
+	else:
+		return false

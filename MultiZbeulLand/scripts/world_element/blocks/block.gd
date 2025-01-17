@@ -3,6 +3,7 @@ class_name Block
 
 @onready var ray_cast_2d = $RayCast2D as RayCast2D
 
+
 #func bump(_player_mode: Player.PlayerMode):
 func bump():
 	#GlobalAudioPlayer.play_sound(GlobalAudioPlayer.Sounds.BLOCK_HIT)

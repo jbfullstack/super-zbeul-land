@@ -35,6 +35,9 @@ var nb_collected_coin = 0
 static func _name() -> String:
 	return "MultiplayerController"
 
+func getShape():
+	return self.get_node("CollisionShape2D")
+	
 func _ready():
 	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()

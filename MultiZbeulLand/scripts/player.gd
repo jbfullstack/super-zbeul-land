@@ -16,7 +16,10 @@ var current_pipe = null
 
 static func _name() -> String:
 	return "Player"
-	
+
+func getShape():
+	return self.get_node("CollisionShape2D")
+		
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cuv4vme4rwno0"]
+[gd_scene load_steps=21 format=3 uid="uid://cuv4vme4rwno0"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_rbmkf"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="10_nyxvp"]
 [ext_resource type="PackedScene" uid="uid://dd18nnqadvu7y" path="res://scenes/world_element/pipes/teleport_pipe.tscn" id="11_5jro2"]
 [ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_tgnqd"]
+[ext_resource type="PackedScene" uid="uid://cfpx5majge2sc" path="res://scenes/world_element/blocks/mystery_block.tscn" id="13_l37tf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_r1crl")
@@ -678,5 +679,12 @@ shape = SubResource("RectangleShape2D_2186x")
 
 [node name="Brick" parent="." instance=ExtResource("12_tgnqd")]
 position = Vector2(32, -48)
+
+[node name="MysteryBlock" parent="." instance=ExtResource("13_l37tf")]
+position = Vector2(72, 48)
+
+[node name="MysteryBlock2" parent="." instance=ExtResource("13_l37tf")]
+position = Vector2(90, 48)
+invisible = true
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

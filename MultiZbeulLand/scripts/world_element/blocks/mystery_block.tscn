@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dnh0agv3jki3g"]
+
+[node name="MysteryBlock" type="StaticBody2D"]

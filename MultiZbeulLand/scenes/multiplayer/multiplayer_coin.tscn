@@ -1,11 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://dhbcujmgpo7yv"]
+[gd_scene load_steps=22 format=3 uid="uid://dhbcujmgpo7yv"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_coin.gd" id="1_x3nbv"]
 [ext_resource type="Texture2D" uid="uid://bped01tsjeycn" path="res://assets/sprites/coin.png" id="2_xt1ss"]
 [ext_resource type="AudioStream" uid="uid://hxv3svfwkg67" path="res://assets/sounds/coin.wav" id="3_2n2ft"]
-[ext_resource type="AudioStream" uid="uid://blkdjxlrdrhgx" path="res://assets/sounds/coin_collected_by_someone_else.wav" id="4_gjmtk"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cvqen"]
+[ext_resource type="AudioStream" uid="uid://tqmy6nm2kcd3" path="res://assets/sounds/coin_collected_by_someone_else.wav" id="4_gjmtk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1fm7y"]
 atlas = ExtResource("2_xt1ss")
@@ -203,9 +201,6 @@ _data = {
 [node name="MultiplayerCoin" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_x3nbv")
-
-[node name="CoinSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_cvqen")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_i3y1m")

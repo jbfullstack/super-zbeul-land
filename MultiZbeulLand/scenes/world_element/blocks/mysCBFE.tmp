@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://cfpx5majge2sc"]
+
+[ext_resource type="Script" path="res://scripts/world_element/blocks/mystery_block.gd" id="1_p415h"]
+[ext_resource type="Texture2D" uid="uid://cephoy15s5x21" path="res://assets/sprites/mario_world/items/brick/block_mistery_1.png" id="2_gdlij"]
+[ext_resource type="Texture2D" uid="uid://bxoy23475idjt" path="res://assets/sprites/mario_world/items/brick/block_mistery_2.png" id="3_hqwh0"]
+[ext_resource type="Texture2D" uid="uid://chw5tm5t36yxj" path="res://assets/sprites/mario_world/items/brick/block_mistery_3.png" id="4_sq10e"]
+[ext_resource type="Texture2D" uid="uid://d1swec8wrnio6" path="res://assets/sprites/mario_world/items/brick/block_mistery_4.png" id="5_3mhhj"]
+[ext_resource type="Texture2D" uid="uid://dgwfw7hpmamkh" path="res://assets/sprites/mario_world/items/brick/block_mistery_empty.png" id="6_bt7ic"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fyhrn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gdlij")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hqwh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sq10e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3mhhj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_bt7ic")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vtbp"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8eb5q"]
+size = Vector2(14, 3)
+
+[node name="MysteryBlock" type="StaticBody2D"]
+collision_mask = 2
+script = ExtResource("1_p415h")
+bonus_type = null
+invisible = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fyhrn")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_1vtbp")
+
+[node name="BumpArea2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="BumpCollisionShape2D" type="CollisionShape2D" parent="BumpArea2D"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_8eb5q")
+
+[node name="TopLeftRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(-7, -13)
+collision_mask = 2
+
+[node name="CenteredRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, -14)
+collision_mask = 2
+
+[node name="TopRightRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(7, -13)
+collision_mask = 2
+
+[connection signal="body_entered" from="BumpArea2D" to="." method="_on_bump_area_2d_body_entered"]
