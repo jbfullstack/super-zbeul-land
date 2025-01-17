@@ -9,3 +9,6 @@ func init(gm):
 func _on_body_entered(_body):
 	#game_manager.add_point(body)
 	animation_player.play("pickup")
+
+
+
