@@ -14,6 +14,9 @@ var nb_collected_coin = 0
 
 var current_pipe = null
 
+static func _name() -> String:
+	return "Player"
+	
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():

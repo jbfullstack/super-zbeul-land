@@ -32,6 +32,8 @@ var nb_collected_coin = 0
 		pseudo = name
 		%PseudoLbl.text = name
 
+static func _name() -> String:
+	return "MultiplayerController"
 
 func _ready():
 	if multiplayer.get_unique_id() == player_id:

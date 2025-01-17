@@ -24,6 +24,7 @@ GameManager="*res://scripts/multiplayer/game_manager.gd"
 NetworkController="*res://scripts/multiplayer/network_controller.gd"
 RpcAwait="*res://scripts/multiplayer/rpc_await.gd"
 DebugUtils="*res://scripts/utils/debug.gd"
+ClassUtils="*res://scripts/utils/class_utils.gd"
 
 [display]
 

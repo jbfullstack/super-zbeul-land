@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cuv4vme4rwno0"]
+[gd_scene load_steps=20 format=3 uid="uid://cuv4vme4rwno0"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_rbmkf"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="7_8cblx"]
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="10_nyxvp"]
 [ext_resource type="PackedScene" uid="uid://dd18nnqadvu7y" path="res://scenes/world_element/pipes/teleport_pipe.tscn" id="11_5jro2"]
+[ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_tgnqd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_r1crl")
@@ -674,5 +675,8 @@ script = ExtResource("10_nyxvp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLine"]
 position = Vector2(622.5, -136.5)
 shape = SubResource("RectangleShape2D_2186x")
+
+[node name="Brick" parent="." instance=ExtResource("12_tgnqd")]
+position = Vector2(32, -48)
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

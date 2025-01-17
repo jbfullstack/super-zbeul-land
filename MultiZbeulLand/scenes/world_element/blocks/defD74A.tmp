@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://c35tdwbc6jwje"]
+
+[ext_resource type="Script" path="res://scripts/world_element/blocks/default_brick.gd" id="1_6s2va"]
+[ext_resource type="Texture2D" uid="uid://pko5xjk68y8x" path="res://assets/sprites/mario_world/items/brick/default_brick.png" id="2_8dgke"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4xe6"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23be7"]
+size = Vector2(14, 3)
+
+[node name="Brick" type="StaticBody2D"]
+script = ExtResource("1_6s2va")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8dgke")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n4xe6")
+
+[node name="BumpArea2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="BumpCollisionShape2D" type="CollisionShape2D" parent="BumpArea2D"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_23be7")
+
+[node name="CenteredRayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1.45193, 1)
+target_position = Vector2(0, -10)
+collision_mask = 2
+
+[node name="TopRightAngleRayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1.45193, 1)
+target_position = Vector2(4.82117, -9)
+collision_mask = 2
+
+[node name="TopLeftAngleRayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1.45193, 1)
+target_position = Vector2(-4.82117, -9)
+collision_mask = 2
+
+[connection signal="body_entered" from="BumpArea2D" to="." method="_on_bump_area_2d_body_entered"]
