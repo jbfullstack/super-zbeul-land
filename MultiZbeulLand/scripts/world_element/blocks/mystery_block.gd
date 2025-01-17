@@ -128,11 +128,8 @@ func _on_bump_area_2d_body_entered(body):
 			var player_moving_up = body.velocity.y < 0
 			if invisible:
 				if player_below and player_moving_up:
-					#make_visible()
 					_set_visible()
-
 					bump()
-
 					# Ensure player doesn't get stuck inside now-solid block
 					_prevent_player_stuck(body)
 			else:
