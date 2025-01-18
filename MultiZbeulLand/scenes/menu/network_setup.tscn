@@ -426,8 +426,15 @@ text = "Full screen"
 [node name="screen_selector_OptionButton" type="OptionButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
 layout_mode = 2
 
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="settingsBackBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings"]
+layout_mode = 2
+text = "Back"
+
 [node name="InGameContainer" type="MarginContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer"]
@@ -439,7 +446,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 30
-text = "Settings"
+text = "InGame Menu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -447,39 +454,30 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="IsHosting" type="CheckButton" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+[node name="resumeBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 0
 theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 19
-text = "Host game ?"
+text = "Resume"
 
-[node name="Pseudo" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+[node name="settingsBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 19
-placeholder_text = "Peudonyme"
-
-[node name="IpAddr" type="LineEdit" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("3_r44fr")
-theme_override_font_sizes/font_size = 19
-placeholder_text = "Ip address"
+text = "Settings"
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="LaunchButton" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
+[node name="quitBtn" type="Button" parent="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 0
 theme_override_fonts/font = ExtResource("3_r44fr")
 theme_override_font_sizes/font_size = 19
-text = "Launch"
+text = "Quit"
 
 [node name="AnimationBlur" type="AnimationPlayer" parent="."]
 process_mode = 3
@@ -505,5 +503,7 @@ libraries = {
 [connection signal="item_selected" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/resolution_OptionButton" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_option_button_item_selected"]
 [connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/fullscreen_CheckBox" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_fullscreen_check_box_toggled"]
 [connection signal="item_selected" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/screen_selector_OptionButton" to="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings" method="_on_screen_selector_option_button_item_selected"]
-[connection signal="toggled" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/IsHosting" to="CanvasLayer" method="_on_is_hosting_toggled"]
-[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/LaunchButton" to="CanvasLayer" method="_on_launch_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/SettingsContainer/VBoxContainer/HBoxContainer/Options_Settings/settingsBackBtn" to="CanvasLayer" method="_on_settings_back_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/resumeBtn" to="." method="_on_resume_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/settingsBtn" to="CanvasLayer" method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/quitBtn" to="CanvasLayer" method="_on_quit_btn_pressed"]

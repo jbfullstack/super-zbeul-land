@@ -211,9 +211,13 @@ func _unpause_game():
 		get_tree().paused = false
 
 func _pause_game():
-	canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+	canvas_layer.display(EnumsUtils.WINDOW.IN_GAME_MENU)
 	canvas_layer.visible = true
 	animation_blur.play(BLUR)
 	is_game_paused = true
 	if is_local_game:
 		get_tree().paused = true
+
+
+func _on_resume_btn_pressed():
+	_unpause_game()

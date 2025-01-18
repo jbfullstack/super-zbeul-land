@@ -14,6 +14,8 @@ extends CanvasLayer
 @onready var join_container_graber = $Main/CenterContainer/PanelContainer/JoinContainer/VBoxContainer/LaunchButton
 
 @onready var in_game_container = $Main/CenterContainer/PanelContainer/InGameContainer
+@onready var in_game_container_graber = $Main/CenterContainer/PanelContainer/InGameContainer/VBoxContainer/resumeBtn
+
 @onready var join_waiting_container = $Main/CenterContainer/PanelContainer/JoinWaitingContainer
 
 @onready var settings_container = $Main/CenterContainer/PanelContainer/SettingsContainer
@@ -57,6 +59,7 @@ func display(window: EnumsUtils.WINDOW):
 			join_container_graber.grab_focus()
 		EnumsUtils.WINDOW.IN_GAME_MENU:
 			in_game_container.visible = true
+			in_game_container_graber.grab_focus()
 		EnumsUtils.WINDOW.JOIN_WAITING_MENU:
 			join_waiting_container.visible = true
 		EnumsUtils.WINDOW.SETTINGS_MENU:
@@ -114,3 +117,15 @@ func _on_pseudo_text_changed(new_text):
 
 func _on_check_button_toggled(toggled_on):
 	can_joining_game_late = toggled_on
+
+
+func _on_settings_back_btn_pressed():
+	display(EnumsUtils.WINDOW.IN_GAME_MENU)
+
+
+func _on_settings_btn_pressed():
+	display(EnumsUtils.WINDOW.SETTINGS_MENU)
+
+
+func _on_quit_btn_pressed():
+	get_tree().quit()
