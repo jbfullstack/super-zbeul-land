@@ -9,6 +9,9 @@ const JUMP_VELOCITY = -300.0
 @onready var pseudo_lbl = %PseudoLbl
 
 
+@onready var visibility_manager: VisibilityManager
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -22,7 +25,10 @@ var do_invisible = false
 
 var _is_on_floor = true
 var alive = true
-var is_invisible: bool = false
+var is_invisible: bool:
+	get:
+		return visibility_manager.is_invisible if visibility_manager else false
+
 
 
 
@@ -50,6 +56,7 @@ func _ready():
 		GameManager.current_player = self
 		player_hud.init(player_id)
 		
+		
 	else:
 		$Camera2D.enabled = false
 		player_hud.queue_free()
@@ -59,6 +66,10 @@ func _ready():
 		spawner_manager = game_node.get_node("SpawnerManager")
 	else:
 		push_error("No SpawnerManager found  [%]", % player_id)
+		
+	visibility_manager = VisibilityManager.new()
+	add_child(visibility_manager)
+	visibility_manager.setup(animated_sprite, pseudo_lbl)
 		
 	#$PseudoLbl.text = pseudo
 	#print("pseudo: %s" % pseudo)
@@ -150,53 +161,12 @@ func _set_alive():
 func update_score():
 	player_hud.UpdateScoreHUD.rpc()
 
-
+# ------------------------------------------
+#                POWER
+# ------------------------------------------
 func _set_invisible(authority_id: int):
-	if multiplayer.is_server():
-		# Set is_invisible flag first
-		is_invisible = true
-		
-		# Apply local visibility on server
-		if multiplayer.get_unique_id() == authority_id:
-			make_invisible_self()
-		else:
-			make_invisible_others()
-			
-		# Propagate to all clients with the authority_id of who triggered it
-		sync_invisible.rpc(authority_id)
-
-@rpc
-func sync_invisible(authority_id: int):
-	is_invisible = true
-	
-	# If this client is the one who triggered invisibility
-	if multiplayer.get_unique_id() == authority_id:
-		make_invisible_self()  # Show half-visible
-	else:
-		make_invisible_others()  # Show fully invisible
+	visibility_manager.set_invisible(authority_id)
 
 func _reset_alpha(authority_id: int):
-	if multiplayer.is_server():
-		is_invisible = false
-		make_visible()
-		sync_reset_alpha.rpc()
-
-@rpc
-func sync_reset_alpha():
-	is_invisible = false
-	make_visible()
-
-# Helper functions remain the same
-func make_visible():
-	animated_sprite.modulate.a = 1  # Fully visible
-	if pseudo_lbl.visible == false:
-		pseudo_lbl.visible = true
-
-func make_invisible_self():
-	animated_sprite.modulate.a = 0.5  # Semi-invisible for the player who triggered it
-
-func make_invisible_others():
-	animated_sprite.modulate.a = 0  # Fully invisible for other clients
-	pseudo_lbl.visible = false
-
+	visibility_manager.reset_alpha(authority_id)
 
