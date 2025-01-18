@@ -33,10 +33,10 @@ func _calculate_height_and_adjust_pipe():
 		pipe_body_sprite.offset = Vector2(0, 0)
 		
 		var collision_point = ray_cast_2d.get_collision_point()
-		print("Collision point: ", collision_point)
+		#print("Collision point: ", collision_point)
 
 		var height = collision_point.y - global_position.y + 16
-		print("Calculated height: ", height)
+		#print("Calculated height: ", height)
 
 		adjust_pipe(height)
 		is_lenght_computed = true
