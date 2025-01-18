@@ -6,19 +6,25 @@ const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var player_hud = %PlayerHUD
+@onready var pseudo_lbl = %PseudoLbl
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var spawner_manager
+var current_pipe = null
 
 var direction = 1
 var do_jump = false
 var do_down = false
+var do_invisible = false
+
 var _is_on_floor = true
 var alive = true
+var is_invisible: bool = false
 
-var current_pipe = null
+
 
 var nb_collected_coin = 0
 
@@ -90,6 +96,16 @@ func _apply_movement_from_input(delta):
 			print("Down with pipe  [%s]" % player_id)
 			current_pipe.teleport_player(self)
 		do_down = false
+		
+	#if do_invisible:
+		## make semi visible locally
+		#if !is_invisible:
+			#if multiplayer.is_server():
+				#_set_invisible(player_id)
+		#else:
+			#if multiplayer.is_server():
+				#_reset_alpha(player_id)
+		#do_invisible = false
 
 	# Get the input direction: -1, 0, 1
 	direction = %InputSynchronizer.input_direction
@@ -133,3 +149,54 @@ func _set_alive():
 
 func update_score():
 	player_hud.UpdateScoreHUD.rpc()
+
+
+func _set_invisible(authority_id: int):
+	if multiplayer.is_server():
+		# Set is_invisible flag first
+		is_invisible = true
+		
+		# Apply local visibility on server
+		if multiplayer.get_unique_id() == authority_id:
+			make_invisible_self()
+		else:
+			make_invisible_others()
+			
+		# Propagate to all clients with the authority_id of who triggered it
+		sync_invisible.rpc(authority_id)
+
+@rpc
+func sync_invisible(authority_id: int):
+	is_invisible = true
+	
+	# If this client is the one who triggered invisibility
+	if multiplayer.get_unique_id() == authority_id:
+		make_invisible_self()  # Show half-visible
+	else:
+		make_invisible_others()  # Show fully invisible
+
+func _reset_alpha(authority_id: int):
+	if multiplayer.is_server():
+		is_invisible = false
+		make_visible()
+		sync_reset_alpha.rpc()
+
+@rpc
+func sync_reset_alpha():
+	is_invisible = false
+	make_visible()
+
+# Helper functions remain the same
+func make_visible():
+	animated_sprite.modulate.a = 1  # Fully visible
+	if pseudo_lbl.visible == false:
+		pseudo_lbl.visible = true
+
+func make_invisible_self():
+	animated_sprite.modulate.a = 0.5  # Semi-invisible for the player who triggered it
+
+func make_invisible_others():
+	animated_sprite.modulate.a = 0  # Fully invisible for other clients
+	pseudo_lbl.visible = false
+
+

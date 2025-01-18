@@ -31,6 +31,12 @@ func _physics_process(delta):
 
 	# Get the input direction: -1, 0, 1
 	var direction = Input.get_axis("move_left", "move_right")
+	#if direction > 0:
+		#var new_modulate = Color(animated_sprite.modulate.r, animated_sprite.modulate.g, animated_sprite.modulate.b, animated_sprite.modulate.a + 0.01)
+		#animated_sprite.modulate = new_modulate
+	#elif direction < 0:
+		#var new_modulate = Color(animated_sprite.modulate.r, animated_sprite.modulate.g, animated_sprite.modulate.b, animated_sprite.modulate.a - 0.01)
+		#animated_sprite.modulate = new_modulate
 	
 	if Input.is_action_just_pressed("down"):
 		print("Down")
@@ -62,5 +68,3 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _on_solo_btn_pressed():
-	pass
