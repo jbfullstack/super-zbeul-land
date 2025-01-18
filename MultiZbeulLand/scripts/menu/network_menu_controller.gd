@@ -179,7 +179,7 @@ func _on_solo_btn_pressed():
 	var scene = game_scene.instantiate()
 	get_tree().root.add_child(scene)
 	is_game_started = true
-	is_game_paused = false
+	#is_game_paused = false
 	animation_blur.play_backwards(BLUR)
 	is_local_game = true
 	get_tree().paused = false
@@ -200,40 +200,40 @@ func print_d(msg: String):
 		
 func manage_settings_display():
 	if Input.is_action_just_pressed("settings"):
-		#if !is_game_paused:
-			#is_game_paused = true
-			#canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
-			#get_tree().paused = true
-			#canvas_layer.visible = true
-			#animation_blur.play(BLUR)
-		#else:
-			#is_game_paused = false
-			#canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
-			#get_tree().paused = false
-			#canvas_layer.visible = false
-			#animation_blur.play_backwards(BLUR)
-		if is_game_started:
-			if is_local_game:
-				if !is_game_paused:
-					get_tree().paused = true
-					canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
-					#canvas_layer.visible = true
-					animation_blur.play(BLUR)
-					is_game_paused = true
-				else:
+		if !is_game_paused:
+			is_game_paused = true
+			canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+			get_tree().paused = true
+			canvas_layer.visible = true
+			animation_blur.play(BLUR)
+		else:
+			is_game_paused = false
+			canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+			get_tree().paused = false
+			canvas_layer.visible = false
+			animation_blur.play_backwards(BLUR)
+		#if is_game_started:
+			#if is_local_game:
+				#if get_tree().paused == false:
+					##get_tree().paused = true
+					#canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+					##canvas_layer.visible = true
+					#animation_blur.play(BLUR)
+					#is_game_paused = true
+				#else:
+					##animation_blur.play_backwards(BLUR)
 					#animation_blur.play_backwards(BLUR)
-					animation_blur.play_backwards(BLUR)
-					is_game_paused = false
-					get_tree().paused = false
-			else:
-				if !is_game_paused:
-					canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
-					animation_blur.play(BLUR)
-					#canvas_layer.visible = true
-					is_game_paused = true
-				else:
-					#canvas_layer.visible = false
-					animation_blur.play_backwards(BLUR)
-					is_game_paused = false
-					
+					##is_game_paused = false
+					#get_tree().paused = false
+			#else:
+				#if !is_game_paused:
+					##canvas_layer.display(EnumsUtils.WINDOW.SETTINGS_MENU)
+					#animation_blur.play(BLUR)
+					##canvas_layer.visible = true
+					#is_game_paused = true
+				#else:
+					##canvas_layer.visible = false
+					#animation_blur.play_backwards(BLUR)
+					#is_game_paused = false
+					#
 	
