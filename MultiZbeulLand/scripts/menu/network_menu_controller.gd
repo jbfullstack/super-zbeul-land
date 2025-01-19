@@ -66,30 +66,38 @@ func connection_failed():
 
 @rpc("any_peer")
 func SendPlayerInformation(pseudo, id):
-	if !GameManager.Players.has(id):
-		GameManager.Players[id] ={
-			"name" : pseudo,
-			"id" : id,
-			"score": 0,
-			"color":  ColorsUtils.pick_random_hex_color_for_player()
-		}
-		
+	if multiplayer.is_server():
+		# Server creates new player entry if needed
+		if !GameManager.Players.has(id):
+			GameManager.Players[id] = {
+				"name": pseudo,
+				"id": id,
+				"score": 0,
+				"color": ColorsUtils.pick_random_hex_color_for_player()
+			}
+			# Broadcast the complete player info to all clients
+			SyncPlayerData.rpc(id, GameManager.Players[id])
+			
+		# Sync existing players to new clients
+		for player_id in GameManager.Players:
+			SyncPlayerData.rpc_id(id, player_id, GameManager.Players[player_id])
 	
 	nb_player_lbl.text = "%s players" % GameManager.Players.size()
 	nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
 	
-	if multiplayer.is_server():		
-		print_d("updated number player %s " % nb_player_lbl.text)
-		for i in GameManager.Players:
-			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
-	
-	# If the server is already in-game, spawn this new player on all peers
+	# Handle late joiner spawning
 	if multiplayer.is_server() and is_game_started:
 		var spawner_manager = getSpawnerManager()
 		if spawner_manager != null:
 			spawner_manager.spawn_late_joiner.rpc(id)
 	
 	GameManager.print_players()
+
+# New RPC function to sync player data
+@rpc
+func SyncPlayerData(player_id: int, player_data: Dictionary):
+	if !multiplayer.is_server():  # Only clients update their data from this RPC
+		GameManager.Players[player_id] = player_data
 
 @rpc("any_peer", "call_local")
 func LateJoinStartGame(players_dict: Dictionary, collected_coins_dict: Dictionary):
