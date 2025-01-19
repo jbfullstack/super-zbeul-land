@@ -1,4 +1,5 @@
 extends Node
+class_name ClassUtil
 
 
 static func is_instance_of_class(obj: Object, className: String) -> bool:

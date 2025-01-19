@@ -35,15 +35,26 @@ func SendCollectedCoinInformation(collected_id: int, collector_id: int):
 		
 @rpc("any_peer")
 func UpdateScoreInformation(player_id: int, score_delta: int):
-	if! Players.has(player_id):
+	if not Players.has(player_id):
 		print("Cannot update score for player %s, Player not in the Players List  [%d]" % [player_id, multiplayer.get_unique_id()])
 		return
-	else:
-		Players[player_id]["score"] += score_delta
-		current_player.player_hud.UpdateScoreHUD.rpc()
-		#UpdateScoreHUD.rpc_id(multiplayer.get_unique_id())
-		#print("Coin %s added to CollectedCoins dict!  [%d]" % [collected_id, multiplayer.get_unique_id()])
 	
+	# Update score in Players dictionary
+	Players[player_id]["score"] += score_delta
+	
+	# Propagate update to all clients if we're the server
 	if multiplayer.is_server():
 		UpdateScoreInformation.rpc(player_id, score_delta)
-	
+		# Tell all clients to update their HUDs
+		NotifyScoreUpdate.rpc(player_id)
+
+@rpc
+func NotifyScoreUpdate(player_id: int):
+	# Find the player node and update its HUD if it exists
+	var root = get_tree().root
+	if root.has_node("Game"):
+		var game = root.get_node("Game")
+		# Use get_node_or_null to avoid errors if node doesn't exist
+		var player = game.get_node_or_null(str(player_id))
+		if player and player.has_node("%PlayerHUD"):
+			player.get_node("%PlayerHUD").update_score()
