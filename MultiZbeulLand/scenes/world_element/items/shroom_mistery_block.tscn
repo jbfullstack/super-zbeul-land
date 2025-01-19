@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://eqkvm41cw3cm"]
+
+[ext_resource type="Script" path="res://scripts/world_element/items/shroom_mistery_block.gd" id="1_aj34x"]
+[ext_resource type="Shader" path="res://shaders/highlight_pixel_perfect.gdshader" id="2_m6qqs"]
+[ext_resource type="Texture2D" uid="uid://ct451woihvebf" path="res://assets/sprites/mario_world/items/bonus/shroom_red.png" id="3_d475m"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_sdl3s"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_opc0g"]
+offsets = PackedFloat32Array(0, 0.100575, 0.58046, 0.942529)
+colors = PackedColorArray(0, 0, 0, 1, 0.0376344, 0.0376344, 0.0376344, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j60lf"]
+gradient = SubResource("Gradient_opc0g")
+fill_from = Vector2(0, 0.00854701)
+fill_to = Vector2(0.846154, 0.752137)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctqvd"]
+shader = ExtResource("2_m6qqs")
+shader_parameter/size_effect = -2.75
+shader_parameter/speed = 0.3
+shader_parameter/highlight_strength = -2.45
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = false
+shader_parameter/color_gradient = SubResource("GradientTexture2D_j60lf")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kixfw"]
+radius = 8.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcsei"]
+
+[node name="ShroomMysteryBlock" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_aj34x")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_sdl3s")
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+clip_children = 2
+material = SubResource("ShaderMaterial_ctqvd")
+texture = ExtResource("3_d475m")
+
+[node name="pict" type="Sprite2D" parent="AnimatedSprite2D"]
+modulate = Color(1, 1, 1, 0.835294)
+texture = ExtResource("3_d475m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_kixfw")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+scale = Vector2(0.84, 0.820228)
+shape = SubResource("RectangleShape2D_lcsei")
+target_position = Vector2(0, 0)
+collision_mask = 3
+collide_with_areas = true
+
+[node name="EffectTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="EffectTimer" to="." method="_on_effect_timer_timeout"]

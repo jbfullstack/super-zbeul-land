@@ -4,9 +4,9 @@ const SPEED = 60
 
 var direction = 1
 
-@onready var ray_cast_right = $RayCastRight
-@onready var ray_cast_left = $RayCastLeft
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var ray_cast_right = $RayCastRight as RayCast2D
+@onready var ray_cast_left = $RayCastLeft as RayCast2D
+@onready var animated_sprite = $AnimatedSprite2D as AnimatedSprite2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

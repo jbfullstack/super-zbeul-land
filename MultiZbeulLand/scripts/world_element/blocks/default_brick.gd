@@ -33,7 +33,7 @@ func check_for_upper_collisions():
 				print("player %s hit by block (TODO)" % player.player_id)
 
 
-func _on_bump_area_2d_body_entered(body):
+func _on_bump_area_2d_body_entered(_body):
 	bump()
 
 func is_brick_colliding_with(className: String) -> Object:

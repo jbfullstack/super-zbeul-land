@@ -50,7 +50,7 @@ func adjust_pipe(height):
 	var computed_size_x: float = BODY_PIPE_WIDTH 
 	var computed_size_y: float = height - TOP_PIPE_HEIGHT  # Subtract top pipe height
 	var computed_x: float = BODY_PIPE_WIDTH + (computed_size_y / 2 - (TOP_PIPE_HEIGHT / 2))
-	var computed_y: float = TOP_PIPE_HEIGHT  # Start below the top pipe
+	#var computed_y: float = TOP_PIPE_HEIGHT  # Start below the top pipe
 
 	# Adjust the pipe body sprite
 	var region_rect = Rect2(pipe_body_sprite.region_rect)

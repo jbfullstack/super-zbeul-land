@@ -40,7 +40,7 @@ func sync_invisible(authority_id: int) -> void:
 		make_invisible_others()  # Show fully invisible
 
 # Called by the controller to reset visibility
-func reset_alpha(authority_id: int) -> void:
+func reset_alpha(_authority_id: int) -> void:
 	if multiplayer.is_server():
 		is_invisible = false
 		make_visible()

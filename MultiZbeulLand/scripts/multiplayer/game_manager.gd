@@ -9,7 +9,7 @@ func print_players():
 		print("\nList of players: ")
 		print("-----------------------------")
 		for i in Players:
-			print("%s [%s]" % [Players[i].name, Players[i].id])
+			print("%s  [%s]" % [Players[i].name, Players[i].id])
 		print("-----------------------------\n")
 		
 func print_collected_coins():

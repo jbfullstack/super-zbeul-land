@@ -1,5 +1,5 @@
 extends DefaultBrick
-class_name  MysteryBlock
+class_name  MisteryBlock
 
 enum BonusType {
 	COIN,
@@ -7,9 +7,11 @@ enum BonusType {
 	FLOWER
 }
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
+const SHROOM_SCENE = preload("res://scenes/world_element/items/shroom_mistery_block.tscn")
+
+@onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var bump_area = $BumpArea2D
-@onready var block_collision_shape = $BumpArea2D/BumpCollisionShape2D
+@onready var block_collision_shape = $BumpArea2D/BumpCollisionShape2D as CollisionShape2D
 @export var bonus_type: BonusType = BonusType.SHROOM
 @export var invisible: bool = false
 
@@ -46,13 +48,14 @@ func bump():
 	super.bump()
 	_set_empty()
 
-	match bonus_type:
-		BonusType.COIN:
-			spawn_coin()
-		BonusType.SHROOM:
-			spawn_shroom()
-		BonusType.FLOWER:
-			spawn_flower()
+	if multiplayer.is_server():
+		match bonus_type:
+			BonusType.COIN:
+				spawn_coin()
+			BonusType.SHROOM:
+				spawn_shroom.rpc()
+			BonusType.FLOWER:
+				spawn_flower()
 
 func make_empty():
 	is_empty = true
@@ -75,9 +78,11 @@ func spawn_coin():
 	#get_tree().get_first_node_in_group("level_manager").on_coin_collected()
 	pass
 
+@rpc("call_local")
 func spawn_shroom():
-	#var shroom = SHROOM_SCENE.instantiate()
-	#shroom.global_position = global_position
+	var shroom = SHROOM_SCENE.instantiate()
+	shroom.global_position = global_position
+	get_tree().root.call_deferred("add_child", shroom)
 	#get_tree().root.call_deferred("add_child", shroom)
 	pass
 
@@ -97,19 +102,51 @@ func _enable_collisions():
 	set_collision_mask_value(2, true)
 	#set_collision_mask_value(3, true)
 
+#func _prevent_player_stuck(player):
+	## Get the block's collision shape and compute its rect
+	#var block_rect = _get_collision_rect(block_collision_shape, global_position)
+#
+	## Get player's collision shape node; adjust the path if needed
+	#var player_collision_shape = player.getShape()
+	#var player_rect = _get_collision_rect(player_collision_shape, player.global_position)
+#
+	## Check overlap
+	#if block_rect.intersects(player_rect):
+		## Move player just below the block
+		## We assume the block and player rect are properly sized.
+		#player.global_position.y = block_rect.position.y + block_rect.size.y + (player_rect.size.y * 0.5) + 1
 func _prevent_player_stuck(player):
 	# Get the block's collision shape and compute its rect
 	var block_rect = _get_collision_rect(block_collision_shape, global_position)
-
-	# Get player's collision shape node; adjust the path if needed
 	var player_collision_shape = player.getShape()
 	var player_rect = _get_collision_rect(player_collision_shape, player.global_position)
-
-	# Check overlap
+	
 	if block_rect.intersects(player_rect):
-		# Move player just below the block
-		# We assume the block and player rect are properly sized.
-		player.global_position.y = block_rect.position.y + block_rect.size.y + (player_rect.size.y * 0.5) + 1
+		print_d("Player stuck detected! Checking escape routes...")
+		
+		# Calculate potential horizontal positions with increased escape distance
+		var safe_distance = player_rect.size.x * 1.5  # Increase escape distance
+		var move_right = block_rect.position.x + block_rect.size.x + safe_distance
+		var move_left = block_rect.position.x - safe_distance
+		
+		# Check which direction requires less movement
+		var dist_to_move_right = abs(player.global_position.x - move_right)
+		var dist_to_move_left = abs(player.global_position.x - move_left)
+		
+		print_d("Distance to move right: %s, Distance to move left: %s" % [dist_to_move_right, dist_to_move_left])
+		
+		# Try direct movement first
+		if dist_to_move_left <= dist_to_move_right:
+			print_d("Attempting to move left to position x: %s" % move_left)
+			player.global_position.x = move_left
+		else:
+			print_d("Attempting to move right to position x: %s" % move_right)
+			player.global_position.x = move_right
+		
+		# Add a small vertical boost to help escape
+		player.global_position.y -= 1
+		
+		print_d("Final position after unstuck attempt: %s" % player.global_position)
 
 func _get_collision_rect(collision_shape: CollisionShape2D, entity_pos: Vector2) -> Rect2:
 	var shape = collision_shape.get_shape()
@@ -135,4 +172,9 @@ func _on_bump_area_2d_body_entered(body):
 			else:
 				bump()
 
-
+func print_d(msg: String):
+	if DebugUtils.debug_item_mistery_block || DebugUtils.debug_all_item:
+		if NetworkController.multiplayer_mode_enabled:
+			print("%s  [%s]" % [msg,multiplayer.get_unique_id() ])
+		else:
+			print(msg)

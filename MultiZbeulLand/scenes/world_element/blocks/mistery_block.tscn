@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cfpx5majge2sc"]
 
-[ext_resource type="Script" path="res://scripts/world_element/blocks/mystery_block.gd" id="1_p415h"]
+[ext_resource type="Script" path="res://scripts/world_element/blocks/mistery_block.gd" id="1_p415h"]
 [ext_resource type="Texture2D" uid="uid://cephoy15s5x21" path="res://assets/sprites/mario_world/items/brick/block_mistery_1.png" id="2_gdlij"]
 [ext_resource type="Texture2D" uid="uid://bxoy23475idjt" path="res://assets/sprites/mario_world/items/brick/block_mistery_2.png" id="3_hqwh0"]
 [ext_resource type="Texture2D" uid="uid://chw5tm5t36yxj" path="res://assets/sprites/mario_world/items/brick/block_mistery_3.png" id="4_sq10e"]
@@ -68,6 +68,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_1vtbp")
 
 [node name="BumpArea2D" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 2
 
 [node name="BumpCollisionShape2D" type="CollisionShape2D" parent="BumpArea2D"]
@@ -85,5 +86,7 @@ collision_mask = 2
 [node name="TopRightAngleRayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(7, -13)
 collision_mask = 2
+
+[node name="ItemsSpawned" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="BumpArea2D" to="." method="_on_bump_area_2d_body_entered"]

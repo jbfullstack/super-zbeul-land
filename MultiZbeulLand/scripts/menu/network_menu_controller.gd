@@ -25,7 +25,6 @@ const RESET: String = "RESET"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_blur.play(RESET)
-	print("RESET")
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
@@ -80,10 +79,10 @@ func SendPlayerInformation(pseudo, id):
 			
 		# Sync existing players to new clients
 		for player_id in GameManager.Players:
-			SyncPlayerData.rpc_id(id, player_id, GameManager.Players[player_id])
+			SyncPlayerData.rpc_id(id, player_id, GameManager.Players[player_id])	
 	
 	nb_player_lbl.text = "%s players" % GameManager.Players.size()
-	nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
+	#nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
 	
 	# Handle late joiner spawning
 	if multiplayer.is_server() and is_game_started:
@@ -98,6 +97,8 @@ func SendPlayerInformation(pseudo, id):
 func SyncPlayerData(player_id: int, player_data: Dictionary):
 	if !multiplayer.is_server():  # Only clients update their data from this RPC
 		GameManager.Players[player_id] = player_data
+		#nb_player_lbl.text = "%s players" % GameManager.Players.size()
+		nb_player_joining_menu_lbl.text = "%s players" % GameManager.Players.size()
 
 @rpc("any_peer", "call_local")
 func LateJoinStartGame(players_dict: Dictionary, collected_coins_dict: Dictionary):

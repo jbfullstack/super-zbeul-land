@@ -4,9 +4,9 @@ class_name MultiplayerController
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite = $AnimatedSprite2D as AnimatedSprite2D
 @onready var player_hud = %PlayerHUD
-@onready var pseudo_lbl = %PseudoLbl
+@onready var pseudo_lbl = %PseudoLbl as Label
 
 
 @onready var visibility_manager: VisibilityManager
