@@ -6,7 +6,7 @@ class_name StateBasedCamera2D
 @export_range(0.0, 1.0) var pos_cam_1 := 0.2
 @export_range(0.0, 1.0) var pos_cam_2 := 0.8
 @export var dead_zone_size := 0.30
-@export var camera_speed := 1.0
+@export var camera_speed := 2.0
 @export var zoom_factor := Vector2(4, 4)
 @export var debug_display := true
 
@@ -17,26 +17,12 @@ enum CAMERA_STATE {
 
 var current_side: CAMERA_STATE = CAMERA_STATE.TO_RIGHT
 var target_camera_x: float
-
-# Debug visualization data structure
-class DebugLine:
-	var start: Vector2
-	var end: Vector2
-	var color: Color
-	var width: float
-	
-	func _init(s: Vector2, e: Vector2, c: Color, w: float = 2.0):
-		start = s
-		end = e
-		color = c
-		width = w
-
-# Arrays to store debug visualization elements
-var debug_lines: Array[DebugLine] = []
+var debug: CameraDebug
 
 func _ready() -> void:
 	zoom = zoom_factor
 	target_camera_x = global_position.x
+	debug = CameraDebug.new(self)
 
 func _physics_process(delta: float) -> void:
 	if not target:
@@ -74,7 +60,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Update debug visualization
 	if debug_display:
-		update_debug_lines()
+		debug.update_debug_lines(current_side, pos_cam_1, pos_cam_2, dead_zone_size, zoom)
 		queue_redraw()
 
 func get_desired_camera_x(target_fraction: float) -> float:
@@ -84,62 +70,6 @@ func get_desired_camera_x(target_fraction: float) -> float:
 	var offset = (desired_screen_x - half_screen_width) / zoom.x
 	return target.global_position.x - offset
 
-func update_debug_lines() -> void:
-	debug_lines.clear()
-	
-	var screen_size = get_viewport_rect().size
-	var scaled_w = screen_size.x / zoom.x
-	var scaled_h = screen_size.y / zoom.y
-	var half_w = scaled_w * 0.5
-	var half_h = scaled_h * 0.5
-	
-	# Calculate positions
-	var dead_zone_width = scaled_w * dead_zone_size
-	
-	match current_side:
-		CAMERA_STATE.TO_RIGHT:
-			var target_x = scaled_w * pos_cam_1
-			var offset = target_x - half_w
-			if debug_display:
-				add_camera_debug_lines(offset, dead_zone_width, half_h, current_side)
-			
-		CAMERA_STATE.TO_LEFT:
-			var target_x = scaled_w * pos_cam_2
-			var offset = target_x - half_w
-			if debug_display:
-				add_camera_debug_lines(offset, dead_zone_width, half_h, current_side)
-
-func add_camera_debug_lines(offset: float, dead_zone_width: float, half_h: float, side: CAMERA_STATE) -> void:
-	# Add dead zone lines
-	debug_lines.append(DebugLine.new(
-		Vector2(offset - dead_zone_width/2, -half_h),
-		Vector2(offset - dead_zone_width/2, half_h),
-		Color(0, 0.6, 1)
-	))
-	debug_lines.append(DebugLine.new(
-		Vector2(offset + dead_zone_width/2, -half_h),
-		Vector2(offset + dead_zone_width/2, half_h),
-		Color(0, 0.6, 1)
-	))
-	
-	# Add center line with correct color based on side
-	var center_color = Color(1, 0, 0) if side == CAMERA_STATE.TO_RIGHT else Color(0.8, 0, 0.6)
-	debug_lines.append(DebugLine.new(
-		Vector2(offset, -half_h),
-		Vector2(offset, half_h),
-		center_color,
-		1.0
-	))
-
 func _draw() -> void:
-	if not debug_display:
-		return
-	
-	# Draw all debug lines
-	for line in debug_lines:
-		draw_line(line.start, line.end, line.color, line.width)
-	
-	# Draw player position
-	if target:
-		var local_pos = target.global_position - global_position
-		draw_circle(local_pos, 3.0, Color.GREEN)
+	if debug_display:
+		debug.draw(target)
