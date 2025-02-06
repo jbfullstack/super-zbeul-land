@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dxu66dpeq4rhg"]
+[gd_scene load_steps=23 format=3 uid="uid://dxu66dpeq4rhg"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_jaua5"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_2tdy6"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_dydhp"]
 [ext_resource type="PackedScene" uid="uid://cfpx5majge2sc" path="res://scenes/world_element/blocks/mistery_block.tscn" id="13_7ev1y"]
 [ext_resource type="PackedScene" uid="uid://2cypydg2eyji" path="res://scenes/state_based_camera_2d.tscn" id="14_utu5j"]
-[ext_resource type="Script" path="res://scripts/state_based_camera_2d.gd" id="15_xxn0l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_2tdy6")
@@ -497,8 +496,8 @@ _data = {
 size = Vector2(33, 83)
 
 [sub_resource type="Curve" id="Curve_owhr2"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.257692, 0.491214), 0.0, 0.0, 0, 0, Vector2(0.746154, 0.543131), 0.385669, 0.385669, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Game" type="Node"]
 
@@ -689,8 +688,9 @@ invisible = true
 position = Vector2(90, 67)
 zoom = Vector2(4, 4)
 position_smoothing_speed = 2.0
-script = ExtResource("15_xxn0l")
 target = NodePath("../Player")
+pos_cam_1 = 0.28
+pos_cam_2 = 0.72
 curve = SubResource("Curve_owhr2")
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]
