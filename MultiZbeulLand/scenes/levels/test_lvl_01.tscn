@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dxu66dpeq4rhg"]
+[gd_scene load_steps=24 format=3 uid="uid://dxu66dpeq4rhg"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_jaua5"]
 [ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_2tdy6"]
@@ -496,6 +496,10 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2186x"]
 size = Vector2(33, 83)
 
+[sub_resource type="Curve" id="Curve_owhr2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.257692, 0.491214), 0.0, 0.0, 0, 0, Vector2(0.746154, 0.543131), 0.385669, 0.385669, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [node name="Game" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_jaua5")]
@@ -687,5 +691,6 @@ zoom = Vector2(4, 4)
 position_smoothing_speed = 2.0
 script = ExtResource("15_xxn0l")
 target = NodePath("../Player")
+curve = SubResource("Curve_owhr2")
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]
