@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://2cypydg2eyji"]
+
+[node name="StateCamera" type="Camera2D"]
+limit_smoothed = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
