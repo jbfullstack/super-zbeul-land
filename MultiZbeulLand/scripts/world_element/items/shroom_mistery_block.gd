@@ -35,7 +35,7 @@ func _ready():
 func _on_body_entered(body):
 	print("Body entered: " + body.to_string())
 	if is_eatable and ClassUtils.is_player_type(body):
-		print("Player detected: ", body.player_id)
+		print("Playerdd detected: ", body.player_id)
 		if multiplayer.is_server():
 			handle_invisibility(body)
 		else:

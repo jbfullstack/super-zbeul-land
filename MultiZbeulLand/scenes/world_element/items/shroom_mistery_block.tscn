@@ -36,7 +36,7 @@ height = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lcsei"]
 
-[node name="ShroomMysteryBlock" type="Area2D"]
+[node name="ShroomMisteryBlock" type="Area2D"]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_aj34x")

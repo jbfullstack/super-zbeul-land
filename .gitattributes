@@ -1,0 +1,2 @@
+# Treat PNG files as binary so they won’t be altered.
+*.png binary

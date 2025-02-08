@@ -1,10 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://cuv4vme4rwno0"]
+[gd_scene load_steps=22 format=3 uid="uid://cuv4vme4rwno0"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_rbmkf"]
-[ext_resource type="PackedScene" uid="uid://2cypydg2eyji" path="res://scenes/state_based_camera_2d.tscn" id="2_hipvl"]
-[ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
+[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="2_hipvl"]
+[ext_resource type="Texture2D" uid="uid://bfi6mdi4viaal" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
 [ext_resource type="PackedScene" uid="uid://bgv5v2fxqlswe" path="res://scenes/platform.tscn" id="3_cmfc3"]
-[ext_resource type="Script" path="res://scripts/state_based_camera_2d.gd" id="3_nq1ev"]
 [ext_resource type="PackedScene" uid="uid://b5s0pc6e66n5v" path="res://scenes/multiplayer/multiplayer_player.tscn" id="5_03udm"]
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="5_x8euu"]
 [ext_resource type="PackedScene" uid="uid://dhbcujmgpo7yv" path="res://scenes/multiplayer/multiplayer_coin.tscn" id="6_gt3lc"]
@@ -688,7 +687,6 @@ invisible = true
 position = Vector2(90, 67)
 zoom = Vector2(4, 4)
 position_smoothing_speed = 2.0
-script = ExtResource("3_nq1ev")
 target = NodePath("../Player")
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

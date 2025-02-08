@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://dxu66dpeq4rhg"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player.tscn" id="1_jaua5"]
-[ext_resource type="Texture2D" uid="uid://d0q2g65ahgok" path="res://assets/sprites/world_tileset.png" id="2_2tdy6"]
+[ext_resource type="Texture2D" uid="uid://bfi6mdi4viaal" path="res://assets/sprites/world_tileset.png" id="2_2tdy6"]
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="3_616mf"]
 [ext_resource type="Script" path="res://scripts/spawner_manager.gd" id="4_tm1tv"]
 [ext_resource type="PackedScene" uid="uid://b5s0pc6e66n5v" path="res://scenes/multiplayer/multiplayer_player.tscn" id="5_1sl53"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="11_ge6yu"]
 [ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_dydhp"]
 [ext_resource type="PackedScene" uid="uid://cfpx5majge2sc" path="res://scenes/world_element/blocks/mistery_block.tscn" id="13_7ev1y"]
-[ext_resource type="PackedScene" uid="uid://2cypydg2eyji" path="res://scenes/state_based_camera_2d.tscn" id="14_utu5j"]
+[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="14_utu5j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_2tdy6")

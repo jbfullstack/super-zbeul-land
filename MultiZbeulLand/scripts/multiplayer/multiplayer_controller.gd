@@ -12,8 +12,7 @@ const WALL_JUMP_TIME = 0.1  # Time in seconds before normal movement resumes
 @onready var player_hud = %PlayerHUD
 @onready var pseudo_lbl = %PseudoLbl as Label
 
-
-@onready var visibility_manager: VisibilityManager
+@onready var visibility_manager: VisibilityManager = %Invisibility
 
 
 
@@ -74,14 +73,7 @@ func _ready():
 	else:
 		push_error("No SpawnerManager found  [%]", % player_id)
 		
-	visibility_manager = VisibilityManager.new()
-	add_child(visibility_manager)
-	visibility_manager.setup(animated_sprite, pseudo_lbl)
-		
-	#$PseudoLbl.text = pseudo
-	#print("pseudo: %s" % pseudo)
-	
-	
+	visibility_manager.setup($AnimatedSprite2D, $PseudoLbl)
 
 func _apply_animations(_delta):
 	# Flip the Sprite
