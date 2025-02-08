@@ -18,17 +18,17 @@ func bump():
 
 func check_for_upper_collisions():
 	if !NetworkController.multiplayer_mode_enabled:
-		var collider = is_brick_colliding_with(Player._name())
+		var collider = is_brick_colliding_with(LocalPlayerController._name())
 		if collider != null:
-				var player = collider as Player
+				var _player = collider as LocalPlayerController
 				#player.die()
 				print("player  hit by block (TODO)")
 				return
 	else:
 		if multiplayer.is_server():
-			var collider = is_brick_colliding_with(MultiplayerController._name())
+			var collider = is_brick_colliding_with(NetworkPlayerController._name())
 			if collider != null:
-				var player =collider as MultiplayerController
+				var player =collider as NetworkPlayerController
 				#player.die()
 				print("player %s hit by block (TODO)" % player.player_id)
 

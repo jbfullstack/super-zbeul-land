@@ -1,5 +1,5 @@
 extends Shroom
-class_name ShroomMisteryBloc
+class_name ShroomMisteryBlock
 
 # Animation constants
 const delta_speed: float = 115
@@ -34,13 +34,17 @@ func _ready():
 
 func _on_body_entered(body):
 	print("Body entered: " + body.to_string())
-	if is_eatable and ClassUtils.is_player_type(body):
-		print("Playerdd detected: ", body.player_id)
-		if multiplayer.is_server():
-			handle_invisibility(body)
-		else:
-			request_invisibility.rpc_id(1, body.player_id)
-		queue_free()
+	if is_eatable:
+		if ClassUtils.is_network_player_type(body):
+			print("Player detected: ", body.player_id)
+			if multiplayer.is_server():
+				handle_invisibility(body)
+			else:
+				request_invisibility.rpc_id(1, body.player_id)
+			queue_free()
+		elif ClassUtils.is_local_player_type(body):
+			print("TODO: Player eat mushroom")
+			
 
 @rpc("any_peer")
 func request_invisibility(player_id: int):

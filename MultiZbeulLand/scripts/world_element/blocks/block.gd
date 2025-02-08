@@ -20,7 +20,7 @@ func check_for_upper_collisions():
 		#var enemy = ray_cast_2d.get_collider() as Enemy
 		#enemy.die_from_hit()
 	
-	if ray_cast_2d.is_colliding() && ray_cast_2d.get_collider() is Player:
-		var player = ray_cast_2d.get_collider() as Player
+	if ray_cast_2d.is_colliding() && ray_cast_2d.get_collider() is LocalPlayerController:
+		var player = ray_cast_2d.get_collider() as LocalPlayerController
 		#player.die()
 		print("player %s hit by block (TODO)" % player.player_id)

@@ -1,6 +1,6 @@
 # visibility_manager.gd
 extends Node
-class_name VisibilityManager
+class_name MultiplayerVisibilityManager
 
 # The sprite we're managing visibility for
 var sprite_node: AnimatedSprite2D = null

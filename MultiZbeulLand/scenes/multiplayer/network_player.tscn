@@ -1,34 +1,31 @@
 [gd_scene load_steps=32 format=3 uid="uid://b5s0pc6e66n5v"]
 
-[ext_resource type="Script" path="res://scripts/player/multiplayer/multiplayer_controller.gd" id="1_f6t8f"]
-[ext_resource type="Script" path="res://scripts/player/multiplayer/multiplayer_input.gd" id="2_4yxad"]
-[ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="3_fi6qr"]
-[ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="4_wpn2i"]
-[ext_resource type="PackedScene" uid="uid://dw23by3xj4w4m" path="res://scenes/menu/player_hud.tscn" id="5_uo8gw"]
-[ext_resource type="Script" path="res://scripts/player/multiplayer/visible_manager.gd" id="6_ttiva"]
+[ext_resource type="Script" path="res://scripts/player/network/multiplayer_controller.gd" id="1_a0dba"]
+[ext_resource type="Script" path="res://scripts/player/network/multiplayer_input.gd" id="2_en82d"]
+[ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="3_kkpe0"]
+[ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="4_ch66a"]
+[ext_resource type="PackedScene" uid="uid://dw23by3xj4w4m" path="res://scenes/menu/player_hud.tscn" id="5_fuuu6"]
+[ext_resource type="Script" path="res://scripts/player/network/multiplayer_visible_manager.gd" id="6_s2x50"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:position")
+properties/1/path = NodePath(".:_is_on_floor")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:do_jump")
+properties/2/path = NodePath(".:pseudo")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:_is_on_floor")
+properties/3/path = NodePath(".:scale")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:direction")
+properties/4/path = NodePath(".:position")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:pseudo")
+properties/5/path = NodePath(".:velocity")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath(".:scale")
-properties/6/spawn = true
-properties/6/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kgm8b"]
 properties/0/path = NodePath("InputSynchronizer:input_direction")
@@ -36,87 +33,87 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eq0sc"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_euih6"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvckt"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qbp8"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m4p6y"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(64, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sbdhl"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cixn3"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wlmx5"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2mug6"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7fabi"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(128, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8kjed"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(160, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_36jc6"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xdrox"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c7dpx"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(0, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pyrft"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dkv65"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_312ld"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08i1f"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(128, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ajbxf"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(160, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ducdv"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(192, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wq37r"]
-atlas = ExtResource("3_fi6qr")
+atlas = ExtResource("3_kkpe0")
 region = Rect2(224, 96, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jsyko"]
@@ -203,10 +200,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2xchh"]
 size = Vector2(9, 13)
 
-[node name="MultiplayerPlayer" type="CharacterBody2D" groups=["Players"]]
+[node name="NetworkPlayer" type="CharacterBody2D" groups=["Players"]]
 collision_layer = 2
 collision_mask = 13
-script = ExtResource("1_f6t8f")
+script = ExtResource("1_a0dba")
 
 [node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_t6mc8")
@@ -214,7 +211,7 @@ replication_config = SubResource("SceneReplicationConfig_t6mc8")
 [node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
 unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_kgm8b")
-script = ExtResource("2_4yxad")
+script = ExtResource("2_en82d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
@@ -246,7 +243,7 @@ offset_right = 19.0
 offset_bottom = -13.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_wpn2i")
+theme_override_fonts/font = ExtResource("4_ch66a")
 theme_override_font_sizes/font_size = 7
 text = "Master 8456"
 horizontal_alignment = 1
@@ -259,13 +256,13 @@ clip_text = true
 wait_time = 0.6
 one_shot = true
 
-[node name="PlayerHUD" parent="." instance=ExtResource("5_uo8gw")]
+[node name="PlayerHUD" parent="." instance=ExtResource("5_fuuu6")]
 unique_name_in_owner = true
 
 [node name="PowerManager" type="Node" parent="."]
 
 [node name="Invisibility" type="Node" parent="PowerManager"]
 unique_name_in_owner = true
-script = ExtResource("6_ttiva")
+script = ExtResource("6_s2x50")
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]

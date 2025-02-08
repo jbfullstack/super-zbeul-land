@@ -154,15 +154,15 @@ func get_desired_camera_x(target_fraction: float) -> float:
 	var screen_width = get_viewport_rect().size.x
 	var half_screen_width = screen_width * 0.5
 	var desired_screen_x = target_fraction * screen_width
-	var offset = (desired_screen_x - half_screen_width) / zoom.x
-	return target.global_position.x - offset
+	var _offset = (desired_screen_x - half_screen_width) / zoom.x
+	return target.global_position.x - _offset
 
 func get_desired_camera_y(target_fraction: float) -> float:
 	var screen_height = get_viewport_rect().size.y
 	var half_screen_height = screen_height * 0.5
 	var desired_screen_y = target_fraction * screen_height
-	var offset = (desired_screen_y - half_screen_height) / zoom.y
-	return target.global_position.y - offset
+	var _offset = (desired_screen_y - half_screen_height) / zoom.y
+	return target.global_position.y - _offset
 
 func _draw() -> void:
 	if debug_display:

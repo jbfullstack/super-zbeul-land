@@ -37,7 +37,19 @@ static func is_instance_of_class(obj: Object, className: String) -> bool:
 
 
 static func is_player_type(body) -> bool :
-	if body is Player or body is MultiplayerController:
+	if body is LocalPlayerController or body is NetworkPlayerController:
+		return true
+	else:
+		return false
+		
+static func is_local_player_type(body) -> bool :
+	if body is LocalPlayerController:
+		return true
+	else:
+		return false
+
+static func is_network_player_type(body) -> bool :
+	if body is NetworkPlayerController:
 		return true
 	else:
 		return false

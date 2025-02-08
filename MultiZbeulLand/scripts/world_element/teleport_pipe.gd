@@ -70,13 +70,13 @@ func adjust_pipe(height):
 
 
 func _on_pipe_area_2d_body_entered(body):
-	if body is Player or body is MultiplayerController:
+	if body is LocalPlayerController or body is NetworkPlayerController:
 		print("pipe setted")
 		body.current_pipe = self
 
 
 func _on_pipe_area_2d_body_exited(body):
-	if body is Player or body is MultiplayerController:
+	if body is LocalPlayerController or body is NetworkPlayerController:
 		print("pipe removed")
 		body.current_pipe = null
 
