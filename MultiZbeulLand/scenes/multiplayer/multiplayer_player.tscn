@@ -1,11 +1,11 @@
 [gd_scene load_steps=32 format=3 uid="uid://b5s0pc6e66n5v"]
 
-[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_controller.gd" id="1_iydig"]
-[ext_resource type="Script" path="res://scripts/multiplayer/multiplayer_input.gd" id="2_64d1i"]
+[ext_resource type="Script" path="res://scripts/player/multiplayer/multiplayer_controller.gd" id="1_f6t8f"]
+[ext_resource type="Script" path="res://scripts/player/multiplayer/multiplayer_input.gd" id="2_4yxad"]
 [ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="3_fi6qr"]
 [ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="4_wpn2i"]
 [ext_resource type="PackedScene" uid="uid://dw23by3xj4w4m" path="res://scenes/menu/player_hud.tscn" id="5_uo8gw"]
-[ext_resource type="Script" path="res://scripts/multiplayer/visible_manager.gd" id="6_s7ulc"]
+[ext_resource type="Script" path="res://scripts/player/multiplayer/visible_manager.gd" id="6_ttiva"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
@@ -206,7 +206,7 @@ size = Vector2(9, 13)
 [node name="MultiplayerPlayer" type="CharacterBody2D" groups=["Players"]]
 collision_layer = 2
 collision_mask = 13
-script = ExtResource("1_iydig")
+script = ExtResource("1_f6t8f")
 
 [node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_t6mc8")
@@ -214,7 +214,7 @@ replication_config = SubResource("SceneReplicationConfig_t6mc8")
 [node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
 unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_kgm8b")
-script = ExtResource("2_64d1i")
+script = ExtResource("2_4yxad")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
@@ -266,6 +266,6 @@ unique_name_in_owner = true
 
 [node name="Invisibility" type="Node" parent="PowerManager"]
 unique_name_in_owner = true
-script = ExtResource("6_s7ulc")
+script = ExtResource("6_ttiva")
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]
