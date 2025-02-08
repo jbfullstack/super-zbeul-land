@@ -687,6 +687,5 @@ position = Vector2(90, 67)
 zoom = Vector2(4, 4)
 position_smoothing_speed = 2.0
 target = NodePath("../Player")
-debug_display = true
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

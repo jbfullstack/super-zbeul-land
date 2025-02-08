@@ -169,8 +169,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vxuq8"]
-size = Vector2(12, 14)
+[sub_resource type="CircleShape2D" id="CircleShape2D_oaie3"]
+radius = 8.33333
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
@@ -185,8 +185,9 @@ animation = &"jump"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
-shape = SubResource("RectangleShape2D_vxuq8")
+position = Vector2(0, -6)
+scale = Vector2(0.6, 0.601473)
+shape = SubResource("CircleShape2D_oaie3")
 
 [node name="PowerManager" type="Node" parent="."]
 
