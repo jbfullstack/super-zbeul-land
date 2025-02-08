@@ -3,6 +3,10 @@ class_name MultiplayerController
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
+# WALL STUFF
+const WALL_SLIDE_SPEED = 50.0  # Speed of wall sliding
+const WALL_JUMP_VELOCITY = Vector2(300.0, -250.0)  # Wall jump force
+const WALL_JUMP_TIME = 0.1  # Time in seconds before normal movement resumes
 
 @onready var animated_sprite = $AnimatedSprite2D as AnimatedSprite2D
 @onready var player_hud = %PlayerHUD
@@ -10,6 +14,7 @@ const JUMP_VELOCITY = -300.0
 
 
 @onready var visibility_manager: VisibilityManager
+
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -29,7 +34,9 @@ var is_invisible: bool:
 	get:
 		return visibility_manager.is_invisible if visibility_manager else false
 
-
+var is_wall_sliding = false
+var wall_normal = Vector2.ZERO  # Direction of the wall normal
+var wall_jump_timer = 0.0
 
 
 var nb_collected_coin = 0
@@ -89,6 +96,10 @@ func _apply_animations(_delta):
 			animated_sprite.play("idle")
 		else:
 			animated_sprite.play("run")
+	elif is_wall_sliding:
+		# TODO: Wall side animation
+		print("wallslide animation")
+		animated_sprite.play("idle")
 	else:
 		animated_sprite.play("jump")
 
@@ -96,10 +107,28 @@ func _apply_movement_from_input(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+	# Wall slide check
+	is_wall_sliding = false
+	if not is_on_floor() and is_on_wall():
+		wall_normal = get_wall_normal()
+		is_wall_sliding = true
+		print("is_wall_sliding")
+		velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
+		
+	# Handle wall jump
+	if wall_jump_timer > 0:
+		wall_jump_timer -= delta
 
 	# Handle jump.
-	if do_jump and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if do_jump:
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		elif is_wall_sliding:
+			# Wall jump
+			print("wall jump")
+			velocity = Vector2(wall_normal.x * WALL_JUMP_VELOCITY.x, WALL_JUMP_VELOCITY.y)
+			wall_jump_timer = WALL_JUMP_TIME
 		do_jump = false
 		
 	if do_down:
