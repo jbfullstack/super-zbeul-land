@@ -35,6 +35,7 @@ var slow_slide_timer = 0.0
 var no_control_timer = 0.0
 var alive = true
 var _input_state: PlayerInputState
+var collision_rayon
 
 var is_invisible: bool:
 	get:
@@ -51,6 +52,8 @@ func getShape():
 
 func _ready():
 	_input_state = PlayerInputState.new()
+	var collision = $CollisionShape2D as CollisionShape2D
+	collision_rayon = collision.get_shape().radius
 
 func _physics_process(delta):
 	if not alive && is_on_floor():
@@ -139,6 +142,12 @@ func _handle_jump():
 func _perform_normal_jump():
 	velocity.y = JUMP_VELOCITY
 	last_jump_side = 0
+	
+	if not has_node("JumpDustParticles"):
+		return
+		
+	var particles = $JumpDustParticles as GPUParticles2D
+	particles.emitting = true
 
 func _perform_wall_jump():
 	var current_side = sign(wall_normal.x)
@@ -190,6 +199,8 @@ func _handle_wall_particles():
 		
 	var particles = $WallDustParticles as GPUParticles2D
 	
+	#TODO: manage particle position fct of collision_radius
+	
 	if is_wall_sliding:
 		_update_wall_particles(particles)
 	else:
@@ -199,13 +210,14 @@ func _update_wall_particles(particles: GPUParticles2D):
 	particles.emitting = true
 	
 	var speed_ratio = (abs(velocity.y) - WALL_SLIDE_SUPER_SLOW) / (WALL_SLIDE_SPEED - WALL_SLIDE_SUPER_SLOW)
-	speed_ratio = clamp(speed_ratio, 0.0, 1.0)
+	speed_ratio = clamp(speed_ratio, 0.0, 1.0)	
 	
 	var process_material = particles.process_material as ParticleProcessMaterial
 	if process_material:
 		process_material.emission_box_extents.y = lerp(1.0, 3.0, speed_ratio)
 		process_material.initial_velocity_min = lerp(5.0, 20.0, speed_ratio)
 		process_material.initial_velocity_max = lerp(10.0, 30.0, speed_ratio)
+		particles.scale.x = _input_state.direction		
 		particles.amount = int(lerp(4, 12, speed_ratio))
 
 func mark_dead():

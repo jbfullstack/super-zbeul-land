@@ -1,8 +1,43 @@
-[gd_scene load_steps=27 format=3 uid="uid://dqnaqj8yb6hwd"]
+[gd_scene load_steps=35 format=3 uid="uid://dqnaqj8yb6hwd"]
 
 [ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="1_p3dy5"]
 [ext_resource type="Script" path="res://scripts/player/local/local_player_controller.gd" id="1_ykxqx"]
 [ext_resource type="Script" path="res://scripts/player/local/local_visible_manager.gd" id="3_hogl6"]
+[ext_resource type="Texture2D" uid="uid://pyrrykkfuf16" path="res://assets/sprites/particles/fog/fog_01.png" id="4_cdn74"]
+
+[sub_resource type="Curve" id="Curve_4plo1"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.990909, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yqi2c"]
+curve = SubResource("Curve_4plo1")
+
+[sub_resource type="Curve" id="Curve_tpmus"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.936364, 0.692308), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pv6k5"]
+curve = SubResource("Curve_tpmus")
+
+[sub_resource type="Curve" id="Curve_3mq64"]
+_data = [Vector2(0.0136364, 0.197802), 0.0, 0.0, 0, 0, Vector2(0.977273, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ch6ti"]
+curve = SubResource("Curve_3mq64")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t4bfv"]
+particle_flag_disable_z = true
+angle_curve = SubResource("CurveTexture_yqi2c")
+direction = Vector3(-45, 0, 0)
+spread = 10.0
+initial_velocity_min = 40.0
+initial_velocity_max = 55.0
+angular_velocity_curve = SubResource("CurveTexture_pv6k5")
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ch6ti")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eq0sc"]
 atlas = ExtResource("1_p3dy5")
@@ -178,6 +213,17 @@ collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_ykxqx")
 
+[node name="JumpDustParticles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -1)
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_t4bfv")
+texture = ExtResource("4_cdn74")
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.6
+randomness = 0.16
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_81gkq")
@@ -194,3 +240,12 @@ shape = SubResource("CircleShape2D_oaie3")
 [node name="Invisibility" type="Node" parent="PowerManager"]
 unique_name_in_owner = true
 script = ExtResource("3_hogl6")
+
+[node name="WallDustParticles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -5)
+amount = 5
+amount_ratio = 0.4572
+process_material = SubResource("ParticleProcessMaterial_t4bfv")
+texture = ExtResource("4_cdn74")
+lifetime = 0.5
+randomness = 0.49

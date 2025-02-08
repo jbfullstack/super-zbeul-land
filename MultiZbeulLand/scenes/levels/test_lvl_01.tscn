@@ -690,32 +690,4 @@ position_smoothing_speed = 2.0
 target = NodePath("../Player")
 curve = SubResource("Curve_owhr2")
 
-[node name="StateCamera" parent="StateCamera" node_paths=PackedStringArray("target") instance=ExtResource("14_utu5j")]
-position = Vector2(90, 67)
-zoom = Vector2(4, 4)
-position_smoothing_speed = 2.0
-target = NodePath("../../Player")
-curve = SubResource("Curve_owhr2")
-
-[node name="StateCamera" parent="StateCamera/StateCamera" node_paths=PackedStringArray("target") instance=ExtResource("14_utu5j")]
-position = Vector2(90, 67)
-zoom = Vector2(4, 4)
-position_smoothing_speed = 2.0
-target = NodePath("../../../Player")
-curve = SubResource("Curve_owhr2")
-
-[node name="StateCamera" parent="StateCamera/StateCamera/StateCamera" node_paths=PackedStringArray("target") instance=ExtResource("14_utu5j")]
-position = Vector2(90, 67)
-zoom = Vector2(4, 4)
-position_smoothing_speed = 2.0
-target = NodePath("../../../../Player")
-curve = SubResource("Curve_owhr2")
-
-[node name="StateCamera2" parent="StateCamera/StateCamera/StateCamera" node_paths=PackedStringArray("target") instance=ExtResource("14_utu5j")]
-position = Vector2(90, 67)
-zoom = Vector2(4, 4)
-position_smoothing_speed = 2.0
-target = NodePath("../../../../Player")
-curve = SubResource("Curve_owhr2")
-
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]
