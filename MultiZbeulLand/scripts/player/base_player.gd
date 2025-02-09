@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name BasePlayerController
 
+@onready var coyote_timer: Timer = $CoyoteJumpTimer
+var coyote_used: bool = false
+
 # State variables
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var current_pipe = null
@@ -23,13 +26,11 @@ var is_invisible: bool:
 
 func _ready() -> void:
 	_input_state = PlayerInputState.new()
-	
-	# S'assurer que tous les états ont accès au player
+	# Ensure that all states have access to the player
 	for state in state_machine.get_children():
 		if state is BasePlayerState:
 			state.player = self
-			
-	# S'assurer que les particules sont désactivées au démarrage
+	# Ensure that particles are disabled on start
 	if has_node("WallDustParticles"):
 		$WallDustParticles.emitting = false
 
@@ -39,11 +40,20 @@ func getShape():
 func _physics_process(delta):
 	if not alive && is_on_floor():
 		_set_alive()
-
-	# First execute normal physics logic
+	
+	# When on the floor, stop the coyote timer and reset the flag.
+	if is_on_floor():
+		coyote_timer.stop()
+		coyote_used = false
+	else:
+		# Only start the coyote timer if it's not running and we haven't used it yet.
+		if not coyote_used and coyote_timer.is_stopped():
+			coyote_timer.start(PlayerStates.WALL_COYOTE_TIME)
+				
+	# Execute normal physics logic via the state machine.
 	$StateMachine._physics_process(delta)
 	
-	# Then reset one-shot actions
+	# Then reset one-shot actions.
 	post_physics_update()
 
 # Function to be overridden by children

@@ -21,7 +21,6 @@ func _physics_process(_delta):
 	_input_state.should_jump = Input.is_action_just_pressed("jump")
 	_input_state.should_down = Input.is_action_just_pressed("down")
 	
-	print("Jump pressed:", Input.is_action_just_pressed("jump"), " - should_jump:", _input_state.should_jump)
 	super._physics_process(_delta)
 	
 	# Ne pas reset les actions ici, ça sera fait APRÈS que la physique soit traitée
@@ -29,5 +28,4 @@ func _physics_process(_delta):
 
 # Nouveau: une fonction qui sera appelée après le physics_process pour reset les inputs
 func post_physics_update():
-	print("local post_physics_update called")
 	_input_state.reset_one_shot_actions()

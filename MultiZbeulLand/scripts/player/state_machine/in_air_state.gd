@@ -11,15 +11,16 @@ func enter() -> void:
 	print("should_jump:", player._input_state.should_jump)
 	print("Initial velocity:", player.velocity)
 	
-	# Init coyote time si on vient de quitter le sol ou un mur
+	# Initialize coyote time if coming off the floor or a wall.
 	if player.is_on_floor() or was_on_wall:
 		coyote_timer = PlayerStates.WALL_COYOTE_TIME
 		can_wall_jump = true
 	
-	# Si on entre depuis un saut normal
+	# If entering from a normal jump, mark coyote as used.
 	if player.is_on_floor() and player._input_state.should_jump:
 		print("Initiating jump with velocity:", PlayerStates.JUMP_VELOCITY)
 		player.velocity.y = PlayerStates.JUMP_VELOCITY
+		player.coyote_used = true
 		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
 	else:
 		print("Entering air state without jump")
@@ -29,24 +30,31 @@ func physics_update(delta: float) -> void:
 	print("InTheAirState - physics_update()")
 	print("Current velocity:", player.velocity)
 	
-	# Mettre à jour le timer de coyote
-	if coyote_timer > 0:
-		coyote_timer -= delta
-		if coyote_timer <= 0:
-			can_wall_jump = false
+	# Check for a coyote jump:
+	# Only trigger if:
+	#   - The coyote timer is still running,
+	#   - The player presses jump,
+	#   - The player's vertical velocity is not already negative,
+	#   - And a coyote jump hasn't already been used.
+	if not player.coyote_timer.is_stopped() and player._input_state.should_jump and player.velocity.y >= 0 and not player.coyote_used:
+		print("Coyote jump triggered via Timer!")
+		player.coyote_timer.stop()       # Stop the timer so it only triggers once.
+		player.coyote_used = true        # Mark that the coyote jump has been used.
+		player.velocity.y = PlayerStates.JUMP_VELOCITY
+		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
 	
-	# Mise à jour du mouvement
+	# Update horizontal movement based on input.
 	player.velocity.x = player._input_state.direction * PlayerStates.SPEED
+	
+	# Apply gravity.
 	player.velocity.y += player.gravity * delta
 	
-	# Vérifier les transitions
-	if player.is_on_wall():
-		was_on_wall = true
+	# Trigger wall slide only if on a wall and falling (not moving upward).
+	if player.is_on_wall() and player.velocity.y >= 0:
 		transition_to(PlayerStates.WALL_SLIDE)
 		return
-	else:
-		was_on_wall = false
 	
+	# If the player lands, transition to Idle or Running.
 	if player.is_on_floor():
 		if player._input_state.direction == 0:
 			transition_to(PlayerStates.IDLE)
@@ -54,7 +62,6 @@ func physics_update(delta: float) -> void:
 			transition_to(PlayerStates.RUNNING)
 		return
 	
-	# Update animation based on vertical velocity
 	_update_animations()
 	player.move_and_slide()
 

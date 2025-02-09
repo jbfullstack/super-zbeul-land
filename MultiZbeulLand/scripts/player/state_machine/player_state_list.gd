@@ -18,7 +18,7 @@ const GRAVITY = 4000.0  # À déplacer depuis ProjectSettings
 const WALL_SLIDE_SPEED = 50.0
 const WALL_SLIDE_SUPER_SLOW = 5.0  # Vitesse très lente quand on pousse vers le mur
 const WALL_SLIDE_MIN_TIME = 0.3  # Temps minimum de slow slide pour réinitialiser le wall jump
-const WALL_JUMP_VELOCITY = Vector2(150.0, -150.0)  # Augmenté la force en X
+const WALL_JUMP_VELOCITY = Vector2(100.0, -250.0)  # Augmenté la force en X
 const WALL_JUMP_OPPOSITE_FORCE = 1.5  # Multiplicateur de force dans la direction opposée
 const WALL_JUMP_NO_CONTROL_TIME = 0.25  # Temps pendant lequel le joueur ne peut pas contrôler après un wall jump
 const WALL_COYOTE_TIME = 0.1  # Temps pendant lequel le joueur encore jump wall apres avoir quitté le mur
@@ -30,3 +30,6 @@ const ANIMATION_FALL = "idle"
 const ANIMATION_RUN = "run"
 const ANIMATION_WALL_SLIDE = "jump"
 const ANIMATION_ENTER_PIPE = "idle"
+
+# Particules Fx constants
+const DEFAULT_WALL_DUST_PARTICULES_OFFSET = 4.0

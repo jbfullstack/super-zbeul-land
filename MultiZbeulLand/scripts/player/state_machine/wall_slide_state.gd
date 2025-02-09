@@ -61,9 +61,28 @@ func _stop_wall_particles() -> void:
 func _update_wall_particles() -> void:
 	if not player.has_node("WallDustParticles"):
 		return
-		
+	
 	var particles = player.get_node("WallDustParticles")
 	particles.emitting = player.is_wall_sliding
+	
+	# Calculer l'offset horizontal de base à partir de la collision shape
+	var offset_distance: float = PlayerStates.DEFAULT_WALL_DUST_PARTICULES_OFFSET
+	var shape = player.get_node("CollisionShape2D").shape
+	var new_position: Vector2
+	if shape is CircleShape2D:
+		# Pour un cercle, l'offset horizontal est basé sur le rayon (ajusté)
+		offset_distance = shape.radius - 4.0
+		# On ajoute un offset vertical pour placer les particules au milieu du joueur (par exemple, -shape.radius/2)
+		new_position = -player.wall_normal * offset_distance + Vector2(0, -shape.radius / 2)
+	elif shape is RectangleShape2D:
+		# Pour un rectangle, l'offset horizontal est basé sur l'extents.x (ajusté)
+		offset_distance = shape.extents.x - 4.0
+		# On positionne verticalement au centre du joueur, supposant que l'origine est en bas
+		new_position = -player.wall_normal * offset_distance + Vector2(0, -shape.extents.y)
+	else:
+		new_position = -player.wall_normal * offset_distance  # ou un Vector2(0,0) par défaut
+
+	particles.position = new_position
 	
 	if player.is_wall_sliding:
 		var speed_ratio = (abs(player.velocity.y) - PlayerStates.WALL_SLIDE_SUPER_SLOW) / (PlayerStates.WALL_SLIDE_SPEED - PlayerStates.WALL_SLIDE_SUPER_SLOW)
@@ -75,6 +94,8 @@ func _update_wall_particles() -> void:
 			process_material.initial_velocity_min = lerp(5.0, 20.0, speed_ratio)
 			process_material.initial_velocity_max = lerp(10.0, 30.0, speed_ratio)
 			particles.amount = int(lerp(4, 12, speed_ratio))
+
+
 
 func exit() -> void:
 	print("Exiting WallSlide state")
