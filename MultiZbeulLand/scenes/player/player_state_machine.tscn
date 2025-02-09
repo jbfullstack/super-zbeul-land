@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2cfyvaw537hy"]
+
+[ext_resource type="Script" path="res://scripts/player/state_machine/base_player_state_machine.gd" id="1_ordoa"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/idle_state.gd" id="2_3xtg4"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/running_state.gd" id="3_e5paj"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/in_air_state.gd" id="4_vcm8a"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/wall_slide_state.gd" id="5_vtkvc"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/wall_jump_state.gd" id="6_emoo0"]
+[ext_resource type="Script" path="res://scripts/player/state_machine/enter_pipe_state.gd" id="7_0a66i"]
+
+[node name="StateMachine" type="Node"]
+script = ExtResource("1_ordoa")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="."]
+script = ExtResource("2_3xtg4")
+
+[node name="Running" type="Node" parent="."]
+script = ExtResource("3_e5paj")
+
+[node name="InTheAir" type="Node" parent="."]
+script = ExtResource("4_vcm8a")
+
+[node name="WallSlide" type="Node" parent="."]
+script = ExtResource("5_vtkvc")
+
+[node name="WallJump" type="Node" parent="."]
+script = ExtResource("6_emoo0")
+
+[node name="EnterPipe" type="Node" parent="."]
+script = ExtResource("7_0a66i")

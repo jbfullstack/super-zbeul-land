@@ -8,3 +8,4 @@ var should_down: bool = false
 func reset_one_shot_actions() -> void:
 	should_jump = false
 	should_down = false
+

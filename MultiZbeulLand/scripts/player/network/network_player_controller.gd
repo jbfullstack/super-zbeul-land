@@ -19,7 +19,7 @@ static func _name() -> String:
 	return "NetworkPlayerController"
 
 func _ready():
-	super._ready()  # This initializes input_state in base controller
+	super._ready()
 	
 	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()
@@ -37,18 +37,18 @@ func _ready():
 	
 	visibility_manager.setup($AnimatedSprite2D, $PseudoLbl)
 
-func _physics_process(delta):
-	# Server handles physics and input
+
+func _physics_process(_delta):
+	# Serveur gère l'input
 	if multiplayer.is_server():
 		if get_multiplayer_authority() == multiplayer.get_unique_id():
 			_input_state.direction = %InputSynchronizer.input_direction
-		super._physics_process(delta)
-		_input_state.reset_one_shot_actions()
-	
-	# Clients only handle animations
-	if !multiplayer.is_server() || NetworkController.host_mode_enabled:
-		_handle_animations(delta)	
 
+	super._physics_process(_delta)
+	
+func post_physics_update():
+	_input_state.reset_one_shot_actions()
+	
 func _respawn():
 	super._respawn()
 	position = spawner_manager.respawn_point

@@ -15,7 +15,7 @@ func _on_body_entered(body):
 
 func _multiplayer_dead(body):
 	if multiplayer.is_server() && body.alive:
-		Engine.time_scale = 0.5
+		#Engine.time_scale = 0.5
 		body.mark_dead()
 
 func _on_timer_timeout():

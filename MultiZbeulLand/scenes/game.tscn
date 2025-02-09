@@ -1,10 +1,10 @@
 [gd_scene load_steps=22 format=3 uid="uid://cuv4vme4rwno0"]
 
-[ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/local_player.tscn" id="1_resmd"]
+[ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player/local_player.tscn" id="1_ou6fc"]
 [ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="2_hipvl"]
 [ext_resource type="Texture2D" uid="uid://bfi6mdi4viaal" path="res://assets/sprites/world_tileset.png" id="2_r1crl"]
 [ext_resource type="PackedScene" uid="uid://bgv5v2fxqlswe" path="res://scenes/platform.tscn" id="3_cmfc3"]
-[ext_resource type="PackedScene" uid="uid://b5s0pc6e66n5v" path="res://scenes/multiplayer/network_player.tscn" id="5_vtsra"]
+[ext_resource type="PackedScene" uid="uid://b5s0pc6e66n5v" path="res://scenes/player/network_player.tscn" id="5_i25qn"]
 [ext_resource type="PackedScene" uid="uid://dtrbka1ef726o" path="res://scenes/killzone.tscn" id="5_x8euu"]
 [ext_resource type="PackedScene" uid="uid://dhbcujmgpo7yv" path="res://scenes/multiplayer/multiplayer_coin.tscn" id="6_gt3lc"]
 [ext_resource type="PackedScene" uid="uid://d2w2i5h0lhc6l" path="res://scenes/slime.tscn" id="6_l0s6b"]
@@ -500,7 +500,7 @@ size = Vector2(33, 83)
 
 [node name="Game" type="Node"]
 
-[node name="Player" parent="." instance=ExtResource("1_resmd")]
+[node name="Player" parent="." instance=ExtResource("1_ou6fc")]
 position = Vector2(90, 74)
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -520,7 +520,7 @@ shape = SubResource("WorldBoundaryShape2D_cn5tm")
 [node name="SpawnerManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_rwnli")
-PlayerScene = ExtResource("5_vtsra")
+PlayerScene = ExtResource("5_i25qn")
 CoinScene = ExtResource("6_gt3lc")
 
 [node name="PlayersMarkers" type="Node" parent="SpawnerManager"]

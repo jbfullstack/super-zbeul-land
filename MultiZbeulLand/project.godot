@@ -30,7 +30,6 @@ PowerUpManager="*res://scripts/utils/power_up_manager.gd"
 
 [display]
 
-window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 

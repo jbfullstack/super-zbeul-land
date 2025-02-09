@@ -1,9 +1,10 @@
-[gd_scene load_steps=35 format=3 uid="uid://dqnaqj8yb6hwd"]
+[gd_scene load_steps=36 format=3 uid="uid://dqnaqj8yb6hwd"]
 
 [ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="1_p3dy5"]
 [ext_resource type="Script" path="res://scripts/player/local/local_player_controller.gd" id="1_ykxqx"]
 [ext_resource type="Script" path="res://scripts/player/local/local_visible_manager.gd" id="3_hogl6"]
 [ext_resource type="Texture2D" uid="uid://pyrrykkfuf16" path="res://assets/sprites/particles/fog/fog_01.png" id="4_cdn74"]
+[ext_resource type="PackedScene" uid="uid://d2cfyvaw537hy" path="res://scenes/player/player_state_machine.tscn" id="5_jcms7"]
 
 [sub_resource type="Curve" id="Curve_4plo1"]
 min_value = -360.0
@@ -214,6 +215,7 @@ collision_mask = 13
 script = ExtResource("1_ykxqx")
 
 [node name="JumpDustParticles" type="GPUParticles2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 emitting = false
 amount = 5
@@ -249,3 +251,5 @@ process_material = SubResource("ParticleProcessMaterial_t4bfv")
 texture = ExtResource("4_cdn74")
 lifetime = 0.5
 randomness = 0.49
+
+[node name="StateMachine" parent="." instance=ExtResource("5_jcms7")]
