@@ -8,11 +8,13 @@ const IN_AIR = "InTheAir"
 const WALL_SLIDE = "WallSlide"
 const WALL_JUMP = "WallJump"
 const ENTER_PIPE = "EnterPipe"
+const DOWN_DASH = "DownDash"
 
 # Movement constants
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 const GRAVITY = 4000.0  # À déplacer depuis ProjectSettings
+const DOWN_ATTACK_SPEED = 450
 
 # Wall mechanics
 const WALL_SLIDE_SPEED = 50.0
@@ -31,6 +33,7 @@ const ANIMATION_FALL = "idle"
 const ANIMATION_RUN = "run"
 const ANIMATION_WALL_SLIDE = "jump"
 const ANIMATION_ENTER_PIPE = "idle"
+const ANIMATION_DOWN_ATTACK = "down_dash"
 
 # Particules Fx constants
 const DEFAULT_WALL_DUST_PARTICULES_OFFSET = 4.0

@@ -84,6 +84,7 @@ func _stop_wall_particles() -> void:
 		player.get_node("WallDustParticles").emitting = false
 
 func _update_wall_particles() -> void:
+	
 	if not player.has_node("WallDustParticles"):
 		return
 		
@@ -96,6 +97,10 @@ func _update_wall_particles() -> void:
 		
 	# Calculer l'offset horizontal de base à partir de la collision shape
 	var offset_distance: float = PlayerStates.DEFAULT_WALL_DUST_PARTICULES_OFFSET
+	if player.get_node("CollisionShape2D") == null:
+		push_error("player.collision is null, preventing error")
+		return 
+		
 	var shape = player.get_node("CollisionShape2D").shape
 	var new_position: Vector2
 	if shape is CircleShape2D:

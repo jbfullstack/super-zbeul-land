@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://deu8adkndmhuv"]
+
+[node name="RayCastNode" type="Node2D"]
+
+[node name="FloorRayCasts" type="Node2D" parent="."]
+
+[node name="LeftFloorRayCast2D" type="RayCast2D" parent="FloorRayCasts"]
+position = Vector2(-3, -3)
+target_position = Vector2(0, 3)
+
+[node name="RightFloorRayCast2D" type="RayCast2D" parent="FloorRayCasts"]
+position = Vector2(3, -3)
+target_position = Vector2(0, 3)
+
+[node name="LeftWallRayCasts" type="Node2D" parent="."]
+
+[node name="LeftHandRayCast2D" type="RayCast2D" parent="LeftWallRayCasts"]
+position = Vector2(-2, -6)
+target_position = Vector2(-3, 0)
+
+[node name="LeftFootRayCast2D" type="RayCast2D" parent="LeftWallRayCasts"]
+position = Vector2(-2, -2)
+target_position = Vector2(-3, 0)
+
+[node name="RightWallRayCasts" type="Node2D" parent="."]
+
+[node name="RightHandRayCast2D" type="RayCast2D" parent="RightWallRayCasts"]
+position = Vector2(2, -6)
+target_position = Vector2(3, 0)
+
+[node name="RightFootRayCast2D" type="RayCast2D" parent="RightWallRayCasts"]
+position = Vector2(2, -2)
+target_position = Vector2(3, 0)

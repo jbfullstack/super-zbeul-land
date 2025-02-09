@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b5s0pc6e66n5v"]
+[gd_scene load_steps=34 format=3 uid="uid://b5s0pc6e66n5v"]
 
 [ext_resource type="Script" path="res://scripts/player/network/network_player_controller.gd" id="1_ih3nq"]
 [ext_resource type="Script" path="res://scripts/player/network/multiplayer_input.gd" id="2_nn87h"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dw23by3xj4w4m" path="res://scenes/menu/player_hud.tscn" id="5_g7f2r"]
 [ext_resource type="Script" path="res://scripts/player/network/multiplayer_visible_manager.gd" id="6_5egsx"]
 [ext_resource type="PackedScene" uid="uid://d2cfyvaw537hy" path="res://scenes/player/player_state_machine.tscn" id="7_uyu2t"]
+[ext_resource type="PackedScene" uid="uid://deu8adkndmhuv" path="res://scenes/player/player_ray_cast_node.tscn" id="8_crsjd"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
@@ -219,7 +220,7 @@ autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
-scale = Vector2(1, 1.04)
+scale = Vector2(0.72, 1.04)
 shape = SubResource("CircleShape2D_e5yko")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -270,16 +271,6 @@ script = ExtResource("6_5egsx")
 wait_time = 0.1
 one_shot = true
 
-[node name="RayCastNode" type="Node2D" parent="."]
-
-[node name="FloorRayCasts" type="Node2D" parent="RayCastNode"]
-
-[node name="LeftFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
-position = Vector2(-3, -3)
-target_position = Vector2(0, 3)
-
-[node name="RightFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
-position = Vector2(3, -3)
-target_position = Vector2(0, 3)
+[node name="RayCastNode" parent="." instance=ExtResource("8_crsjd")]
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]

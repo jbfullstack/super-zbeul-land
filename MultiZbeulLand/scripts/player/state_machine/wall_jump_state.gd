@@ -1,50 +1,52 @@
 extends BasePlayerState
 class_name WallJumpState
 
-var no_control_timer: float
+var no_control_timer: float = 0.0
 
 func enter() -> void:
-	# Initialiser le timer au début du wall jump
+	print("Entering WallJump state")
+	# Initialiser le timer de non-contrôle pour le wall jump
 	no_control_timer = PlayerStates.WALL_JUMP_NO_CONTROL_TIME
+	# Calculer la force du wall jump et appliquer la direction opposée du mur
 	var jump_force = PlayerStates.WALL_JUMP_VELOCITY
 	jump_force.x *= PlayerStates.WALL_JUMP_OPPOSITE_FORCE
-	
-	# Appliquer la velocité du wall jump
+	# Appliquer la vélocité initiale du wall jump
 	player.velocity = Vector2(player.wall_normal.x * jump_force.x, jump_force.y)
+	# Enregistrer le côté du saut (pour d'éventuelles restrictions ultérieures)
 	player.last_jump_side = sign(player.wall_normal.x)
-	
-	# Update animation
 	_update_animations()
 
 func physics_update(delta: float) -> void:
+	# Décrémenter le timer de non-contrôle
 	no_control_timer -= delta
+	# Appliquer la gravité
 	player.velocity.y += player.gravity * delta
 	
-	# Le mouvement horizontal ne doit être appliqué qu'après la période de non-contrôle
+	# Si le timer de non-contrôle est expiré, alors on autorise le joueur à changer la direction.
+	# Sinon, on conserve l'inertie (la vitesse x initiale du wall jump) tant que l'input horizontal reste nul.
 	if no_control_timer <= 0:
-		player.velocity.x = player._input_state.direction * PlayerStates.SPEED
-	
+		if player._input_state.direction != 0:
+			# Si le joueur fournit une commande, on applique la nouvelle vitesse en x
+			player.velocity.x = player._input_state.direction * PlayerStates.SPEED
+			player.animated_sprite.flip_h = player._input_state.direction < 0
+		elif player._input_state.should_down:
+			transition_to(PlayerStates.DOWN_DASH)
+		# Sinon, on conserve la vélocité x actuelle (inertie)
+
 	player.move_and_slide()
 	
-	# Check transitions dans l'ordre de priorité
+	# Transition vers d'autres états (exemple) :
 	if player.is_on_wall() and not player.is_on_floor():
-		# Permettre de re-wall slide uniquement sur un mur différent
-		var current_wall_normal = player.get_wall_normal()
-		if current_wall_normal != player.wall_normal:
-			transition_to(PlayerStates.WALL_SLIDE)
-	# Ne pas vérifier is_on_floor pendant la période de non-contrôle
-	elif player.is_on_floor() and no_control_timer <= 0:
+		transition_to(PlayerStates.WALL_SLIDE)
+	elif player.is_on_floor():
 		if player._input_state.direction == 0:
 			transition_to(PlayerStates.IDLE)
 		else:
 			transition_to(PlayerStates.RUNNING)
-	# Passer en état aérien seulement si le timer est écoulé
-	elif no_control_timer <= 0:
-		transition_to(PlayerStates.IN_AIR)
+	# Vous pouvez compléter avec d'autres conditions de transition si nécessaire.
 
 func _update_animations() -> void:
 	player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
-	player.animated_sprite.flip_h = player.velocity.x < 0
-
-func exit() -> void:
-	print("Exiting WallJump state")
+	# Inverser l'orientation du sprite si besoin (par exemple, en fonction de la vélocité x)
+	if player.velocity.x != 0:
+		player.animated_sprite.flip_h = player.velocity.x < 0

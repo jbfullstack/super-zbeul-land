@@ -5,7 +5,7 @@ var coyote_timer: float = 0.0
 var can_wall_jump: bool = false
 var was_on_wall: bool = false
 
-func enter() -> void:	
+func enter() -> void:
 	# Initialize coyote time if coming off the floor or a wall.
 	if player.is_on_floor() or was_on_wall:
 		coyote_timer = PlayerStates.WALL_COYOTE_TIME
@@ -52,6 +52,9 @@ func physics_update(delta: float) -> void:
 			transition_to(PlayerStates.RUNNING)
 		return
 	
+	if player._input_state.should_down:
+			transition_to(PlayerStates.DOWN_DASH)
+			
 	_update_animations()
 	player.move_and_slide()
 
