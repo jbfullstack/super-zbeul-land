@@ -59,6 +59,24 @@ func _physics_process(delta):
 # Function to be overridden by children
 func post_physics_update():
 	pass
+
+func floor_is_colliding_with_raycast() -> bool:
+	for ray in get_node("RayCastNode/FloorRayCasts").get_children():
+		if ray is RayCast2D and ray.is_enabled() and ray.is_colliding():
+			return true
+	return false
+	
+func left_wall_is_colliding_with_raycast() -> bool:
+	for ray in get_node("RayCastNode/LeftWallRayCasts").get_children():
+		if ray is RayCast2D and ray.is_enabled() and ray.is_colliding():
+			return true
+	return false
+	
+func right_wall_is_colliding_with_raycast() -> bool:
+	for ray in get_node("RayCastNode/RightWallRayCasts").get_children():
+		if ray is RayCast2D and ray.is_enabled() and ray.is_colliding():
+			return true
+	return false
 	
 func mark_dead():
 	print("Mark player dead!")

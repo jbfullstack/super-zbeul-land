@@ -5,12 +5,7 @@ var coyote_timer: float = 0.0
 var can_wall_jump: bool = false
 var was_on_wall: bool = false
 
-func enter() -> void:
-	print("InTheAirState - enter()")
-	print("is_on_floor:", player.is_on_floor())
-	print("should_jump:", player._input_state.should_jump)
-	print("Initial velocity:", player.velocity)
-	
+func enter() -> void:	
 	# Initialize coyote time if coming off the floor or a wall.
 	if player.is_on_floor() or was_on_wall:
 		coyote_timer = PlayerStates.WALL_COYOTE_TIME
@@ -18,18 +13,13 @@ func enter() -> void:
 	
 	# If entering from a normal jump, mark coyote as used.
 	if player.is_on_floor() and player._input_state.should_jump:
-		print("Initiating jump with velocity:", PlayerStates.JUMP_VELOCITY)
 		player.velocity.y = PlayerStates.JUMP_VELOCITY
 		player.coyote_used = true
 		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
 	else:
-		print("Entering air state without jump")
 		player.animated_sprite.play(PlayerStates.ANIMATION_FALL)
 
-func physics_update(delta: float) -> void:
-	print("InTheAirState - physics_update()")
-	print("Current velocity:", player.velocity)
-	
+func physics_update(delta: float) -> void:	
 	# Check for a coyote jump:
 	# Only trigger if:
 	#   - The coyote timer is still running,

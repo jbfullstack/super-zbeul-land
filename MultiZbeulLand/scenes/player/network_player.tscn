@@ -266,4 +266,20 @@ script = ExtResource("6_5egsx")
 
 [node name="StateMachine" parent="." instance=ExtResource("7_uyu2t")]
 
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="RayCastNode" type="Node2D" parent="."]
+
+[node name="FloorRayCasts" type="Node2D" parent="RayCastNode"]
+
+[node name="LeftFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
+position = Vector2(-3, -3)
+target_position = Vector2(0, 3)
+
+[node name="RightFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
+position = Vector2(3, -3)
+target_position = Vector2(0, 3)
+
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]

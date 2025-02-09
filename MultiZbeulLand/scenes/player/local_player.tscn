@@ -222,8 +222,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oaie3"]
-radius = 8.33333
+[sub_resource type="CircleShape2D" id="CircleShape2D_cpb70"]
+radius = 15.5807
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
@@ -251,8 +251,8 @@ autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
-scale = Vector2(0.6, 0.721473)
-shape = SubResource("CircleShape2D_oaie3")
+scale = Vector2(0.288452, 0.381219)
+shape = SubResource("CircleShape2D_cpb70")
 
 [node name="PowerManager" type="Node" parent="."]
 
@@ -274,3 +274,35 @@ randomness = 0.49
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="RayCastNode" type="Node2D" parent="."]
+
+[node name="FloorRayCasts" type="Node2D" parent="RayCastNode"]
+
+[node name="LeftFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
+position = Vector2(-3, -3)
+target_position = Vector2(0, 3)
+
+[node name="RightFloorRayCast2D" type="RayCast2D" parent="RayCastNode/FloorRayCasts"]
+position = Vector2(3, -3)
+target_position = Vector2(0, 3)
+
+[node name="LeftWallRayCasts" type="Node2D" parent="RayCastNode"]
+
+[node name="LeftHandRayCast2D" type="RayCast2D" parent="RayCastNode/LeftWallRayCasts"]
+position = Vector2(-2, -6)
+target_position = Vector2(-3, 0)
+
+[node name="LeftFootRayCast2D" type="RayCast2D" parent="RayCastNode/LeftWallRayCasts"]
+position = Vector2(-2, -2)
+target_position = Vector2(-3, 0)
+
+[node name="RightWallRayCasts" type="Node2D" parent="RayCastNode"]
+
+[node name="RightHandRayCast2D" type="RayCast2D" parent="RayCastNode/RightWallRayCasts"]
+position = Vector2(2, -6)
+target_position = Vector2(3, 0)
+
+[node name="RightFootRayCast2D" type="RayCast2D" parent="RayCastNode/RightWallRayCasts"]
+position = Vector2(2, -2)
+target_position = Vector2(3, 0)
