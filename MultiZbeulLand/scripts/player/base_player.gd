@@ -40,15 +40,6 @@ func getShape():
 func _physics_process(delta):
 	if not alive && is_on_floor():
 		_set_alive()
-	
-	# When on the floor, stop the coyote timer and reset the flag.
-	if is_on_floor():
-		coyote_timer.stop()
-		coyote_used = false
-	else:
-		# Only start the coyote timer if it's not running and we haven't used it yet.
-		if not coyote_used and coyote_timer.is_stopped():
-			coyote_timer.start(PlayerStates.WALL_COYOTE_TIME)
 				
 	# Execute normal physics logic via the state machine.
 	$StateMachine._physics_process(delta)
@@ -77,6 +68,21 @@ func right_wall_is_colliding_with_raycast() -> bool:
 		if ray is RayCast2D and ray.is_enabled() and ray.is_colliding():
 			return true
 	return false
+	
+func only_hand_is_colliding_with_raycast() -> bool:
+	var isRightHandColliding = get_node("RayCastNode/RightWallRayCasts/RightHandRayCast2D").is_colliding()
+	var isLeftHandColliding = get_node("RayCastNode/LeftWallRayCasts/LeftHandRayCast2D").is_colliding()
+	
+	if (isRightHandColliding or isLeftHandColliding):
+		var isRightFootColliding = get_node("RayCastNode/RightWallRayCasts/RightFootRayCast2D").is_colliding()
+		var isLefFootColliding = get_node("RayCastNode/LeftWallRayCasts/LeftFootRayCast2D").is_colliding()
+		if not isRightFootColliding and not isLefFootColliding:
+			return true
+		else:
+			return false
+	else:
+		return false
+	
 	
 func check_edge_correction():
 	var right_floor_ray = get_node("RayCastNode/FloorRayCasts/RightFloorRayCast2D")

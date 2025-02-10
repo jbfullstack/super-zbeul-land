@@ -3,6 +3,7 @@ extends Node
 var debug_network_setup = false
 var debug_spawner_manager = false
 var debug_player_hud = true
+var debug_player_state_machine = false
 
 # ---- Items
 var debug_all_items = true

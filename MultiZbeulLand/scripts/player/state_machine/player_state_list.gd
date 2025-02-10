@@ -23,7 +23,7 @@ const WALL_SLIDE_MIN_TIME = 0.3  # Temps minimum de slow slide pour réinitialis
 const WALL_JUMP_VELOCITY = Vector2(100.0, -250.0)  # Augmenté la force en X
 const WALL_JUMP_OPPOSITE_FORCE = 1.5  # Multiplicateur de force dans la direction opposée
 const WALL_JUMP_NO_CONTROL_TIME = 0.25  # Temps pendant lequel le joueur ne peut pas contrôler après un wall jump
-const WALL_COYOTE_TIME = 0.02  # Temps pendant lequel le joueur encore jump wall apres avoir quitté le mur
+const WALL_COYOTE_TIME = 0.5  # Temps pendant lequel le joueur encore jump wall apres avoir quitté le mur
 const MIN_FLOOR_CONTACT_TIME = 0.3
 
 # Animation names

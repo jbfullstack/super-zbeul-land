@@ -5,7 +5,7 @@ var down_attack_speed: float = PlayerStates.DOWN_ATTACK_SPEED
 var down_dash_inertia: float = 0.0
 
 func enter() -> void:
-	print("Entering DownDash state")
+	print_d("Entering DownDash state")
 	# Lancer l'animation spécifique au dash vers le bas
 	player.animated_sprite.play(PlayerStates.ANIMATION_DOWN_ATTACK)	
 	## Stocker l'inertie horizontale actuelle dès l'entrée dans l'état
@@ -33,5 +33,5 @@ func physics_update(delta: float) -> void:
 	# Notez qu'on ignore ici tout input (direction ou jump) afin de conserver l'inertie pendant tout le dash.
 
 func exit() -> void:
-	print("Exiting DownDash state")
+	print_d("Exiting DownDash state")
 	# Optionnel : réinitialiser des variables spécifiques à cet état

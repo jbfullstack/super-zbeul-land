@@ -54,15 +54,23 @@ func physics_update(delta: float) -> void:
 		else:
 			transition_to(PlayerStates.IN_AIR)
 		return
+		
+	#if player.only_hand_is_colliding_with_raycast():
+		#transition_to(PlayerStates.IN_AIR)
+		#return
 	
 	# Mettre à jour la normale du mur
 	player.wall_normal = player.get_wall_normal()
 	
 	# Ajuster la vitesse de glisse selon l'input
 	var pushing_into_wall = sign(player._input_state.direction) == -sign(player.wall_normal.x)
+	var pushing_away_from_wall = sign(player._input_state.direction) == sign(player.wall_normal.x)
 	if pushing_into_wall:
 		player.velocity.y = min(player.velocity.y, PlayerStates.WALL_SLIDE_SUPER_SLOW)
 		slow_slide_timer += delta
+	elif pushing_away_from_wall:
+		player.velocity.x += 2 * sign(player.wall_normal.x)
+		transition_to(PlayerStates.IN_AIR)
 	else:
 		player.velocity.y = min(player.velocity.y, PlayerStates.WALL_SLIDE_SPEED)
 		slow_slide_timer = 0.0
@@ -128,5 +136,4 @@ func _update_wall_particles() -> void:
 func exit() -> void:
 	print("Exiting WallSlide state")
 	player.is_wall_sliding = false
-	if player.has_node("WallDustParticles"):
-		player.get_node("WallDustParticles").emitting = false
+	_stop_wall_particles()

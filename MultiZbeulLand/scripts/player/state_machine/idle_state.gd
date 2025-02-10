@@ -16,13 +16,13 @@ func physics_update(delta: float) -> void:
 	
 	# Vérifier les transitions
 	if player._input_state.should_jump and player.is_on_floor():
-		print("Initiating jump transition")
+		print_d("Initiating jump transition")
 		transition_to(PlayerStates.IN_AIR)
 	elif not player.is_on_floor():
-		print("Falling transition")
+		print_d("Falling transition")
 		transition_to(PlayerStates.IN_AIR)
 	elif player._input_state.direction != 0:
-		print("Running transition")
+		print_d("Running transition")
 		transition_to(PlayerStates.RUNNING)
 	
 	player.move_and_slide()

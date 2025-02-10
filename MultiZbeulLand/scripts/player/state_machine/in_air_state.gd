@@ -27,7 +27,7 @@ func physics_update(delta: float) -> void:
 	#   - The player's vertical velocity is not already negative,
 	#   - And a coyote jump hasn't already been used.
 	if not player.coyote_timer.is_stopped() and player._input_state.should_jump and player.velocity.y >= 0 and not player.coyote_used:
-		print("Coyote jump triggered via Timer!")
+		print_d("Coyote jump triggered via Timer!")
 		player.coyote_timer.stop()       # Stop the timer so it only triggers once.
 		player.coyote_used = true        # Mark that the coyote jump has been used.
 		player.velocity.y = PlayerStates.JUMP_VELOCITY

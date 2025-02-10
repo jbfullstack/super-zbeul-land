@@ -31,3 +31,10 @@ func _update_animations() -> void:
 # Fonction utilitaire pour les transitions
 func transition_to(new_state: String) -> void:
 	state_finished.emit(new_state)
+
+func print_d(msg: String):
+	if DebugUtils.debug_player_state_machine:
+		if NetworkController.multiplayer_mode_enabled:
+			print("%s  [%s]" % [msg,multiplayer.get_unique_id() ])
+		else:
+			print(msg)
