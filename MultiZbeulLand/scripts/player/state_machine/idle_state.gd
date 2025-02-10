@@ -12,6 +12,8 @@ func physics_update(delta: float) -> void:
 	
 	player.velocity.y += player.gravity * delta
 	
+	player.check_edge_correction()
+	
 	# Vérifier les transitions
 	if player._input_state.should_jump and player.is_on_floor():
 		print("Initiating jump transition")

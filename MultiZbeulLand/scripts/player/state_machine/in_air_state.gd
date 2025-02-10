@@ -1,14 +1,14 @@
 extends BasePlayerState
 class_name InTheAirState
 
-var coyote_timer: float = 0.0
+#var coyote_timer: float = 0.0
 var can_wall_jump: bool = false
 var was_on_wall: bool = false
 
 func enter() -> void:
 	# Initialize coyote time if coming off the floor or a wall.
 	if player.is_on_floor() or was_on_wall:
-		coyote_timer = PlayerStates.WALL_COYOTE_TIME
+		#coyote_timer = PlayerStates.WALL_COYOTE_TIME
 		can_wall_jump = true
 	
 	# If entering from a normal jump, mark coyote as used.
@@ -40,7 +40,7 @@ func physics_update(delta: float) -> void:
 	player.velocity.y += player.gravity * delta
 	
 	# Trigger wall slide only if on a wall and falling (not moving upward).
-	if player.is_on_wall() and player.velocity.y >= 0:
+	if player.is_on_wall() and player.velocity.y >= 0 and (player.left_wall_is_colliding_with_raycast() or player.right_wall_is_colliding_with_raycast()):
 		transition_to(PlayerStates.WALL_SLIDE)
 		return
 	
