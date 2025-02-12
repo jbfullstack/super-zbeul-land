@@ -35,9 +35,9 @@ target_position = Vector2(3, 0)
 [node name="EdgeCorrectionCasts" type="Node2D" parent="."]
 
 [node name="LeftCorrectionFloorRayCast2D" type="RayCast2D" parent="EdgeCorrectionCasts"]
-position = Vector2(-2, -3)
+position = Vector2(-1, -3)
 target_position = Vector2(0, 3)
 
 [node name="RightCorrectionFloorRayCast2D" type="RayCast2D" parent="EdgeCorrectionCasts"]
-position = Vector2(2, -3)
+position = Vector2(1, -3)
 target_position = Vector2(0, 3)

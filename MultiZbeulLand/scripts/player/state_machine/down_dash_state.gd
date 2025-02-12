@@ -7,7 +7,7 @@ var down_dash_inertia: float = 0.0
 func enter() -> void:
 	print_d("Entering DownDash state")
 	# Lancer l'animation spécifique au dash vers le bas
-	player.animated_sprite.play(PlayerStates.ANIMATION_DOWN_ATTACK)	
+	set_animation(PlayerStates.ANIMATION_DOWN_ATTACK)	
 	## Stocker l'inertie horizontale actuelle dès l'entrée dans l'état
 	#down_dash_inertia = player.velocity.x
 	player.velocity.x = 0

@@ -6,7 +6,7 @@ func enter() -> void:
 	player.velocity = Vector2.ZERO
 	print_d("Entering EnterPipe state")
 	# Joue l'animation dédiée, si elle existe
-	player.animated_sprite.play(PlayerStates.ANIMATION_ENTER_PIPE)
+	set_animation(PlayerStates.ANIMATION_ENTER_PIPE)
 	# Optionnel : désactiver temporairement les inputs ou autres éléments visuels
 
 func physics_update(delta: float) -> void:

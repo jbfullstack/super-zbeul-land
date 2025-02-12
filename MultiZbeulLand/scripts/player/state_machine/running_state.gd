@@ -9,16 +9,20 @@ func physics_update(delta: float) -> void:
 		transition_to(PlayerStates.ENTER_PIPE)
 		return
 		
-	player.velocity.x = player._input_state.direction * PlayerStates.SPEED
+	# prevent user to fall if joystick not heavly presssed
+	if player.is_on_edge() and abs(player._input_state.direction) < 0.8:
+		print("Prevent player falling - Running")
+	else:
+		player.velocity.x = player._input_state.direction * PlayerStates.SPEED
 	player.velocity.y += player.gravity * delta
 	
 	# Check transitions
 	if not player.is_on_floor():
 		# Init coyote for player 
 		player.timers_component.start_coyote_jump()
-		transition_to(PlayerStates.IN_AIR)
+		transition_to(PlayerStates.FALL)
 	elif (player._input_state.should_jump ):
-		transition_to(PlayerStates.IN_AIR)
+		transition_to(PlayerStates.JUMP)
 	elif player._input_state.direction == 0:
 		transition_to(PlayerStates.IDLE)
 	else:
@@ -27,7 +31,7 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 
 func _update_animations() -> void:
-	player.animated_sprite.play(PlayerStates.ANIMATION_RUN)
+	set_animation(PlayerStates.ANIMATION_RUN)
 	var effective_direction = player._input_state.direction
 	if effective_direction == 0:
 		effective_direction = sign(player.velocity.x)

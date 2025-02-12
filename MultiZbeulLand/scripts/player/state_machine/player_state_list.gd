@@ -3,8 +3,10 @@ class_name PlayerStates
 
 # State names
 const IDLE = "Idle"
-const RUNNING = "Running"
-const IN_AIR = "InTheAir"
+const RUN = "Run"
+#const IN_AIR = "InTheAir"
+const JUMP = "Jump"
+const FALL = "Fall"
 const WALL_SLIDE = "WallSlide"
 const WALL_JUMP = "WallJump"
 const ENTER_PIPE = "EnterPipe"
@@ -39,6 +41,7 @@ const ANIMATION_RUN = "run"
 const ANIMATION_WALL_SLIDE = "jump"
 const ANIMATION_ENTER_PIPE = "idle"
 const ANIMATION_DOWN_ATTACK = "down_dash"
+const ANIMATION_ON_EDGE_OF_FALLING = "on_edge"
 
 # Particules Fx constants
 const DEFAULT_WALL_DUST_PARTICULES_OFFSET = 4.0

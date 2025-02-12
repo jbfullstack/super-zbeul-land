@@ -50,9 +50,9 @@ func physics_update(delta: float) -> void:
 			if player._input_state.direction == 0:
 				transition_to(PlayerStates.IDLE)
 			else:
-				transition_to(PlayerStates.RUNNING)
+				transition_to(PlayerStates.RUN)
 		else:
-			transition_to(PlayerStates.IN_AIR)
+			transition_to(PlayerStates.FALL)
 		return
 		
 	#if player.only_hand_is_colliding_with_raycast():
@@ -70,7 +70,7 @@ func physics_update(delta: float) -> void:
 		slow_slide_timer += delta
 	elif pushing_away_from_wall:
 		player.velocity.x += 2 * sign(player.wall_normal.x)
-		transition_to(PlayerStates.IN_AIR)
+		transition_to(PlayerStates.FALL)
 	else:
 		player.velocity.y = min(player.velocity.y, PlayerStates.WALL_SLIDE_SPEED)
 		slow_slide_timer = 0.0
@@ -84,7 +84,7 @@ func physics_update(delta: float) -> void:
 
 
 func _update_animations() -> void:
-	player.animated_sprite.play(PlayerStates.ANIMATION_WALL_SLIDE)
+	set_animation(PlayerStates.ANIMATION_WALL_SLIDE)
 	player.animated_sprite.flip_h = player.wall_normal.x > 0
 
 func _stop_wall_particles() -> void:

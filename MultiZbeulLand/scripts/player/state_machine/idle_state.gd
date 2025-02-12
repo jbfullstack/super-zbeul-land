@@ -12,23 +12,28 @@ func physics_update(delta: float) -> void:
 	
 	player.velocity.y += player.gravity * delta
 	
-	player.check_edge_correction()
+	#player.check_edge_correction()
 	
 	# Vérifier les transitions
 	if (player._input_state.should_jump ) and player.is_on_floor():
 		print_d("Initiating jump transition")
-		transition_to(PlayerStates.IN_AIR)
+		transition_to(PlayerStates.JUMP)
 	elif not player.is_on_floor():
 		print_d("Falling transition")
-		transition_to(PlayerStates.IN_AIR)
+		transition_to(PlayerStates.FALL)
+	elif player.is_on_edge() and abs(player._input_state.direction) < 0.9:
+		#print("Prevent player falling - IDLE")
+		
+		set_animation(PlayerStates.ANIMATION_ON_EDGE_OF_FALLING)
+		pass
 	elif player._input_state.direction != 0:
 		print_d("Running transition")
-		transition_to(PlayerStates.RUNNING)
+		transition_to(PlayerStates.RUN)
 	
 	player.move_and_slide()
 
 func _update_animations() -> void:
-	player.animated_sprite.play(PlayerStates.ANIMATION_IDLE)
+	set_animation(PlayerStates.ANIMATION_IDLE)
 	
 	var effective_direction = player._input_state.direction
 	if effective_direction == 0:

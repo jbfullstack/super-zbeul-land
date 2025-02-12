@@ -93,12 +93,25 @@ func check_edge_correction():
 	var right_foot_ray = get_node("RayCastNode/RightWallRayCasts/RightFootRayCast2D")
 	var left_foot_ray = get_node("RayCastNode/LeftWallRayCasts/LeftFootRayCast2D")
 	if right_floor_ray.is_colliding() and not right_foot_ray.is_colliding() and not right_correction_floor_ray.is_colliding():
-		position.x += 2  # Nudge player left
-		position.y -= 1  # Small vertical adjustment
+		position.x += 1  # Nudge player left
+		#position.y -= 1  # Small vertical adjustment
 	elif left_floor_ray.is_colliding() and not left_foot_ray.is_colliding() and not left_correction_floor_ray.is_colliding():
-		position.x -= 2  # Nudge player right
-		position.y -= 1  # Small vertical adjustment
+		position.x -= 1  # Nudge player right
+		#position.y -= 1  # Small vertical adjustment
+
+func is_on_edge():
+	var right_floor_ray = get_node("RayCastNode/FloorRayCasts/RightFloorRayCast2D")
+	var left_floor_ray = get_node("RayCastNode/FloorRayCasts/LeftFloorRayCast2D")
+	var right_correction_floor_ray = get_node("RayCastNode/EdgeCorrectionCasts/RightCorrectionFloorRayCast2D")
+	var left_correction_floor_ray = get_node("RayCastNode/EdgeCorrectionCasts/LeftCorrectionFloorRayCast2D")
 	
+	if right_floor_ray.is_colliding() and not right_correction_floor_ray.is_colliding():
+		return true
+	elif left_floor_ray.is_colliding() and not left_correction_floor_ray.is_colliding():
+		return true
+	else:
+		return false
+		
 func mark_dead():
 	print("Mark player dead!")
 	alive = false

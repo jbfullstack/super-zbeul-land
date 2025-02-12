@@ -16,7 +16,7 @@ func enter() -> void:
 	if player.is_on_floor() and player._input_state.should_jump:
 		start_jump()
 	else:
-		player.animated_sprite.play(PlayerStates.ANIMATION_FALL)
+		set_animation(PlayerStates.ANIMATION_FALL)
 
 func physics_update(delta: float) -> void:	
 	# Check for coyote jump
@@ -68,7 +68,7 @@ func physics_update(delta: float) -> void:
 		if player._input_state.direction == 0:
 			transition_to(PlayerStates.IDLE)
 		else:
-			transition_to(PlayerStates.RUNNING)
+			transition_to(PlayerStates.RUN)
 		return
 	
 	if player._input_state.should_down:
@@ -81,13 +81,13 @@ func physics_update(delta: float) -> void:
 func start_jump() -> void:
 	player.velocity.y = PlayerStates.JUMP_VELOCITY * INITIAL_JUMP_BOOST  # Snappier initial jump
 	player.timers_component.start_max_jump()
-	player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
+	set_animation(PlayerStates.ANIMATION_JUMP)
 	
 func _update_animations() -> void:
 	if player.velocity.y < 0:
-		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
+		set_animation(PlayerStates.ANIMATION_JUMP)
 	else:
-		player.animated_sprite.play(PlayerStates.ANIMATION_FALL)
+		set_animation(PlayerStates.ANIMATION_FALL)
 	
 	if player.velocity.x != 0:
 		player.animated_sprite.flip_h = player.velocity.x < 0

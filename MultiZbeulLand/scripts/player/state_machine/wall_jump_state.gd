@@ -42,11 +42,11 @@ func physics_update(delta: float) -> void:
 		if player._input_state.direction == 0:
 			transition_to(PlayerStates.IDLE)
 		else:
-			transition_to(PlayerStates.RUNNING)
+			transition_to(PlayerStates.RUN)
 	# Vous pouvez compléter avec d'autres conditions de transition si nécessaire.
 
 func _update_animations() -> void:
-	player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
+	set_animation(PlayerStates.ANIMATION_JUMP)
 	# Inverser l'orientation du sprite si besoin (par exemple, en fonction de la vélocité x)
 	if player.velocity.x != 0:
 		player.animated_sprite.flip_h = player.velocity.x < 0

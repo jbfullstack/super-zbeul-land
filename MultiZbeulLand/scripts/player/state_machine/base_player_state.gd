@@ -38,3 +38,10 @@ func print_d(msg: String):
 			print("%s  [%s]" % [msg,multiplayer.get_unique_id() ])
 		else:
 			print(msg)
+
+func set_animation(animation_name: String) -> bool:
+	if player.animated_sprite.animation !=animation_name:
+		player.animated_sprite.play(animation_name)
+		return true
+	else:
+		return false
