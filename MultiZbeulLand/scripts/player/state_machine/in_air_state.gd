@@ -1,20 +1,18 @@
 extends BasePlayerState
 class_name InTheAirState
 
-#var coyote_timer: float = 0.0
 var can_wall_jump: bool = false
 var was_on_wall: bool = false
 
-func enter() -> void:
+func enter() -> void:		
 	# Initialize coyote time if coming off the floor or a wall.
 	if player.is_on_floor() or was_on_wall:
-		#coyote_timer = PlayerStates.WALL_COYOTE_TIME
 		can_wall_jump = true
 	
 	# If entering from a normal jump, mark coyote as used.
 	if player.is_on_floor() and player._input_state.should_jump:
 		player.velocity.y = PlayerStates.JUMP_VELOCITY
-		player.coyote_used = true
+		player.timers_component.coyote_used = true
 		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
 	else:
 		player.animated_sprite.play(PlayerStates.ANIMATION_FALL)
@@ -26,10 +24,9 @@ func physics_update(delta: float) -> void:
 	#   - The player presses jump,
 	#   - The player's vertical velocity is not already negative,
 	#   - And a coyote jump hasn't already been used.
-	if not player.coyote_timer.is_stopped() and player._input_state.should_jump and player.velocity.y >= 0 and not player.coyote_used:
+	if player.timers_component.coyote_timer_allows_jump() and player._input_state.should_jump and player.velocity.y >= 0:
 		print_d("Coyote jump triggered via Timer!")
-		player.coyote_timer.stop()       # Stop the timer so it only triggers once.
-		player.coyote_used = true        # Mark that the coyote jump has been used.
+		player.timers_component.stop_coyote_jump()      # Stop the timer so it only triggers once.
 		player.velocity.y = PlayerStates.JUMP_VELOCITY
 		player.animated_sprite.play(PlayerStates.ANIMATION_JUMP)
 	

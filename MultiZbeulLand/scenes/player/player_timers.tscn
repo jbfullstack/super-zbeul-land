@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://e7du7xxjcdkb"]
+
+[ext_resource type="Script" path="res://scripts/player/components/player_timers.gd" id="1_svcv3"]
+
+[node name="Timers" type="Node"]
+script = ExtResource("1_svcv3")
+
+[node name="ChargerJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

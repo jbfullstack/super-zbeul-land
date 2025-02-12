@@ -1,8 +1,8 @@
 extends CharacterBody2D
 class_name BasePlayerController
 
-@onready var coyote_timer: Timer = $CoyoteJumpTimer
-var coyote_used: bool = false
+# Timers
+@onready var timers_component: PlayerTimersComponenent = $Timers
 
 # State variables
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")

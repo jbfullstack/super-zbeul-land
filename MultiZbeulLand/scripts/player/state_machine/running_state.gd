@@ -15,10 +15,9 @@ func physics_update(delta: float) -> void:
 	# Check transitions
 	if not player.is_on_floor():
 		# Init coyote for player 
-		player.coyote_used = false
-		player.coyote_timer.start()
+		player.timers_component.start_coyote_jump()
 		transition_to(PlayerStates.IN_AIR)
-	elif player._input_state.should_jump:
+	elif (player._input_state.should_jump ):
 		transition_to(PlayerStates.IN_AIR)
 	elif player._input_state.direction == 0:
 		transition_to(PlayerStates.IDLE)
