@@ -40,4 +40,4 @@ func _update_animations() -> void:
 		effective_direction = sign(player.velocity.x)
 	
 	if effective_direction != 0:
-		player.animated_sprite.flip_h = effective_direction < 0
+		set_flip_h(effective_direction < 0)

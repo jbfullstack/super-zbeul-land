@@ -35,4 +35,4 @@ func update_animations() -> void:
 		set_animation(PlayerStates.ANIMATION_FALL)
 	
 	if player.velocity.x != 0:
-		player.animated_sprite.flip_h = player.velocity.x < 0
+		set_flip_h(player.velocity.x < 0)

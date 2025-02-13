@@ -8,7 +8,9 @@ func _on_body_entered(body):
 		if not NetworkController.multiplayer_mode_enabled:
 			print("You died!")
 			Engine.time_scale = 0.5
-			body.get_node("CollisionShape2D").queue_free()
+			var collShape = body.get_node("CollisionShape2D")
+			if collShape != null:
+				collShape.queue_free()
 			timer.start()
 		else:
 			_multiplayer_dead(body)

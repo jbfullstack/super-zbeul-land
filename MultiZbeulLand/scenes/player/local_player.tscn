@@ -255,7 +255,6 @@ autoplay = "idle"
 
 [node name="head" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, -12.5)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_dmglt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

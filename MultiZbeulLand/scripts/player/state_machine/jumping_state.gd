@@ -24,6 +24,7 @@ func physics_update(delta: float) -> void:
 	
 	# Handle state transitions - CHECK VELOCITY AFTER APPLYING PHYSICS
 	if player.velocity.y >= 0:
+		player.timers_component.start_coyote_jump()
 		transition_to(PlayerStates.FALL)
 		return
 		

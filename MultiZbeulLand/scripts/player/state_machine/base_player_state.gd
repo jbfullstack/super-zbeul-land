@@ -28,6 +28,21 @@ func animation_update(_delta: float) -> void:
 func _update_animations() -> void:
 	pass
 
+func set_animation(animation_name: String) -> bool:
+	if player.animated_sprite.animation != animation_name:
+		player.animated_sprite.play(animation_name)
+		return true
+	else:
+		return false
+
+func set_flip_h(value: bool) -> bool:
+	if player.animated_sprite.flip_h != value:
+		player.animated_sprite.flip_h = value
+		return true
+	else:
+		return false
+
+
 # Fonction utilitaire pour les transitions
 func transition_to(new_state: String) -> void:
 	state_finished.emit(new_state)
@@ -39,9 +54,4 @@ func print_d(msg: String):
 		else:
 			print(msg)
 
-func set_animation(animation_name: String) -> bool:
-	if player.animated_sprite.animation !=animation_name:
-		player.animated_sprite.play(animation_name)
-		return true
-	else:
-		return false
+

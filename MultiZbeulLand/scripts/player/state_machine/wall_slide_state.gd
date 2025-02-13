@@ -70,6 +70,7 @@ func physics_update(delta: float) -> void:
 		slow_slide_timer += delta
 	elif pushing_away_from_wall:
 		player.velocity.x += 2 * sign(player.wall_normal.x)
+		player.timers_component.start_coyote_jump()
 		transition_to(PlayerStates.FALL)
 	else:
 		player.velocity.y = min(player.velocity.y, PlayerStates.WALL_SLIDE_SPEED)
@@ -85,7 +86,7 @@ func physics_update(delta: float) -> void:
 
 func _update_animations() -> void:
 	set_animation(PlayerStates.ANIMATION_WALL_SLIDE)
-	player.animated_sprite.flip_h = player.wall_normal.x > 0
+	set_flip_h(player.wall_normal.x > 0)
 
 func _stop_wall_particles() -> void:
 	if player.has_node("WallDustParticles"):

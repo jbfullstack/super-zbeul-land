@@ -12,6 +12,7 @@ func physics_update(delta: float) -> void:
 	# prevent user to fall if joystick not heavly presssed
 	if player.is_on_edge() and abs(player._input_state.direction) < 0.8:
 		print("Prevent player falling - Running")
+		set_animation(PlayerStates.ANIMATION_ON_EDGE_OF_FALLING)
 	else:
 		player.velocity.x = player._input_state.direction * PlayerStates.SPEED
 	player.velocity.y += player.gravity * delta
@@ -37,4 +38,4 @@ func _update_animations() -> void:
 		effective_direction = sign(player.velocity.x)
 	
 	if effective_direction != 0:
-		player.animated_sprite.flip_h = effective_direction < 0
+		set_flip_h(effective_direction < 0)
