@@ -1,5 +1,5 @@
 # HOW TO USE
  - Background color is 255,0,255
  - Put pictures in from folder
- - execute : py remove_background.py
+ - execute : python remove_background.py
  - retrieve picture with backaground removed in to folder
