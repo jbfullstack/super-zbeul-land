@@ -13,6 +13,7 @@ enum GrappleState {
 	RETRACTING
 }
 
+var is_equiped: bool = false
 var state: int = GrappleState.IDLE
 var is_griping: bool:
 	get:
@@ -42,6 +43,9 @@ func _ready():
 	set_physics_process(false)
 
 func _physics_process(delta):
+	if !is_equiped:
+		return
+		
 	if player._input_state.joystick_direction.length_squared() > 0.1:
 		raycast.target_position = player._input_state.joystick_direction * 100
 		raycast.force_raycast_update()

@@ -16,7 +16,7 @@ var last_wall_normal = Vector2.ZERO
 var is_wall_sliding = false
 var last_jump_side = 0
 
-
+var is_run_action_activated: bool = false
 
 # Protected variables for child classes
 var _input_state: PlayerInputState
@@ -40,6 +40,12 @@ func _ready() -> void:
 
 func getShape():
 	return self.get_node("CollisionShape2D")
+
+func _process(delta):
+	if _input_state.should_start_run:
+		is_run_action_activated = true
+	elif _input_state.should_stop_run:
+		is_run_action_activated = false
 
 func _physics_process(delta):
 	if not alive && is_on_floor():

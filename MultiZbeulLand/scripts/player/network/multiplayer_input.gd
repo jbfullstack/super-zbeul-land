@@ -18,6 +18,12 @@ func _physics_process(_delta):
 	).normalized()
 	
 func _process(_delta):
+	if Input.is_action_just_pressed("run"):
+		start_run.rpc()
+		
+	if Input.is_action_just_released("run"):
+		stop_run.rpc()
+		
 	if Input.is_action_just_pressed("jump"):
 		jump.rpc()
 		
@@ -31,7 +37,18 @@ func _process(_delta):
 		grapple.rpc()
 		
 	
-
+@rpc("call_local")
+func start_run():
+	if multiplayer.is_server():
+		player._input_state.should_start_run = true
+		player._input_state.is_run_action_activated = true
+		
+@rpc("call_local")
+func stop_run():
+	if multiplayer.is_server():
+		player._input_state.should_stop_run = true
+		player._input_state.is_run_action_activated = false
+		
 @rpc("call_local")
 func jump():
 	if multiplayer.is_server():

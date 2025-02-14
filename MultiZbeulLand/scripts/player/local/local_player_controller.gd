@@ -23,6 +23,12 @@ func _physics_process(_delta):
 		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	).normalized()
 	
+	_input_state.should_start_run = Input.is_action_just_pressed("run")
+	if (_input_state.should_start_run):
+		_input_state.is_run_action_activated = true
+	_input_state.should_stop_run = Input.is_action_just_released("run")
+	if (_input_state.should_stop_run):
+		_input_state.is_run_action_activated = false
 	_input_state.should_jump = Input.is_action_just_pressed("jump")
 	_input_state.jump_just_released = Input.is_action_just_released("jump")
 	_input_state.should_down = Input.is_action_just_pressed("down")
