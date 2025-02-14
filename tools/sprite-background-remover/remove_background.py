@@ -43,7 +43,7 @@ def remove_background_with_color(image_path, output_path, background_color=(255,
     # Save the image
     Image.fromarray(image).save(output_path)
 
-def process_folder(input_folder, output_folder, background_color=(255, 0, 255)):
+def process_folder(input_folder, output_folder, background_color=(0, 0, 0)):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 

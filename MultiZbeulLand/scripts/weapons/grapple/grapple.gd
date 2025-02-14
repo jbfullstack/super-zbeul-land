@@ -24,17 +24,50 @@ var stiffness = 10.0
 var damping = 2.0
 var raycast: RayCast2D
 
+# for visual target
+var appear_tween: Tween
+var pulse_tween: Tween
+var was_colliding: bool = false
+@onready var visual_target: VisualGrappleTarget = $VisualTarget
+
+
 func _ready():
 	print("Grapple ready")
 	await owner.ready
 	player = owner as BasePlayerController
 	raycast = owner.get_node("Weapons/RayCasts/GrappleRayCast2D") as RayCast2D
+	
+	visual_target.scale = Vector2.ZERO
+	
 	set_physics_process(false)
 
 func _physics_process(delta):
 	if player._input_state.joystick_direction.length_squared() > 0.1:
 		raycast.target_position = player._input_state.joystick_direction * 100
 		raycast.force_raycast_update()
+
+	# Hide target if grapple is attached
+	#if state == GrappleState.ATTACHED:
+		#visual_target.scale = Vector2.ZERO
+		#was_colliding = false
+		#return
+
+	if state != GrappleState.ATTACHED:
+		if raycast.is_colliding():
+			var collision_point = raycast.get_collision_point()
+			visual_target.global_position = collision_point
+				
+			if not was_colliding:
+				visual_target.appear()
+			#elif not appear_tween or not appear_tween.is_running():
+				#play_target_pulse_animation()
+		else:
+			if was_colliding:
+				visual_target.hide_target()
+	else:
+		visual_target.hide_target()
+		
+	was_colliding = raycast.is_colliding()
 	
 	if player._input_state.should_grapple_action:
 		if state == GrappleState.IDLE:
@@ -83,4 +116,3 @@ func compute_velocity(delta) -> Vector2:
 		force = spring_force + damping_force
 		
 	return force * delta
-
