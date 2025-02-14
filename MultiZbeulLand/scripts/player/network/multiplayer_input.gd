@@ -3,6 +3,7 @@ extends MultiplayerSynchronizer
 @onready var player = $".."
 
 var input_direction = 0.0
+var joystick_direction = Vector2.ZERO
 
 func _ready():
 	if get_multiplayer_authority() != multiplayer.get_unique_id():
@@ -11,7 +12,11 @@ func _ready():
 
 func _physics_process(_delta):
 	input_direction = Input.get_axis("move_left", "move_right")
-
+	joystick_direction =Vector2(
+		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	).normalized()
+	
 func _process(_delta):
 	if Input.is_action_just_pressed("jump"):
 		jump.rpc()
@@ -21,6 +26,9 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("down"):
 		down.rpc()
+		
+	if Input.is_action_just_pressed("grapple"):
+		grapple.rpc()
 		
 	
 
@@ -38,3 +46,8 @@ func release_jump():
 func down():
 	if multiplayer.is_server():
 		player._input_state.should_down = true
+
+@rpc("call_local")
+func grapple():
+	if multiplayer.is_server():
+		player._input_state.should_grapple_action = true

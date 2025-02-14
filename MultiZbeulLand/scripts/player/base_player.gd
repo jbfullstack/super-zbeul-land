@@ -3,6 +3,8 @@ class_name BasePlayerController
 
 # Timers
 @onready var timers_component: PlayerTimersComponenent = $Timers
+#@onready var grapple_rope: Line2D = $Rope
+@onready var grapple: Grapple = $Weapons/Grapple
 
 # State variables
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -13,6 +15,8 @@ var wall_normal = Vector2.ZERO
 var last_wall_normal = Vector2.ZERO
 var is_wall_sliding = false
 var last_jump_side = 0
+
+
 
 # Protected variables for child classes
 var _input_state: PlayerInputState
@@ -40,7 +44,9 @@ func getShape():
 func _physics_process(delta):
 	if not alive && is_on_floor():
 		_set_alive()
-				
+
+	grapple._physics_process(delta)
+	
 	# Execute normal physics logic via the state machine.
 	$StateMachine._physics_process(delta)
 	
@@ -134,3 +140,6 @@ func _set_invisible(authority_id: int):
 func _reset_alpha(authority_id: int):
 	if visibility_manager:
 		visibility_manager.reset_alpha(authority_id)
+
+
+

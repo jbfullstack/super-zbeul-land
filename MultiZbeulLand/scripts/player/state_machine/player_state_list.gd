@@ -11,6 +11,7 @@ const WALL_SLIDE = "WallSlide"
 const WALL_JUMP = "WallJump"
 const ENTER_PIPE = "EnterPipe"
 const DOWN_DASH = "DownDash"
+const GRAPPLE = "Grapple"
 
 # Movement constants
 const SPEED = 130.0
@@ -42,6 +43,7 @@ const ANIMATION_WALL_SLIDE = "jump"
 const ANIMATION_ENTER_PIPE = "idle"
 const ANIMATION_DOWN_ATTACK = "down_dash"
 const ANIMATION_ON_EDGE_OF_FALLING = "on_edge"
+const ANIMATION_GRAPPLING = "jump"
 
 # Particules Fx constants
 const DEFAULT_WALL_DUST_PARTICULES_OFFSET = 4.0

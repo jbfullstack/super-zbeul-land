@@ -43,6 +43,7 @@ func _physics_process(_delta):
 	if multiplayer.is_server():
 		if get_multiplayer_authority() == multiplayer.get_unique_id():
 			_input_state.direction = %InputSynchronizer.input_direction
+			_input_state.joystick_direction = %InputSynchronizer.joystick_direction
 
 	super._physics_process(_delta)
 	

@@ -18,12 +18,13 @@ func physics_update(delta: float) -> void:
 	if (player._input_state.should_jump ) and player.is_on_floor():
 		print_d("Initiating jump transition")
 		transition_to(PlayerStates.JUMP)
+	elif player.grapple.is_griping:
+		transition_to(PlayerStates.GRAPPLE)
+		return
 	elif not player.is_on_floor():
 		print_d("Falling transition")
 		transition_to(PlayerStates.FALL)
-	elif player.is_on_edge() and abs(player._input_state.direction) < 0.9:
-		#print("Prevent player falling - IDLE")
-		
+	elif player.is_on_edge() and abs(player._input_state.direction) < 0.9:		
 		set_animation(PlayerStates.ANIMATION_ON_EDGE_OF_FALLING)
 		pass
 	elif player._input_state.direction != 0:

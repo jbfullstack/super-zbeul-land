@@ -16,6 +16,9 @@ func physics_update(delta: float) -> void:
 		player.timers_component.stop_max_jump()
 		transition_to(PlayerStates.FALL)
 		return
+	elif player.grapple.is_griping:
+		transition_to(PlayerStates.GRAPPLE)
+		return
 	
 	# Normal jump physics
 	var jump_time_coef: float = player.timers_component.get_jump_time_coefficient(player.timers_component.max_jump())

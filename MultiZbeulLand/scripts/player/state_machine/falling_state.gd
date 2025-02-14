@@ -14,7 +14,9 @@ func physics_update(delta: float) -> void:
 		player.timers_component.stop_coyote_jump()
 		transition_to(PlayerStates.JUMP)
 		return
-	
+	elif player.grapple.is_griping:
+		transition_to(PlayerStates.GRAPPLE)
+		return
 	# Apply fall gravity with speed limit
 	player.velocity.y += (PlayerStates.GRAVITY * FALL_GRAVITY_FACTOR) * delta
 	player.velocity.y = min(player.velocity.y, MAX_FALL_SPEED)

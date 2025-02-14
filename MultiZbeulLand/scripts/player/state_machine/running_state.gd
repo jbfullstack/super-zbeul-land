@@ -8,6 +8,9 @@ func physics_update(delta: float) -> void:
 	if player._input_state.should_down and player.current_pipe != null:
 		transition_to(PlayerStates.ENTER_PIPE)
 		return
+	elif player.grapple.is_griping:
+		transition_to(PlayerStates.GRAPPLE)
+		return
 		
 	# prevent user to fall if joystick not heavly presssed
 	if player.is_on_edge() and abs(player._input_state.direction) < 0.8:
