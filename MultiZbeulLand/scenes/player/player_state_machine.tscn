@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2cfyvaw537hy"]
+[gd_scene load_steps=11 format=3 uid="uid://d2cfyvaw537hy"]
 
 [ext_resource type="Script" path="res://scripts/player/state_machine/base_player_state_machine.gd" id="1_ordoa"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/idle_state.gd" id="2_3xtg4"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/running_state.gd" id="3_e5paj"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/jumping_state.gd" id="4_0ucud"]
-[ext_resource type="Script" path="res://scripts/player/state_machine/in_air_state.gd" id="4_vcm8a"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/falling_state.gd" id="5_44ggb"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/wall_slide_state.gd" id="5_vtkvc"]
 [ext_resource type="Script" path="res://scripts/player/state_machine/wall_jump_state.gd" id="6_emoo0"]
@@ -14,22 +13,7 @@
 
 [node name="StateMachine" type="Node"]
 script = ExtResource("1_ordoa")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="."]
-script = ExtResource("2_3xtg4")
-
-[node name="Run" type="Node" parent="."]
-script = ExtResource("3_e5paj")
-
-[node name="Jump" type="Node" parent="."]
-script = ExtResource("4_0ucud")
-
-[node name="Fall" type="Node" parent="."]
-script = ExtResource("5_44ggb")
-
-[node name="InTheAir" type="Node" parent="."]
-script = ExtResource("4_vcm8a")
+initial_state = NodePath("Landborne/Idle")
 
 [node name="WallSlide" type="Node" parent="."]
 script = ExtResource("5_vtkvc")
@@ -45,3 +29,19 @@ script = ExtResource("8_rjq3c")
 
 [node name="Grapple" type="Node" parent="."]
 script = ExtResource("11_nf53e")
+
+[node name="Landborne" type="Node" parent="."]
+
+[node name="Idle" type="Node" parent="Landborne"]
+script = ExtResource("2_3xtg4")
+
+[node name="Run" type="Node" parent="Landborne"]
+script = ExtResource("3_e5paj")
+
+[node name="Airboorne" type="Node" parent="."]
+
+[node name="Jump" type="Node" parent="Airboorne"]
+script = ExtResource("4_0ucud")
+
+[node name="Fall" type="Node" parent="Airboorne"]
+script = ExtResource("5_44ggb")
