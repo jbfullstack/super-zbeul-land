@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://celu3qmkmvpjp"
-path="res://.godot/imported/smw_mario_sheet.png-b0ebc996529d991d0c103f1007874440.ctex"
+uid="uid://cktxtjwmsq4n5"
+path="res://.godot/imported/sprint_224.png-48f7cac7c673d63efb4e942032831d3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/mario_world/smw_mario_sheet.png"
-dest_files=["res://.godot/imported/smw_mario_sheet.png-b0ebc996529d991d0c103f1007874440.ctex"]
+source_file="res://assets/sprites/home_made_sprite_sheet/sprint_224.png"
+dest_files=["res://.godot/imported/sprint_224.png-48f7cac7c673d63efb4e942032831d3e.ctex"]
 
 [params]
 

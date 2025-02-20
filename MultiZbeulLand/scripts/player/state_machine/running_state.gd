@@ -19,6 +19,9 @@ var is_sliding: bool = false
 var is_change_direction_sliding: bool = false
 var last_direction: float = 0.0  # Track last direction for direction changes
 
+var is_started_to_change_direction_sliding: bool = false
+var change_direction_sliding_initial_direction: float = 0.0
+
 func enter() -> void:
 	# If coming from IDLE, reset velocity
 	if player.get_node("StateMachine").previous_state.name == PlayerStates.IDLE:
@@ -77,12 +80,16 @@ func update_sliding_states() -> void:
 	var current_direction = sign(current_velocity)
 	var input_direction = sign(player._input_state.direction)
 	
+	
 	# Check for direction change sliding
 	is_change_direction_sliding = (
 		abs(current_velocity) > SLIDE_SPEED_THRESHOLD and 
 		input_direction != 0 and 
 		input_direction != current_direction
 	)
+	if is_change_direction_sliding:
+		is_started_to_change_direction_sliding = true
+		change_direction_sliding_initial_direction = current_direction
 	
 	# Check for regular sliding (stopping or releasing run)
 	is_sliding = (
@@ -103,10 +110,15 @@ func get_current_acceleration() -> float:
 		return STOP_DECEL * friction_multiplier
 	return WALK_ACCEL
 
-func update_animations() -> void:
-	if is_change_direction_sliding:
-		set_animation(PlayerStates.ANIMATION_SLIDE)
-	elif p_meter >= MAX_P_METER:
+func update_animations() -> void:	
+	if is_started_to_change_direction_sliding:
+		if player.velocity.x == 0 or sign(player.velocity.x) != change_direction_sliding_initial_direction:
+			is_started_to_change_direction_sliding = false
+			change_direction_sliding_initial_direction = 0.0
+		else:
+			set_animation(PlayerStates.ANIMATION_SLIDE)
+			return
+	if p_meter >= MAX_P_METER:
 		set_animation(PlayerStates.ANIMATION_SPRINT)
 	elif player._input_state.is_run_action_activated:
 		set_animation(PlayerStates.ANIMATION_RUN)

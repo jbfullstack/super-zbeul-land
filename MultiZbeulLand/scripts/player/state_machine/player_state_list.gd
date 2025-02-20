@@ -37,10 +37,10 @@ const MIN_FLOOR_CONTACT_TIME = 0.3
 # Animation names
 const ANIMATION_IDLE = "idle"
 const ANIMATION_JUMP = "jump"
-const ANIMATION_FALL = "idle"
-const ANIMATION_WALK = "run"
+const ANIMATION_FALL = "fall"
+const ANIMATION_WALK = "walk"
 const ANIMATION_RUN = "run"
-const ANIMATION_SLIDE = "jump"
+const ANIMATION_SLIDE = "glide"
 const ANIMATION_SPRINT = "sprint"
 const ANIMATION_WALL_SLIDE = "jump"
 const ANIMATION_ENTER_PIPE = "idle"

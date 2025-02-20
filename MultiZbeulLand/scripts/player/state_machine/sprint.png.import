@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwy531bogrrv"
-path="res://.godot/imported/koopa_shell_red.png-3b74308ae9da69cd02dfae350f646b01.ctex"
+uid="uid://dpotm56030kra"
+path="res://.godot/imported/sprint.png-79ca147fff57ffefb101d9334684ef06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/mario_world/koopa_shell_red.png"
-dest_files=["res://.godot/imported/koopa_shell_red.png-3b74308ae9da69cd02dfae350f646b01.ctex"]
+source_file="res://scripts/player/state_machine/sprint.png"
+dest_files=["res://.godot/imported/sprint.png-79ca147fff57ffefb101d9334684ef06.ctex"]
 
 [params]
 

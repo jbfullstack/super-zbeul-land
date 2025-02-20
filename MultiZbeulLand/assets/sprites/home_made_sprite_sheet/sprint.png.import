@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byjqii3cn8cl2"
-path="res://.godot/imported/mario_little.png-d65b0c872809662013f1c02843b4f4d6.ctex"
+uid="uid://b52l8670y38p0"
+path="res://.godot/imported/sprint.png-e410011e67c8a2718f690e8c74ca9116.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/mario_world/mario_little.png"
-dest_files=["res://.godot/imported/mario_little.png-d65b0c872809662013f1c02843b4f4d6.ctex"]
+source_file="res://assets/sprites/home_made_sprite_sheet/sprint.png"
+dest_files=["res://.godot/imported/sprint.png-e410011e67c8a2718f690e8c74ca9116.ctex"]
 
 [params]
 

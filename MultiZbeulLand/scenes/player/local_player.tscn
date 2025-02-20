@@ -1,16 +1,17 @@
-[gd_scene load_steps=57 format=3 uid="uid://dqnaqj8yb6hwd"]
+[gd_scene load_steps=58 format=3 uid="uid://dqnaqj8yb6hwd"]
 
 [ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="1_p3dy5"]
 [ext_resource type="Script" path="res://scripts/player/local/local_player_controller.gd" id="1_ykxqx"]
 [ext_resource type="Script" path="res://scripts/player/local/local_visible_manager.gd" id="3_hogl6"]
-[ext_resource type="Texture2D" uid="uid://pyrrykkfuf16" path="res://assets/sprites/particles/fog/fog_01.png" id="4_cdn74"]
-[ext_resource type="Texture2D" uid="uid://hxtf84gn4pon" path="res://assets/sprites/home_made_sprite_sheet/sprint_32.png" id="4_oclfv"]
+[ext_resource type="Texture2D" uid="uid://cktxtjwmsq4n5" path="res://assets/sprites/home_made_sprite_sheet/sprint_224.png" id="4_5nwa8"]
+[ext_resource type="Texture2D" uid="uid://dp4tl3guyyf1l" path="res://assets/sprites/particles/fog/fog_01.png" id="4_cdn74"]
 [ext_resource type="PackedScene" uid="uid://d2cfyvaw537hy" path="res://scenes/player/player_state_machine.tscn" id="5_jcms7"]
+[ext_resource type="PackedScene" uid="uid://b0aacwkeorblu" path="res://assets/asprite/player_animation.aseprite" id="5_vxfov"]
 [ext_resource type="PackedScene" uid="uid://deu8adkndmhuv" path="res://scenes/player/player_ray_cast_node.tscn" id="6_vgc4o"]
 [ext_resource type="PackedScene" uid="uid://e7du7xxjcdkb" path="res://scenes/player/player_timers.tscn" id="7_qweuc"]
 [ext_resource type="Script" path="res://scripts/weapons/grapple/grapple.gd" id="8_40nbr"]
 [ext_resource type="Script" path="res://scripts/weapons/grapple/grapple_rope.gd" id="9_021l1"]
-[ext_resource type="Texture2D" uid="uid://dhe573vqm5lmn" path="res://assets/texutres/rope.JPG" id="9_ovsmt"]
+[ext_resource type="Texture2D" uid="uid://e6lgl6m3j7fc" path="res://assets/texutres/rope.JPG" id="9_ovsmt"]
 [ext_resource type="Script" path="res://scripts/weapons/grapple/visual_grapple_target.gd" id="11_55xht"]
 [ext_resource type="Texture2D" uid="uid://btp6oubrgcwqu" path="res://assets/texutres/grapple_aim_corner.png" id="13_2pl6t"]
 
@@ -149,29 +150,29 @@ region = Rect2(192, 96, 32, 32)
 atlas = ExtResource("1_p3dy5")
 region = Rect2(224, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujf5b"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_25gdh"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(0, 32, 224, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ggbi"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_x478c"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(224, 32, 224, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kdayh"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_msti3"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(448, 32, 224, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lnjio"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cffnk"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(672, 32, 224, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0t026"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(128, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2twcq"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(896, 32, 224, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dd6qe"]
-atlas = ExtResource("4_oclfv")
-region = Rect2(160, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_14inr"]
+atlas = ExtResource("4_5nwa8")
+region = Rect2(1120, 32, 224, 224)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_81gkq"]
 animations = [{
@@ -255,22 +256,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ujf5b")
+"texture": SubResource("AtlasTexture_25gdh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6ggbi")
+"texture": SubResource("AtlasTexture_x478c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kdayh")
+"texture": SubResource("AtlasTexture_msti3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lnjio")
+"texture": SubResource("AtlasTexture_cffnk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0t026")
+"texture": SubResource("AtlasTexture_2twcq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dd6qe")
+"texture": SubResource("AtlasTexture_14inr")
 }],
 "loop": true,
 "name": &"sprint",
@@ -308,12 +309,18 @@ one_shot = true
 explosiveness = 0.6
 randomness = 0.16
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D_old" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_81gkq")
-animation = &"sprint"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 0.20385
+
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("5_vxfov")]
+position = Vector2(0, -11)
+scale = Vector2(0.700995, 0.700995)
+animation = &"idle"
+frame_progress = 0.284326
 
 [node name="head" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, -12.5)
