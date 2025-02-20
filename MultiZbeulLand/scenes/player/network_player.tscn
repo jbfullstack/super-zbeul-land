@@ -1,14 +1,17 @@
-[gd_scene load_steps=36 format=3 uid="uid://b5s0pc6e66n5v"]
+[gd_scene load_steps=50 format=3 uid="uid://b5s0pc6e66n5v"]
 
 [ext_resource type="Script" path="res://scripts/player/network/network_player_controller.gd" id="1_ih3nq"]
 [ext_resource type="Script" path="res://scripts/player/network/multiplayer_input.gd" id="2_nn87h"]
 [ext_resource type="Texture2D" uid="uid://cpk30a8r26w5g" path="res://assets/sprites/knight.png" id="3_mmveb"]
+[ext_resource type="PackedScene" uid="uid://b0aacwkeorblu" path="res://assets/asprite/player_animation.aseprite" id="3_ydte0"]
 [ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://assets/fonts/PixelOperator8.ttf" id="4_mlo2p"]
 [ext_resource type="PackedScene" uid="uid://dw23by3xj4w4m" path="res://scenes/menu/player_hud.tscn" id="5_g7f2r"]
 [ext_resource type="Script" path="res://scripts/player/network/multiplayer_visible_manager.gd" id="6_5egsx"]
+[ext_resource type="Texture2D" uid="uid://dp4tl3guyyf1l" path="res://assets/sprites/particles/fog/fog_01.png" id="7_jbwfo"]
 [ext_resource type="PackedScene" uid="uid://d2cfyvaw537hy" path="res://scenes/player/player_state_machine.tscn" id="7_uyu2t"]
 [ext_resource type="PackedScene" uid="uid://deu8adkndmhuv" path="res://scenes/player/player_ray_cast_node.tscn" id="8_crsjd"]
 [ext_resource type="PackedScene" uid="uid://e7du7xxjcdkb" path="res://scenes/player/player_timers.tscn" id="9_2m54n"]
+[ext_resource type="PackedScene" uid="uid://xn1r4dtrbrq7" path="res://scenes/player/weapons.tscn" id="10_ka1dl"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
@@ -203,6 +206,57 @@ size = Vector2(6, 3)
 [sub_resource type="CircleShape2D" id="CircleShape2D_e5yko"]
 radius = 5.52097
 
+[sub_resource type="Curve" id="Curve_r5vj7"]
+_data = [Vector2(0, 0.945055), 0.0, 4.97738, 0, 0, Vector2(0.75, 0), -0.982143, -0.982143, 0, 0, Vector2(1, 0.648352), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_cxxj1"]
+curve = SubResource("Curve_r5vj7")
+
+[sub_resource type="Curve" id="Curve_0foab"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.990909, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yqi2c"]
+curve = SubResource("Curve_0foab")
+
+[sub_resource type="Curve" id="Curve_6ccw3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.936364, 0.692308), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pv6k5"]
+curve = SubResource("Curve_6ccw3")
+
+[sub_resource type="Gradient" id="Gradient_w0rk1"]
+offsets = PackedFloat32Array(0, 0.994792)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_13eeu"]
+gradient = SubResource("Gradient_w0rk1")
+
+[sub_resource type="Curve" id="Curve_8op0b"]
+_data = [Vector2(0.0136364, 0.197802), 0.0, 0.0, 0, 0, Vector2(0.977273, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ch6ti"]
+curve = SubResource("Curve_8op0b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yg6rl"]
+particle_flag_disable_z = true
+angle_curve = SubResource("CurveTexture_yqi2c")
+direction = Vector3(0, -15, 0)
+spread = 10.0
+initial_velocity_min = 40.0
+initial_velocity_max = 55.0
+angular_velocity_curve = SubResource("CurveTexture_pv6k5")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_curve = SubResource("CurveTexture_ch6ti")
+color_ramp = SubResource("GradientTexture1D_13eeu")
+alpha_curve = SubResource("CurveTexture_cxxj1")
+
 [node name="NetworkPlayer" type="CharacterBody2D" groups=["Players"]]
 collision_layer = 2
 collision_mask = 13
@@ -216,7 +270,12 @@ unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_kgm8b")
 script = ExtResource("2_nn87h")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("3_ydte0")]
+position = Vector2(0, -11)
+scale = Vector2(0.687316, 0.687316)
+
+[node name="AnimatedSprite2D_old" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_jsyko")
 animation = &"run"
@@ -267,6 +326,15 @@ one_shot = true
 [node name="PlayerHUD" parent="." instance=ExtResource("5_g7f2r")]
 unique_name_in_owner = true
 
+[node name="WallDustParticles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -6)
+amount = 5
+amount_ratio = 0.4572
+process_material = SubResource("ParticleProcessMaterial_yg6rl")
+texture = ExtResource("7_jbwfo")
+lifetime = 0.5
+randomness = 0.49
+
 [node name="PowerManager" type="Node" parent="."]
 
 [node name="Invisibility" type="Node" parent="PowerManager"]
@@ -278,5 +346,7 @@ script = ExtResource("6_5egsx")
 [node name="RayCastNode" parent="." instance=ExtResource("8_crsjd")]
 
 [node name="Timers" parent="." instance=ExtResource("9_2m54n")]
+
+[node name="Weapons" parent="." instance=ExtResource("10_ka1dl")]
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]

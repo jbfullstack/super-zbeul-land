@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://xn1r4dtrbrq7"]
+
+[ext_resource type="Script" path="res://scripts/weapons/grapple/grapple.gd" id="1_js276"]
+[ext_resource type="Texture2D" uid="uid://e6lgl6m3j7fc" path="res://assets/texutres/rope.JPG" id="2_slelm"]
+[ext_resource type="Script" path="res://scripts/weapons/grapple/grapple_rope.gd" id="3_nnevl"]
+[ext_resource type="Script" path="res://scripts/weapons/grapple/visual_grapple_target.gd" id="4_8am14"]
+[ext_resource type="Texture2D" uid="uid://btp6oubrgcwqu" path="res://assets/texutres/grapple_aim_corner.png" id="5_ex0da"]
+
+[sub_resource type="Curve" id="Curve_ojt1p"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.126923, 0.891994), 0.0, 0.0, 0, 0, Vector2(0.465385, 0.126133), 0.0, 0.0, 0, 0, Vector2(0.753846, 0.911631), 0.0, 0.0, 0, 0, Vector2(0.934615, 0.61707), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_eehg6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.669231, 0.885783), 0.724305, 0.724305, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Weapons" type="Node2D"]
+
+[node name="Grapple" type="Node2D" parent="."]
+script = ExtResource("1_js276")
+
+[node name="Rope" type="Line2D" parent="Grapple"]
+texture_filter = 2
+points = PackedVector2Array(0, -5, 0, 0)
+width = 2.0
+texture = ExtResource("2_slelm")
+texture_mode = 1
+script = ExtResource("3_nnevl")
+wave_animation_curve = SubResource("Curve_ojt1p")
+progression_curve = SubResource("Curve_eehg6")
+
+[node name="VisualTarget" type="Node2D" parent="Grapple"]
+script = ExtResource("4_8am14")
+
+[node name="Corners" type="Sprite2D" parent="Grapple/VisualTarget"]
+modulate = Color(1, 0.129412, 0.156863, 0.815686)
+scale = Vector2(0.0774648, 0.0774648)
+texture = ExtResource("5_ex0da")
+
+[node name="RayCasts" type="Node2D" parent="."]
+
+[node name="GrappleRayCast2D" type="RayCast2D" parent="RayCasts"]
+position = Vector2(0, -4)
+target_position = Vector2(80, 0)
