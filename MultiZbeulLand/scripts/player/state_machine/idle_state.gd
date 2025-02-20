@@ -24,7 +24,7 @@ func physics_update(delta: float) -> void:
 	elif not player.is_on_floor():
 		print_d("Falling transition")
 		transition_to(PlayerStates.FALL)
-	elif player.is_on_edge() and abs(player._input_state.direction) < 0.9:		
+	elif player.is_on_edge() and abs(player._input_state.direction) < 0.9:
 		set_animation(PlayerStates.ANIMATION_ON_EDGE_OF_FALLING)
 		pass
 	elif player._input_state.direction != 0:
