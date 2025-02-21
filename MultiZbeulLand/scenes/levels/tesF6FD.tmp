@@ -13,7 +13,7 @@
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="11_ge6yu"]
 [ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_dydhp"]
 [ext_resource type="PackedScene" uid="uid://cfpx5majge2sc" path="res://scenes/world_element/blocks/mistery_block.tscn" id="13_7ev1y"]
-[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="14_lftun"]
+[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="14_utu5j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_2tdy6")
@@ -679,15 +679,28 @@ invisible = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="StateCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_lftun")]
-visible = false
-position = Vector2(1, -12)
+[node name="StateCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_utu5j")]
+position = Vector2(90, 67)
 zoom = Vector2(4, 4)
-position_smoothing_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.3
-drag_top_margin = 0.4
-drag_right_margin = 0.3
+position_smoothing_speed = 2.0
 target = NodePath("../Player")
+zoom_factor = null
+debug_display = null
+movement_threshold = null
+direction_change_threshold = null
+pos_cam_1 = null
+pos_cam_2 = null
+dead_zone_size = null
+camera_speed = null
+use_bezier_transition = null
+vertical_enabled = null
+vertical_target = null
+vertical_top_offset = null
+vertical_bottom_offset = null
+vertical_speed = null
+enforce_boundaries = null
+horizontal_margin = null
+vertical_margin = null
+fall_speed_threshold = null
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

@@ -19,7 +19,7 @@ var _is_moving := false
 @export_category("horizontal")
 @export_range(0.0, 1.0) var pos_cam_1 := 0.2
 @export_range(0.0, 1.0) var pos_cam_2 := 0.8
-@export var dead_zone_size := 0.30
+@export var dead_zone_size := 0.90
 @export var camera_speed := 2.0
 # bézieene curve
 var transition_start_pos := 0.0

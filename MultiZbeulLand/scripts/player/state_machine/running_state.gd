@@ -55,26 +55,8 @@ func physics_update(delta: float) -> void:
 		update_sliding_states()
 		#
 		## Apply movement with appropriate acceleration/deceleration
-		var accel = get_current_acceleration()
-		
-		## --- DEBUG LOGS: BEFORE move_toward ---
-		prints(
-			"---",
-			"PRE move_toward => curr_vel:", str(current_velocity),
-			" target:", str(target_speed),
-			" accel:", str(accel),
-			" is_change_dir_slide:", str(is_change_direction_sliding),
-			" is_sliding:", str(is_sliding)
-		)
-	
+		var accel = get_current_acceleration()	
 		current_velocity = move_toward(current_velocity, target_speed, accel * delta)
-		
-		## --- DEBUG LOGS: AFTER move_toward ---
-		prints(
-			"---",
-			"POST move_toward => curr_vel:", str(current_velocity),
-			" (delta: ", str(delta), ")"
-		)
 		player.velocity.x = current_velocity
 		
 		# Update last direction for next frame

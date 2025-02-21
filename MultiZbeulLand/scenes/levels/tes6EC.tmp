@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dxu66dpeq4rhg"]
+[gd_scene load_steps=21 format=3 uid="uid://dxu66dpeq4rhg"]
 
 [ext_resource type="PackedScene" uid="uid://dqnaqj8yb6hwd" path="res://scenes/player/local_player.tscn" id="1_jaua5"]
 [ext_resource type="Texture2D" uid="uid://bfi6mdi4viaal" path="res://assets/sprites/world_tileset.png" id="2_2tdy6"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://scripts/finish_line.gd" id="11_ge6yu"]
 [ext_resource type="PackedScene" uid="uid://c35tdwbc6jwje" path="res://scenes/world_element/blocks/default_brick.tscn" id="12_dydhp"]
 [ext_resource type="PackedScene" uid="uid://cfpx5majge2sc" path="res://scenes/world_element/blocks/mistery_block.tscn" id="13_7ev1y"]
-[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="14_lftun"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ashvg"]
 texture = ExtResource("2_2tdy6")
@@ -678,16 +677,5 @@ position = Vector2(185, -120)
 invisible = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="StateCamera" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_lftun")]
-visible = false
-position = Vector2(1, -12)
-zoom = Vector2(4, 4)
-position_smoothing_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.3
-drag_top_margin = 0.4
-drag_right_margin = 0.3
-target = NodePath("../Player")
 
 [connection signal="body_entered" from="FinishLine" to="FinishLine" method="_on_body_entered"]

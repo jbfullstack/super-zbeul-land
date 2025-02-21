@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://b5s0pc6e66n5v"]
+[gd_scene load_steps=51 format=3 uid="uid://b5s0pc6e66n5v"]
 
 [ext_resource type="Script" path="res://scripts/player/network/network_player_controller.gd" id="1_ih3nq"]
 [ext_resource type="Script" path="res://scripts/player/network/multiplayer_input.gd" id="2_nn87h"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://deu8adkndmhuv" path="res://scenes/player/player_ray_cast_node.tscn" id="8_crsjd"]
 [ext_resource type="PackedScene" uid="uid://e7du7xxjcdkb" path="res://scenes/player/player_timers.tscn" id="9_2m54n"]
 [ext_resource type="PackedScene" uid="uid://xn1r4dtrbrq7" path="res://scenes/player/weapons.tscn" id="10_ka1dl"]
+[ext_resource type="PackedScene" uid="uid://cvknrmxucecf2" path="res://scenes/state_based_camera_2d.tscn" id="13_7y56u"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t6mc8"]
 properties/0/path = NodePath(".:player_id")
@@ -271,8 +272,8 @@ replication_config = SubResource("SceneReplicationConfig_kgm8b")
 script = ExtResource("2_nn87h")
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("3_ydte0")]
-position = Vector2(0, -11)
-scale = Vector2(0.687316, 0.687316)
+position = Vector2(0, -10)
+scale = Vector2(0.6205, 0.6205)
 
 [node name="AnimatedSprite2D_old" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -348,5 +349,12 @@ script = ExtResource("6_5egsx")
 [node name="Timers" parent="." instance=ExtResource("9_2m54n")]
 
 [node name="Weapons" parent="." instance=ExtResource("10_ka1dl")]
+
+[node name="StateCamera" parent="." instance=ExtResource("13_7y56u")]
+visible = false
+position = Vector2(-1, -12)
+zoom = Vector2(4, 4)
+position_smoothing_speed = 2.0
+script = null
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_respawn"]
