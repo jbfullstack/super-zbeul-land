@@ -33,6 +33,7 @@ func _physics_process(_delta):
 	_input_state.jump_just_released = Input.is_action_just_released("jump")
 	_input_state.should_down = Input.is_action_just_pressed("down")
 	_input_state.should_grapple_action = Input.is_action_just_pressed("grapple")
+	_input_state.l1_pressed = Input.is_action_just_pressed("l1")
 	
 	super._physics_process(_delta)
 	

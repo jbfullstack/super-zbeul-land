@@ -36,6 +36,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("grapple"):
 		grapple.rpc()
 		
+	if Input.is_action_just_pressed("l1"):
+		switch_grapple.rpc()
 	
 @rpc("call_local")
 func start_run():
@@ -68,3 +70,8 @@ func down():
 func grapple():
 	if multiplayer.is_server():
 		player._input_state.should_grapple_action = true
+
+@rpc("call_local")
+func switch_grapple():
+	if multiplayer.is_server():
+		player._input_state.l1_pressed = true

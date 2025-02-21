@@ -12,8 +12,9 @@ enum GrappleState {
 	ATTACHED,
 	RETRACTING
 }
-
+@onready var visual_target: VisualGrappleTarget = $VisualTarget
 var is_equiped: bool = false
+		
 var state: int = GrappleState.IDLE
 var is_griping: bool:
 	get:
@@ -29,14 +30,18 @@ var raycast: RayCast2D
 var appear_tween: Tween
 var pulse_tween: Tween
 var was_colliding: bool = false
-@onready var visual_target: VisualGrappleTarget = $VisualTarget
+
 
 
 func _ready():
 	print("Grapple ready")
 	await owner.ready
-	player = owner as BasePlayerController
-	raycast = owner.get_node("Weapons/RayCasts/GrappleRayCast2D") as RayCast2D
+	var stateMachine = owner.get_parent()
+	
+	print("owner:", owner)
+	print("stateMachine:", stateMachine)
+	player = owner.get_parent() as BasePlayerController
+	raycast = owner.get_node("RayCasts/GrappleRayCast2D") as RayCast2D
 	
 	visual_target.scale = Vector2.ZERO
 	
@@ -44,6 +49,10 @@ func _ready():
 
 func _physics_process(delta):
 	if !is_equiped:
+		return
+		
+	if !player:
+		printerr("player null in grapple")
 		return
 		
 	if player._input_state.joystick_direction.length_squared() > 0.1:
@@ -120,3 +129,10 @@ func compute_velocity(delta) -> Vector2:
 		force = spring_force + damping_force
 		
 	return force * delta
+
+func switch_is_equiped():
+	is_equiped = not is_equiped
+	if not is_equiped:
+		visual_target.hide_target()
+	else:
+		visual_target.appear()

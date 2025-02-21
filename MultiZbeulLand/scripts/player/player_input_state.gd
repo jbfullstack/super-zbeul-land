@@ -11,6 +11,8 @@ var should_down: bool = false
 var should_grapple_action: bool = false
 var joystick_direction: Vector2 = Vector2.ZERO
 
+var l1_pressed: bool = false
+
 
 func reset_one_shot_actions() -> void:	
 	should_start_run = false
@@ -19,4 +21,5 @@ func reset_one_shot_actions() -> void:
 	should_down = false
 	jump_just_released = false
 	should_grapple_action = false
+	l1_pressed = false
 

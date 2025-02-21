@@ -50,6 +50,10 @@ func _process(delta):
 func _physics_process(delta):
 	if not alive && is_on_floor():
 		_set_alive()
+		
+	if _input_state.l1_pressed:
+		grapple.switch_is_equiped()
+		
 
 	grapple._physics_process(delta)
 	

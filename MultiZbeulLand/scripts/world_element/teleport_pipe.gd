@@ -14,6 +14,8 @@ var BODY_PIPE_WIDTH
 
 var is_lenght_computed = false
 @onready var traffic_sign_animation = $trafficSignAnimation as AnimatedSprite2D
+@onready var barriere = $barriere as Sprite2D
+
 var number_on_player_on_pipe: int = 0
 
 func _ready():
@@ -80,6 +82,8 @@ func _on_pipe_area_2d_body_entered(body):
 			traffic_sign_animation.set_animation("light_arrows")
 			var rotate_sign_tween = get_tree().create_tween()
 			rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(15, 0), .3)
+			var move_barriere_tween = get_tree().create_tween()
+			move_barriere_tween.tween_property(barriere, "position",  barriere.position + Vector2(0, -9), .45)
 		number_on_player_on_pipe += 1
 
 
@@ -93,6 +97,8 @@ func _on_pipe_area_2d_body_exited(body):
 			traffic_sign_animation.set_animation("default")
 			var rotate_sign_tween = get_tree().create_tween()
 			rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(-15, 0), .3)
+			var move_barriere_tween = get_tree().create_tween()
+			move_barriere_tween.tween_property(barriere, "position",  barriere.position + Vector2(0, 9), .45)
 
 func teleport_player(player):
 	if not destination:
