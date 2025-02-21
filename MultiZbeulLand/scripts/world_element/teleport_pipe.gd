@@ -14,6 +14,7 @@ var BODY_PIPE_WIDTH
 
 var is_lenght_computed = false
 @onready var traffic_sign_animation = $trafficSignAnimation as AnimatedSprite2D
+var number_on_player_on_pipe: int = 0
 
 func _ready():
 	traffic_sign_animation.play()
@@ -75,10 +76,11 @@ func _on_pipe_area_2d_body_entered(body):
 	if body is LocalPlayerController or body is NetworkPlayerController:
 		print("pipe setted")
 		body.current_pipe = self
-		traffic_sign_animation.set_animation("light_arrows")
-		var rotate_sign_tween = get_tree().create_tween()
-		rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(15, 0), .3)
-
+		if number_on_player_on_pipe == 0:
+			traffic_sign_animation.set_animation("light_arrows")
+			var rotate_sign_tween = get_tree().create_tween()
+			rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(15, 0), .3)
+		number_on_player_on_pipe += 1
 
 
 
@@ -86,9 +88,11 @@ func _on_pipe_area_2d_body_exited(body):
 	if body is LocalPlayerController or body is NetworkPlayerController:
 		print("pipe removed")
 		body.current_pipe = null
-		traffic_sign_animation.set_animation("default")
-		var rotate_sign_tween = get_tree().create_tween()
-		rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(-15, 0), .3)
+		number_on_player_on_pipe -= 1
+		if number_on_player_on_pipe == 0:
+			traffic_sign_animation.set_animation("default")
+			var rotate_sign_tween = get_tree().create_tween()
+			rotate_sign_tween.tween_property(traffic_sign_animation, "position", traffic_sign_animation.position + Vector2(-15, 0), .3)
 
 func teleport_player(player):
 	if not destination:

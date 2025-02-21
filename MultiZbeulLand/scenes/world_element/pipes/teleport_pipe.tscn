@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://dd18nnqadvu7y"]
+[gd_scene load_steps=15 format=3 uid="uid://dd18nnqadvu7y"]
 
 [ext_resource type="Texture2D" uid="uid://bds3megmrlpt2" path="res://assets/sprites/mario_world/items/pipe/pipe_top_green_vertical.png" id="1_1gkae"]
 [ext_resource type="Script" path="res://scripts/world_element/teleport_pipe.gd" id="1_sdx3n"]
-[ext_resource type="Texture2D" uid="uid://d1physq22882d" path="res://assets/sprites/mario_world/items/pipe/pipe_super-top_green_vertical.png" id="2_adb0p"]
 [ext_resource type="Texture2D" uid="uid://btq5wsjrhie8g" path="res://assets/sprites/mario_world/items/pipe/pipe_body_green_vertical.png" id="2_wg4hp"]
 [ext_resource type="Texture2D" uid="uid://cfugx4iyutcmx" path="res://assets/sprites/mario_world/items/pipe/traffic_sign_sheet.png" id="3_88khn"]
 [ext_resource type="Texture2D" uid="uid://lhmhu2bsncph" path="res://assets/sprites/mario_world/items/pipe/traffic_sign.png" id="5_gqocr"]
@@ -65,9 +64,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnkra"]
-size = Vector2(32, 4)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q4jnp"]
 size = Vector2(32, 43)
 
@@ -81,22 +77,6 @@ script = ExtResource("1_sdx3n")
 position = Vector2(13, -1)
 scale = Vector2(0.439063, 0.439063)
 sprite_frames = SubResource("SpriteFrames_rb07d")
-
-[node name="TrafficSign" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(26, -1.00001)
-scale = Vector2(0.468752, 0.468752)
-texture = ExtResource("5_gqocr")
-
-[node name="RoofSprite" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -32)
-texture = ExtResource("2_adb0p")
-
-[node name="roofCollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -46)
-shape = SubResource("RectangleShape2D_wnkra")
 
 [node name="trafficSignSprite" type="Sprite2D" parent="."]
 
