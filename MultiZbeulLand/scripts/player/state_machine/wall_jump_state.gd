@@ -18,7 +18,7 @@ func enter() -> void:
 
 func physics_update(delta: float) -> void:
 	player.velocity.y += player.gravity * delta
-	
+	_update_animations()
 	var current_force = abs(player.velocity.x)
 	
 	# Decay the force
@@ -61,3 +61,11 @@ func physics_update(delta: float) -> void:
 			transition_to(PlayerStates.IDLE)
 		else:
 			transition_to(PlayerStates.RUN)
+	
+	
+
+func _update_animations() -> void:
+	if player.velocity.y <= 0:
+		set_animation(PlayerStates.ANIMATION_WALL_JUMP)
+	else:
+		set_animation(PlayerStates.ANIMATION_FALL)

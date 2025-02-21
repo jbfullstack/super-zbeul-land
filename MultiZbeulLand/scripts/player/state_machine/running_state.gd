@@ -11,6 +11,7 @@ const P_METER_START_SPEED: float = 131.25
 const MAX_P_METER: float = 1.867
 const EDGE_CHECK_THRESHOLD: float = 0.8
 const SLIDE_SPEED_THRESHOLD: float = WALK_SPEED  # Using WALK_SPEED as threshold
+const FRICTION_FACTOR: float = 0.8  # Plus la valeur est basse, plus le slide dure longtemps
 
 var p_meter: float = 0.0
 var current_max_speed: float = WALK_SPEED
@@ -22,10 +23,11 @@ var last_direction: float = 0.0  # Track last direction for direction changes
 var is_started_to_change_direction_sliding: bool = false
 var change_direction_sliding_initial_direction: float = 0.0
 
+
 func enter() -> void:
 	# If coming from IDLE, reset velocity
-	if player.get_node("StateMachine").previous_state.name == PlayerStates.IDLE:
-		current_velocity = 0.0
+	#current_velocity = clamp(current_velocity, -RUN_SPEED, RUN_SPEED)
+	current_velocity = player.velocity.x
 		
 	update_animations()
 	last_direction = sign(current_velocity) if current_velocity != 0 else 0.0
@@ -46,15 +48,33 @@ func physics_update(delta: float) -> void:
 		print("Prevent player falling - Running")
 		set_animation(PlayerStates.ANIMATION_ON_EDGE_OF_FALLING)
 	else:
-		# Calculate target speed based on input
+		## Calculate target speed based on input
 		var target_speed = player._input_state.direction * current_max_speed
-		
-		# Update sliding states
+		#
+		## Update sliding states
 		update_sliding_states()
-		
-		# Apply movement with appropriate acceleration/deceleration
+		#
+		## Apply movement with appropriate acceleration/deceleration
 		var accel = get_current_acceleration()
+		
+		## --- DEBUG LOGS: BEFORE move_toward ---
+		prints(
+			"---",
+			"PRE move_toward => curr_vel:", str(current_velocity),
+			" target:", str(target_speed),
+			" accel:", str(accel),
+			" is_change_dir_slide:", str(is_change_direction_sliding),
+			" is_sliding:", str(is_sliding)
+		)
+	
 		current_velocity = move_toward(current_velocity, target_speed, accel * delta)
+		
+		## --- DEBUG LOGS: AFTER move_toward ---
+		prints(
+			"---",
+			"POST move_toward => curr_vel:", str(current_velocity),
+			" (delta: ", str(delta), ")"
+		)
 		player.velocity.x = current_velocity
 		
 		# Update last direction for next frame
@@ -80,6 +100,11 @@ func update_sliding_states() -> void:
 	var current_direction = sign(current_velocity)
 	var input_direction = sign(player._input_state.direction)
 	
+	# check if playe touching a wall
+	if player.is_on_wall():
+		is_change_direction_sliding = false
+		is_sliding = false
+		return
 	
 	# Check for direction change sliding
 	is_change_direction_sliding = (
@@ -98,11 +123,12 @@ func update_sliding_states() -> void:
 		not is_change_direction_sliding
 	)
 
-const FRICTION_FACTOR: float = 0.8  # Plus la valeur est basse, plus le slide dure longtemps
+
 
 func get_current_acceleration() -> float:
 	var speed_ratio = abs(current_velocity) / max(current_max_speed, 0.01)  # Prevent division by 0
 	var friction_multiplier = lerp(1.0, FRICTION_FACTOR, speed_ratio)
+	friction_multiplier = clamp(friction_multiplier, 0.0, 1.0)  # prevent invert-mega-boost bug
 	
 	if is_change_direction_sliding:
 		return DIRECTION_CHANGE_DECEL * friction_multiplier
@@ -124,6 +150,7 @@ func update_animations() -> void:
 		set_animation(PlayerStates.ANIMATION_RUN)
 	else:
 		set_animation(PlayerStates.ANIMATION_WALK)
+	#TODO: is on wall with speed to this wall -> hit wall animation
 
 	# Update character direction
 	var effective_direction = player._input_state.direction

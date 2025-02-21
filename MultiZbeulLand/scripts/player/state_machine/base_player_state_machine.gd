@@ -6,6 +6,8 @@ var current_state: BasePlayerState
 var previous_state: BasePlayerState
 var states: Dictionary = {}
 
+var preserve_momentum: bool = false
+
 func _ready() -> void:
 	# Wait for owner to be ready
 	await owner.ready

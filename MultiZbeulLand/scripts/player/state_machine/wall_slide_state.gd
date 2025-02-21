@@ -82,10 +82,14 @@ func physics_update(delta: float) -> void:
 	
 	player.move_and_slide()
 	_update_wall_particles()
+	_update_animations()
 
 
 func _update_animations() -> void:
-	set_animation(PlayerStates.ANIMATION_WALL_SLIDE)
+	if player.velocity.y <= PlayerStates.WALL_SLIDE_SUPER_SLOW:
+		set_animation(PlayerStates.ANIMATION_WALL_SLIDE_SLOW)
+	else:
+		set_animation(PlayerStates.ANIMATION_WALL_SLIDE)
 	set_flip_h(player.wall_normal.x > 0)
 
 func _stop_wall_particles() -> void:
